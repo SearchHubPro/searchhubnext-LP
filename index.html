@@ -78,6 +78,9 @@
   .btn-primary:hover{transform:translateY(-2px);}
   .hero-note{font-size:13px; color:var(--slate);}
 
+  .hero-shot{transform:rotate(-1deg);}
+  .hero-shot img{border-radius:14px; box-shadow:0 30px 70px -20px rgba(20,33,61,.35);}
+
   /* stock ledger card graphic */
   .ledger-card{
     background:var(--card); border:1px solid var(--line); border-radius:18px;
@@ -109,6 +112,19 @@
   .feat-ico{width:40px; height:40px; border-radius:10px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:16px;}
   .feat h3{font-size:15px; margin:0 0 8px; color:var(--navy);}
   .feat p{font-size:13px; color:var(--slate); margin:0;}
+
+  /* ---------- screens gallery ---------- */
+  .screen-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:26px 20px;
+  }
+  .screen-item{margin:0; text-align:center;}
+  .screen-item img{
+    width:100%; border-radius:22px; border:1px solid var(--line);
+    box-shadow:0 18px 40px -18px rgba(20,33,61,.3);
+    transition:transform .2s ease;
+  }
+  .screen-item img:hover{transform:translateY(-4px);}
+  .screen-item figcaption{margin-top:12px; font-size:13px; font-weight:700; color:var(--navy); line-height:1.5;}
 
   /* ---------- pricing ---------- */
   .pricing{background:var(--navy); position:relative;}
@@ -165,8 +181,9 @@
 
   @media (max-width:860px){
     .hero-grid{grid-template-columns:1fr;}
-    .ledger-card{transform:none; margin-top:20px;}
+    .hero-shot{transform:none; margin-top:20px;}
     .feat-grid{grid-template-columns:1fr 1fr;}
+    .screen-grid{grid-template-columns:1fr 1fr;}
     .price-grid{grid-template-columns:1fr;}
     h1.hero-h{font-size:32px;}
     .head-cta{display:none;}
@@ -194,26 +211,8 @@
       </div>
     </div>
 
-    <div class="ledger-card">
-      <div class="ledger-top">
-        <span class="ledger-title">今月の販売状況</span>
-        <span class="ledger-badge">◎ 好調</span>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb"></div>
-        <div class="ledger-mid"><div class="ledger-name">オーディオ機器</div><div class="ledger-sub">仕入 ¥3,200 → 販売済</div></div>
-        <div class="ledger-profit">+¥2,140</div>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb"></div>
-        <div class="ledger-mid"><div class="ledger-name">キッチン家電</div><div class="ledger-sub">仕入 ¥5,000 → 出品中</div></div>
-        <div class="ledger-profit">+¥3,880</div>
-      </div>
-      <div class="ledger-row">
-        <div class="ledger-thumb"></div>
-        <div class="ledger-mid"><div class="ledger-name">ゲーム周辺機器</div><div class="ledger-sub">仕入 ¥1,800 → 返金済み</div></div>
-        <div class="ledger-profit neg">-¥1,800</div>
-      </div>
+    <div class="hero-shot">
+      <img src="https://i.ibb.co/nqPLNKdd/Chat-GPT-Image-2026-7-22-11-36-04.png" alt="SearchHub PLUS PC版の画面" loading="eager">
     </div>
   </div>
 </section>
@@ -246,6 +245,46 @@
         <h3>古物台帳CSV出力</h3>
         <p>販売日・注文番号・売上額まで記録。月別・ステータス別に、そのまま台帳として出力できます。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Screens</div>
+      <h2>実際の画面</h2>
+      <p>店頭でも、事務所でも。PC版とスマホ版、どちらも同じデータをリアルタイムで共有します。</p>
+    </div>
+    <div class="screen-grid">
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/nNvYtLZR/Chat-GPT-Image-2026-7-22-11-34-48.png" alt="ダッシュボード" loading="lazy">
+        <figcaption>ダッシュボード</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/cKD769f5/Chat-GPT-Image-2026-7-22-11-34-58.png" alt="仕入グラフ" loading="lazy">
+        <figcaption>仕入グラフ</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/99BkRFdf/Chat-GPT-Image-2026-7-22-11-35-18.png" alt="販売グラフ" loading="lazy">
+        <figcaption>販売グラフ</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/svzr9Xnh/Chat-GPT-Image-2026-7-22-11-35-09.png" alt="Amazonリサーチ・バーコードスキャン" loading="lazy">
+        <figcaption>Amazonリサーチ<br>（バーコードスキャン）</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/7J7MtkGQ/Chat-GPT-Image-2026-7-22-11-35-29.png" alt="価格改定" loading="lazy">
+        <figcaption>価格改定</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/3yLfNKCm/Chat-GPT-Image-2026-7-22-11-35-37.png" alt="販売管理" loading="lazy">
+        <figcaption>販売管理</figcaption>
+      </figure>
+      <figure class="screen-item">
+        <img src="https://i.ibb.co/LzmZMf5p/Chat-GPT-Image-2026-7-22-11-35-49.png" alt="月別レポート（仕入れ情報）" loading="lazy">
+        <figcaption>月別レポート<br>（仕入れ情報）</figcaption>
+      </figure>
     </div>
   </div>
 </section>
