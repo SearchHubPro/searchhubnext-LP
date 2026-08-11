@@ -144,6 +144,14 @@
   .req li b{color:var(--ink);}
   .req.warn{background:var(--gold-soft); border-color:#EBD6A4;}
 
+  /* ===== 注意 ===== */
+  .caution{border:1px solid #F0C4C4; background:#FDF6F6; border-radius:16px; padding:32px 30px;}
+  .caution h3{font-size:16px; margin-bottom:12px; color:#A03030;}
+  .caution p{font-size:14px; color:var(--slate); margin:0 0 14px;}
+  .caution p:last-child{margin-bottom:0;}
+  .caution b{color:var(--ink);}
+  .caution + .caution{margin-top:22px;}
+
   /* ===== faq ===== */
   .faq{max-width:820px; margin:0 auto;}
   .faq-item{border-bottom:1px solid var(--line); padding:22px 0;}
@@ -469,6 +477,34 @@
   </div>
 </section>
 
+<!-- ============ CAUTION ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Notice</div>
+      <h2>ご利用にあたって</h2>
+      <p>都合の良いことだけを書くつもりはありません。<br>知っておいていただきたいことを、先にお伝えします。</p>
+    </div>
+    <div style="max-width:820px; margin:0 auto;">
+
+      <div class="caution">
+        <h3>アカウント停止のリスクについて</h3>
+        <p><b>「100%安全」なツールは、この世に存在しません。</b>ご利用は自己責任でお願いいたします。</p>
+        <p>本サービスの自動巡回は、一定の間隔で機械的に動くのではなく、開く間隔をばらつかせるなどして、できる限り人の操作に近い動きになるよう設計しています。それでも、各サイトの規約上、自動での操作が推奨されているわけではありません。リスクはゼロではありません。</p>
+        <p><b>「1%でもアカウントが止まるのが怖い」という方は、導入をお控えください。</b>手作業でのリサーチをお願いいたします。</p>
+      </div>
+
+      <div class="caution">
+        <h3>各サイトの仕様変更について</h3>
+        <p>巡回先のサイトが大きく作り変えられた場合、一時的に動かなくなったり、特定の機能が使えなくなることがあります。ウェブの性質上、動作を永続的にお約束することはできません。</p>
+        <p>そうなった場合は、開発者として速やかな修正に全力を尽くします。ただし、サイト側の変更があまりに大きい場合、技術的に対応できないことも稀にあり得ます。その際は免責とさせていただきますので、あらかじめご了承のうえご検討ください。</p>
+        <p>常に使える状態を保てるよう、日々手を入れ続けることをお約束します。</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="wrap">
@@ -479,7 +515,8 @@
     <div class="faq">
       <div class="faq-item">
         <p class="faq-q">Keepaは本当に必要ですか。</p>
-        <p class="faq-a">必要です。相場・手数料・出品者数・売れた回数は、すべてKeepaから取っています。お持ちでない場合はKeepaのサイトでご契約ください。当ツールの料金には含まれません。</p>
+        <p class="faq-a">必要です。相場・手数料・出品者数・売れた回数は、すべてKeepaから取っています。当ツールの料金には含まれません。<br>
+        NEXTライトは月29€のプランでもお使いいただけます。NEXT・NEXT極は、自動巡回と自動リサーチで数千件を一度に解析するため、<b>月49€のプランが前提</b>です。決して安くはありませんが、その作業を人に頼むことを考えれば、はるかに安く済みます。</p>
       </div>
       <div class="faq-item">
         <p class="faq-q">スマホだけで使えますか。</p>
@@ -502,8 +539,40 @@
         <p class="faq-a">初期設定では朝6時から深夜0時までです。深夜はパソコンを休ませます。時間帯はご自身で変更できます。</p>
       </div>
       <div class="faq-item">
+        <p class="faq-q">初心者でも設定できますか。マニュアルはありますか。</p>
+        <p class="faq-a">全工程を解説したセットアップ動画をご用意しています。実際の操作画面を見ながら、同じように進めていただく形です。ご契約後のメールでご案内します。<br>
+        ただし正直に申し上げると、これは「ボタンを押すだけで稼げるアプリ」ではありません。パソコンの基本的な操作が難しい方や、最初の設定が面倒だと感じる方には向いていません。一度越えてしまえば、あとは動き続けます。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">パソコンの電源を切っていても動きますか。</p>
+        <p class="faq-a">自動リサーチ（セラーから利益商品を探す工程）は、こちらのサーバー側で動きます。あなたが寝ている間も外出中も、パソコンを切ったまま候補が溜まっていきます。<br>
+        一方、その商品が「今」出品されているかを見に行く自動巡回は、あなたのパソコンのChromeが動かします。こちらは電源を入れたままにしておく必要があります。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">仕入れまで全部自動でやってくれますか。</p>
+        <p class="faq-a">いいえ。あえて半分だけ自動にしています。<br>
+        面倒な絞り込みと監視はこちらでやりますが、<b>最後に買うかどうかはご自身の目で判断していただきます。</b>商品の状態も、急な相場の変動も、機械には見えないからです。そこを人が見ることで、利益率と安全性を両立させています。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">他の利用者と同じ商品を取り合うことになりませんか。</p>
+        <p class="faq-a">なりにくい作りです。決まったリストを配っているのではなく、<b>あなたが選んだセラーから商品を抜き出しています。</b>選ぶセラーが違えば、出てくるリストも全く違うものになります。自分だけの抽出ルートができていきます。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">使っているうちにネタ切れしませんか。</p>
+        <p class="faq-a">利益が出た商品が見つかると、その商品を扱っている別のセラーを自動で見つけて、次のリサーチ先にします。使うほどに対象が広がっていくので、止まりません。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">家電以外のカテゴリーでも使えますか。</p>
+        <p class="faq-a">使えます。おもちゃ、ゲーム、楽器、カメラ、工具など、Amazonにカタログがあって、Keepaでデータが取れるカテゴリーであれば対象になります。どのカテゴリーを狙うかは、ご自身で設定できます。</p>
+      </div>
+      <div class="faq-item">
         <p class="faq-q">申し込みのメールアドレスは何に使われますか。</p>
         <p class="faq-a">ライセンスキーの送付先になります。決済時に入力されたアドレスへ、キーとアプリのURLをお送りします。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">ここに無いことを聞きたいときは。</p>
+        <p class="faq-a">メールでお気軽にどうぞ。買う前のご相談でも構いません。<br>
+        <a href="mailto:searchhubnext@gmail.com" style="font-weight:700; color:var(--ink);">searchhubnext@gmail.com</a></p>
       </div>
     </div>
   </div>
@@ -515,6 +584,10 @@
     <h2>探す時間を、他のことに使ってください。</h2>
     <p>仕入れも、出品も、記帳も。全部ひとつの画面の中で。</p>
     <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
+    <p style="margin:28px 0 0; font-size:13px; color:#93A0B8;">
+      迷われている点があれば、お気軽にご相談ください<br>
+      <a href="mailto:searchhubnext@gmail.com" style="color:#F0C465; font-weight:700;">searchhubnext@gmail.com</a>
+    </p>
   </div>
 </div>
 
@@ -523,7 +596,7 @@
     <div style="margin-bottom:10px;">
       <a href="tokushoho.html">特定商取引法に基づく表記</a>　|
       <a href="privacy.html">プライバシーポリシー</a>　|
-      <a href="mailto:searchhubnext@gmail.com">お問い合わせ</a>
+      お問い合わせ：<a href="mailto:searchhubnext@gmail.com">searchhubnext@gmail.com</a>
     </div>
     © SearchHub NEXT
   </div>
