@@ -3,189 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SearchHub PLUS | 店舗せどり専用 在庫・売上管理ツール</title>
+<title>SearchHub NEXT｜せどりの「探す時間」を、寝ている間に。</title>
+<meta name="description" content="Amazonリサーチ・在庫売上管理・価格改定に加え、10サイトを自動巡回して仕入れ候補を見つけ続ける、せどり専用ツール。月額980円から。">
+<link rel="icon" href="https://i.ibb.co/zHBtVV9T/Chat-GPT-Image-2026-7-26-22-20-33.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
-    --navy:#14213D;
-    --navy-2:#1E3A5F;
-    --gold:#D69E2E;
-    --gold-2:#B7791F;
+    --ink:#0F1729;
+    --ink-2:#1B2942;
+    --paper:#FFFFFF;
+    --mist:#F5F7FB;
+    --line:#E3E8F0;
+    --slate:#5B6478;
+    --gold:#C9962B;
+    --gold-soft:#FBF3E2;
     --green:#0E9F6E;
-    --paper:#FAF8F3;
-    --card:#FFFFFF;
-    --ink:#232323;
-    --slate:#5A5F6B;
-    --line:#E7E2D6;
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Noto Sans JP', sans-serif;
-    line-height:1.75;
-    -webkit-font-smoothing:antialiased;
-  }
-  h1,h2,h3,.disp{
-    font-family:'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
-    font-weight:900;
-    letter-spacing:.01em;
-    color:var(--navy);
-  }
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Noto Sans JP',sans-serif; line-height:1.85; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif; font-weight:900; letter-spacing:.01em; margin:0;}
   a{color:inherit;}
-  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
-  img,svg{display:block; max-width:100%;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
 
-  /* ---------- header ---------- */
-  header{
-    position:sticky; top:0; z-index:50;
-    background:rgba(250,248,243,.9);
-    backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
+  /* ===== スマホの枠 ===== */
+  .phone{
+    width:100%; max-width:250px; margin:0 auto;
+    background:#171A20; border-radius:32px; padding:8px;
+    box-shadow:0 26px 55px -20px rgba(15,23,41,.5), inset 0 0 0 1px rgba(255,255,255,.07);
   }
-  .headbar{display:flex; align-items:center; justify-content:space-between; padding:16px 24px;}
-  .brand{display:flex; align-items:center; gap:10px; font-weight:900; font-size:19px; color:var(--navy);}
-  .brand-icon{width:30px; height:30px; border-radius:8px; object-fit:cover;}
-  .head-cta{
-    background:var(--navy); color:#fff; padding:10px 20px; border-radius:999px;
-    font-weight:700; font-size:14px; text-decoration:none; white-space:nowrap;
+  .phone-screen{
+    border-radius:25px; overflow:hidden; background:#fff;
+    aspect-ratio:9/18; position:relative;
   }
+  /* 上のステータスバー(時刻・電波・電池)を隠す */
+  .phone-screen img{width:100%; margin-top:-10%;}
+  .phone.lg{max-width:290px;}
 
-  /* ---------- hero ---------- */
-  .hero{padding:76px 0 64px; position:relative; overflow:hidden;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center;}
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:13px; font-weight:700; color:var(--gold-2);
-    background:#FBF1DC; border:1px solid #EBD6A4; padding:6px 14px; border-radius:999px;
-    margin-bottom:22px;
-  }
-  .eyebrow .pulse{width:7px; height:7px; border-radius:50%; background:var(--gold); animation:pulse 1.8s infinite;}
-  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
-  h1.hero-h{font-size:44px; line-height:1.35; margin:0 0 22px;}
-  h1.hero-h .accent{color:var(--gold-2); position:relative; white-space:nowrap;}
-  .hero-lead{font-size:16px; color:var(--slate); max-width:46ch; margin:0 0 32px;}
-  .hero-actions{display:flex; gap:14px; flex-wrap:wrap; align-items:center;}
-  .btn-primary{
-    background:var(--navy); color:#fff; padding:15px 30px; border-radius:10px;
-    font-weight:700; font-size:15px; text-decoration:none; box-shadow:0 8px 20px rgba(20,33,61,.25);
-    transition:transform .15s ease;
-  }
-  .btn-primary:hover{transform:translateY(-2px);}
-  .hero-note{font-size:13px; color:var(--slate);}
+  /* ===== header ===== */
+  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.93); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .headbar{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:900; font-size:18px;}
+  .brand img{width:30px; height:30px; border-radius:8px;}
+  .head-cta{background:var(--ink); color:#fff; padding:10px 22px; border-radius:999px; font-weight:700; font-size:13px; text-decoration:none;}
 
-  .hero-shot img{border-radius:14px; box-shadow:0 30px 70px -20px rgba(20,33,61,.35);}
+  /* ===== hero ===== */
+  .hero{background:linear-gradient(160deg,#0F1729 0%,#1B2942 55%,#243A5E 100%); color:#fff; padding:80px 0 92px; position:relative; overflow:hidden;}
+  .hero::after{content:""; position:absolute; right:-160px; top:-140px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,rgba(201,150,43,.22),transparent 65%);}
+  .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; position:relative; z-index:2;}
+  .eyebrow{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; color:#F0D89B; border:1px solid rgba(201,150,43,.5); background:rgba(201,150,43,.12); padding:6px 14px; border-radius:999px; margin-bottom:24px;}
+  .hero h1{font-size:42px; line-height:1.4; color:#fff; margin-bottom:24px;}
+  .hero p.lead{font-size:16px; color:#C3CCDD; max-width:44ch; margin:0 0 34px;}
+  .hero-actions{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
+  .btn{display:inline-block; text-decoration:none; font-weight:700; border-radius:10px; transition:transform .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-gold{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206; padding:16px 34px; font-size:15px; box-shadow:0 12px 26px rgba(201,150,43,.32);}
+  .btn-ghost{border:1px solid rgba(255,255,255,.35); color:#fff; padding:15px 28px; font-size:14px;}
+  .hero-cap{text-align:center; margin-top:16px; font-size:12px; color:#93A0B8;}
 
-  /* stock ledger card graphic */
-  .ledger-card{
-    background:var(--card); border:1px solid var(--line); border-radius:18px;
-    box-shadow:0 30px 60px -20px rgba(20,33,61,.28);
-    padding:26px; transform:rotate(-1.2deg);
-  }
-  .ledger-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;}
-  .ledger-title{font-size:13px; font-weight:700; color:var(--slate);}
-  .ledger-badge{font-size:11px; font-weight:700; color:var(--green); background:#E4F7EF; padding:4px 10px; border-radius:999px;}
-  .ledger-row{display:flex; align-items:center; gap:12px; padding:11px 0; border-bottom:1px dashed var(--line);}
-  .ledger-row:last-child{border-bottom:none;}
-  .ledger-thumb{width:38px; height:38px; border-radius:8px; background:linear-gradient(135deg,#EFEAE0,#E1D9C6); flex-shrink:0;}
-  .ledger-mid{flex:1; min-width:0;}
-  .ledger-name{font-size:13px; font-weight:700; color:var(--navy); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .ledger-sub{font-size:11px; color:var(--slate);}
-  .ledger-profit{font-size:14px; font-weight:900; color:var(--green); white-space:nowrap;}
-  .ledger-profit.neg{color:#C0392B;}
+  /* ===== problem ===== */
+  .problem{background:var(--mist); padding:76px 0;}
+  .prob-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:40px;}
+  .prob{background:#fff; border:1px solid var(--line); border-radius:14px; padding:26px 24px;}
+  .prob .q{font-size:15px; font-weight:700; margin:0 0 10px;}
+  .prob .a{font-size:13px; color:var(--slate); margin:0;}
 
-  /* ---------- section shell ---------- */
-  section{padding:78px 0;}
-  .sec-head{max-width:640px; margin:0 auto 48px; text-align:center;}
-  .sec-eyebrow{font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--gold-2); text-transform:uppercase; margin-bottom:10px;}
-  .sec-head h2{font-size:30px; margin:0 0 14px;}
-  .sec-head p{color:var(--slate); font-size:15px;}
+  /* ===== section shell ===== */
+  section{padding:84px 0;}
+  .sec-head{max-width:680px; margin:0 auto 48px; text-align:center;}
+  .sec-eyebrow{font-size:11px; font-weight:700; letter-spacing:.16em; color:var(--gold); margin-bottom:12px;}
+  .sec-head h2{font-size:30px; line-height:1.5; margin-bottom:14px;}
+  .sec-head p{color:var(--slate); font-size:15px; margin:0;}
 
-  /* ---------- features ---------- */
-  .feat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .feat{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:26px 22px;}
-  .feat-ico{width:40px; height:40px; border-radius:10px; background:var(--navy); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:16px;}
-  .feat h3{font-size:15px; margin:0 0 8px; color:var(--navy);}
-  .feat p{font-size:13px; color:var(--slate); margin:0;}
+  /* ===== pillars ===== */
+  .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .pillar{border:1px solid var(--line); border-radius:16px; padding:32px 26px; background:#fff;}
+  .pillar .n{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:.1em; margin-bottom:14px;}
+  .pillar h3{font-size:19px; margin-bottom:12px; line-height:1.5;}
+  .pillar p{font-size:14px; color:var(--slate); margin:0;}
 
-  /* ---------- screens gallery ---------- */
-  .screen-grid{
-    display:grid; grid-template-columns:repeat(4,1fr); gap:26px 20px;
-  }
-  .screen-item{margin:0; text-align:center;}
-  .screen-item img{
-    width:100%; border-radius:22px; border:1px solid var(--line);
-    box-shadow:0 18px 40px -18px rgba(20,33,61,.3);
-    transition:transform .2s ease;
-  }
-  .screen-item img:hover{transform:translateY(-4px);}
-  .screen-item figcaption{margin-top:12px; font-size:13px; font-weight:700; color:var(--navy); line-height:1.5;}
+  /* ===== sites ===== */
+  .sites{background:var(--ink); color:#fff; padding:84px 0;}
+  .sites h2{color:#fff;}
+  .sites .sec-head p{color:#9BA7BE;}
+  .sites-grid{display:grid; grid-template-columns:1fr .8fr; gap:56px; align-items:center;}
+  .site-tags{display:flex; flex-wrap:wrap; gap:10px;}
+  .site-tag{border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06); padding:9px 18px; border-radius:999px; font-size:14px;}
+  .sites-note{color:#9BA7BE; font-size:13px; margin-top:26px;}
+  .sites-note b{color:#F0C465;}
 
-  /* ---------- pricing ---------- */
-  .pricing{background:var(--navy); position:relative;}
-  .pricing .sec-head h2, .pricing .sec-eyebrow{color:#fff;}
-  .pricing .sec-head p{color:#B9C2D6;}
+  /* ===== screens ===== */
+  .screens{background:var(--mist);}
+  .screen-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px 24px;}
+  .shot{margin:0; text-align:center;}
+  .shot figcaption{margin-top:16px; font-size:13px; font-weight:700; line-height:1.6;}
+  .shot figcaption span{display:block; font-weight:400; font-size:12px; color:var(--slate); margin-top:2px;}
+
+  /* ===== pricing ===== */
   .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch;}
-  .price-card{
-    background:var(--card); border-radius:18px; padding:30px 26px; display:flex; flex-direction:column;
-    position:relative; border:2px solid transparent;
-  }
-  .price-card.reco{border-color:var(--gold);}
-  .price-card.sold .stock-fill{background:#C7CBD1 !important;}
-  .price-card.sold{opacity:.72;}
-  .tier-tag{font-size:12px; font-weight:700; color:var(--gold-2); margin-bottom:6px;}
-  .price-num{font-size:38px; font-weight:900; color:var(--navy); margin:0 0 2px;}
-  .price-num sup{font-size:16px; margin-right:2px;}
-  .price-unit{font-size:12px; color:var(--slate); margin-bottom:18px;}
-  .price-trial{
-    display:inline-block; font-size:11px; font-weight:700; color:var(--green);
-    background:#E4F7EF; padding:4px 10px; border-radius:999px; margin-bottom:18px; width:fit-content;
-  }
-  .stock-label{display:flex; justify-content:space-between; font-size:12px; color:var(--slate); margin-bottom:6px;}
-  .stock-label b{color:var(--navy);}
-  .stock-bar{height:8px; border-radius:99px; background:#EFEAE0; overflow:hidden; margin-bottom:22px;}
-  .stock-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--gold-2)); border-radius:99px; transition:width .6s ease;}
-  .price-cta{
-    margin-top:auto; text-align:center; text-decoration:none; padding:13px; border-radius:10px;
-    font-weight:700; font-size:14px; background:var(--navy); color:#fff;
-  }
-  .price-card.reco .price-cta{background:var(--gold-2);}
-  .price-card.sold .price-cta{background:#C7CBD1; color:#5A5F6B; pointer-events:none;}
-  .sold-flag{
-    position:absolute; top:22px; right:-8px; background:#8A8F99; color:#fff; font-size:11px; font-weight:700;
-    padding:5px 14px 5px 10px; letter-spacing:.05em;
-  }
-  .reco-flag{
-    position:absolute; top:-13px; left:50%; transform:translateX(-50%);
-    background:var(--gold); color:var(--navy); font-size:11px; font-weight:700; padding:5px 16px; border-radius:999px;
-  }
-  .price-foot-note{text-align:center; color:#8895AD; font-size:12px; margin-top:28px;}
+  .pcard{border:1px solid var(--line); border-radius:18px; padding:32px 26px; display:flex; flex-direction:column; background:#fff; position:relative;}
+  .pcard.reco{border:2px solid var(--gold); box-shadow:0 20px 50px -24px rgba(201,150,43,.5);}
+  .reco-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--gold); color:#1a1206; font-size:11px; font-weight:700; padding:5px 18px; border-radius:999px; white-space:nowrap;}
+  .pname{font-size:17px; font-weight:900; margin-bottom:4px;}
+  .pfor{font-size:12px; color:var(--slate); margin-bottom:18px; min-height:3.4em;}
+  .pnum{font-size:40px; font-weight:900; line-height:1; margin-bottom:4px;}
+  .pnum sup{font-size:17px; margin-right:2px;}
+  .punit{font-size:12px; color:var(--slate); margin-bottom:22px;}
+  .plist{list-style:none; padding:0; margin:0 0 26px; font-size:13.5px;}
+  .plist li{padding:7px 0 7px 26px; position:relative; border-bottom:1px dashed var(--line);}
+  .plist li:last-child{border-bottom:none;}
+  .plist li::before{content:"✓"; position:absolute; left:2px; color:var(--green); font-weight:900;}
+  .plist li.off{color:#AAB2C0;}
+  .plist li.off::before{content:"—"; color:#C7CDD8;}
+  .pcta{margin-top:auto; text-align:center; text-decoration:none; padding:15px; border-radius:10px; font-weight:700; font-size:14px; background:var(--ink); color:#fff;}
+  .pcard.reco .pcta{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206;}
+  /* 残り枠 */
+  .slot-badge{display:inline-block; background:#FBEAEA; color:#C0392B; border:1px solid #F0C4C4; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; margin-bottom:12px;}
+  .slot-label{display:flex; justify-content:space-between; font-size:12px; color:var(--slate); margin-bottom:6px;}
+  .slot-label b{color:var(--ink);}
+  .slot-bar{height:8px; border-radius:99px; background:#EDF0F5; overflow:hidden; margin-bottom:20px;}
+  .slot-fill{height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#D9A73C,#B7801C); transition:width .7s ease;}
+  .pcard.sold{opacity:.7;}
+  .pcard.sold .slot-fill{background:#C7CDD8;}
+  .pcard.sold .pcta{background:#C7CDD8; color:#5B6478; pointer-events:none;}
 
-  /* ---------- faq ---------- */
-  .faq{max-width:760px; margin:0 auto;}
-  .faq-item{border-bottom:1px solid var(--line); padding:20px 0;}
-  .faq-q{font-weight:700; color:var(--navy); font-size:15px; margin:0 0 8px;}
+  .price-notes{margin-top:32px; padding:24px 28px; background:var(--mist); border-radius:14px; font-size:13px; color:var(--slate);}
+  .price-notes b{color:var(--ink);}
+  .price-notes ul{margin:10px 0 0; padding-left:20px;}
+  .price-notes li{margin-bottom:6px;}
+
+  /* ===== requirements ===== */
+  .req-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .req{border:1px solid var(--line); border-radius:16px; padding:30px 28px; background:#fff;}
+  .req h3{font-size:16px; margin-bottom:16px;}
+  .req ul{margin:0; padding-left:20px; font-size:14px; color:var(--slate);}
+  .req li{margin-bottom:10px;}
+  .req li b{color:var(--ink);}
+  .req.warn{background:var(--gold-soft); border-color:#EBD6A4;}
+
+  /* ===== faq ===== */
+  .faq{max-width:820px; margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line); padding:22px 0;}
+  .faq-q{font-weight:700; font-size:15px; margin:0 0 8px;}
   .faq-a{color:var(--slate); font-size:14px; margin:0;}
 
-  /* ---------- final cta ---------- */
-  .final-cta{text-align:center; padding:90px 0;}
-  .final-cta h2{font-size:28px; margin:0 0 18px;}
-  .final-cta p{color:var(--slate); margin:0 0 30px;}
+  /* ===== final ===== */
+  .final{background:linear-gradient(160deg,#0F1729,#243A5E); color:#fff; text-align:center; padding:96px 0;}
+  .final h2{color:#fff; font-size:30px; margin-bottom:16px; line-height:1.5;}
+  .final p{color:#B7C2D6; margin:0 0 34px;}
 
-  footer{border-top:1px solid var(--line); padding:30px 0; text-align:center; color:var(--slate); font-size:12px;}
+  footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; color:var(--slate); font-size:12px;}
 
-  @media (max-width:860px){
-    .hero-grid{grid-template-columns:1fr;}
-    .hero-shot{transform:none; margin-top:20px;}
-    .feat-grid{grid-template-columns:1fr 1fr;}
-    .screen-grid{grid-template-columns:1fr 1fr;}
-    .price-grid{grid-template-columns:1fr;}
-    h1.hero-h{font-size:32px;}
+  @media (max-width:960px){
+    .screen-grid{grid-template-columns:repeat(2,1fr);}
+    .sites-grid{grid-template-columns:1fr; gap:40px;}
+  }
+  @media (max-width:820px){
+    .hero-grid{grid-template-columns:1fr; gap:40px;}
+    .hero h1{font-size:29px;}
+    .hero{padding:54px 0 64px;}
+    .prob-grid,.pillars,.price-grid,.req-grid{grid-template-columns:1fr;}
     .head-cta{display:none;}
+    section{padding:60px 0;}
+    .sec-head h2{font-size:23px;}
   }
 </style>
 </head>
@@ -193,167 +176,300 @@
 
 <header>
   <div class="headbar wrap">
-    <div class="brand"><img src="https://i.ibb.co/jkX8RD5V/Gemini-Generated-Image-f3uz5if3uz5if3uz-1.png" alt="SearchHub PLUS" class="brand-icon">SearchHub PLUS</div>
-    <a class="head-cta" href="#pricing">今すぐはじめる</a>
+    <div class="brand"><img src="https://i.ibb.co/zHBtVV9T/Chat-GPT-Image-2026-7-26-22-20-33.png" alt="SearchHub NEXT">SearchHub NEXT</div>
+    <a class="head-cta" href="#pricing">料金を見る</a>
   </div>
 </header>
 
+<!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span class="pulse"></span>先着200名限定・リリース記念プライス</div>
-      <h1 class="hero-h">「これ、まだ<br>出品してたっけ？」を<br><span class="accent">今日で終わりに。</span></h1>
-      <p class="hero-lead">店舗せどり・電脳せどり専用の在庫・売上管理ツール。仕入れから出品、Amazon価格改定、古物台帳の記帳まで、これ1本で完結。メルカリ・ヤフオクなどのフリマ出品にも対応しています。</p>
+      <div class="eyebrow">せどり専用・リサーチ／在庫管理ツール</div>
+      <h1>店に立てる時間だけが、<br>仕入れの時間じゃない。</h1>
+      <p class="lead">
+        あなたが利益を出した商品を、10サイト分ずっと見張り続けます。
+        条件に合うものが出た瞬間に通知。<br>
+        リサーチも、在庫も、価格改定も、帳簿も、これ1本で。
+      </p>
       <div class="hero-actions">
-        <a class="btn-primary" href="#pricing">30日間無料ではじめる</a>
-        <span class="hero-note">クレジットカード登録後、30日間は0円</span>
+        <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
+        <a class="btn btn-ghost" href="#screens">画面を見る</a>
       </div>
+      <p style="margin-top:22px; font-size:12px; color:#93A0B8;">月額980円から／いつでも解約できます</p>
     </div>
-
-    <div class="hero-shot">
-      <img src="https://i.ibb.co/nqPLNKdd/Chat-GPT-Image-2026-7-22-11-36-04.png" alt="SearchHub PLUS PC版の画面" loading="eager">
+    <div>
+      <div class="phone lg">
+        <div class="phone-screen">
+          <img src="https://i.ibb.co/V04HRR34/IMG-0992.png" alt="巡回で見つかった新着の一覧" loading="eager">
+        </div>
+      </div>
+      <p class="hero-cap">寝ている間に集まった、今日の候補</p>
     </div>
   </div>
 </section>
 
-<section id="features">
+<!-- ============ PROBLEM ============ -->
+<div class="problem">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:0;">
+      <div class="sec-eyebrow">Why</div>
+      <h2>せどりで消えていく時間は、<br>だいたい決まっています。</h2>
+    </div>
+    <div class="prob-grid">
+      <div class="prob">
+        <p class="q">同じ商品を、毎日手で検索している</p>
+        <p class="a">前に利益が出た商品。また安く出ていないか、いくつものサイトを開いて確かめる。その時間だけで1日が終わる。</p>
+      </div>
+      <div class="prob">
+        <p class="q">出品したかどうか、思い出せない</p>
+        <p class="a">「これ、まだ出品してたっけ？」。仕入れとAmazonと帳簿がバラバラだから、毎回セラーセントラルを開いて確かめることになる。</p>
+      </div>
+      <div class="prob">
+        <p class="q">同じ数字を、何度も打ち込んでいる</p>
+        <p class="a">価格改定ツールに1回、帳簿に1回、確定申告用にもう1回。売れるたびにコピペしている。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PILLARS ============ -->
+<section>
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-eyebrow">Features</div>
-      <h2>仕入れから記帳まで、迷わない。</h2>
-      <p>「価格改定ツール」と「帳簿」を別々に管理して、売れるたびにコピペする。<br>その二重入力を、まるごと無くすために作りました。</p>
+      <div class="sec-eyebrow">What it does</div>
+      <h2>やることは、3つだけです。</h2>
+      <p>探す。見張る。管理する。この3つを1本につなげました。</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <div class="feat-ico">🔍</div>
-        <h3>Amazonリサーチ</h3>
-        <p>店頭で商品を見た瞬間、相場・手数料・利益・出品者数・規制の有無までその場で確認。仕入れの可否を即断できます。</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="n">01 / SEARCH</div>
+        <h3>1秒で、仕入れの可否を決める</h3>
+        <p>ASINかバーコードを読ませるだけで、90日平均・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に。自分の在庫が何個あるかも同時に出るので、二重仕入れも防げます。</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">🏆</div>
-        <h3>自動ランク判定</h3>
-        <p>相場データから、独自ロジックで商品のランクを自動判定。「売れる商品」を見極める目安になります。</p>
+      <div class="pillar">
+        <div class="n">02 / WATCH</div>
+        <h3>寝ている間も、探し続ける</h3>
+        <p>一度売れた商品を登録しておくと、10サイトを自動で巡回します。あなたが決めた仕入上限より安く出た瞬間に通知。店にいない時間も、仕入れの時間になります。</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">🕘</div>
-        <h3>過去の販売実績</h3>
-        <p>同じ商品、前回いくらで仕入れて、いくらで売れたか。ASINを入れるだけで一瞬で確認できます。</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">📦</div>
-        <h3>在庫・売上管理</h3>
-        <p>納品待ちから出品中、販売済みまで一元管理。写真付きで在庫の状態がひと目でわかります。</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">💴</div>
-        <h3>価格改定サポート</h3>
-        <p>自動改定に任せきりにせず、ライバル価格を自分の目で見て判断したい方向け。まとめて確認・比較できます。</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">🧾</div>
-        <h3>古物台帳CSV出力</h3>
-        <p>販売日・注文番号・売上額まで記録。返金・補填の管理も含めて、月別・ステータス別にそのまま台帳として出力できます。</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">📊</div>
-        <h3>期首・期末在庫</h3>
-        <p>月初・月末時点の在庫金額を自動集計。正確な利益・在庫回転率の把握に役立ちます。</p>
-      </div>
-      <div class="feat">
-        <div class="feat-ico">💳</div>
-        <h3>資金繰りカレンダー</h3>
-        <p>クレジットカードの支払い予定をカードごとに設定。仕入れが、いつ・いくら引き落とされるか先に把握できます。</p>
+      <div class="pillar">
+        <div class="n">03 / MANAGE</div>
+        <h3>仕入れから記帳まで、二重入力なし</h3>
+        <p>仕入れた瞬間に販売管理へ。出品、価格改定、販売、返金までひと続き。月別の利益も、古物台帳用のCSVも、そのまま出せます。</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="screens">
+<!-- ============ SITES ============ -->
+<div class="sites">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Patrol</div>
+      <h2>10サイトを、順番に見て回ります。</h2>
+      <p>あなたの仕入上限に合わせた検索URLを自動で作り、1件ずつ確かめていきます。</p>
+    </div>
+    <div class="sites-grid">
+      <div>
+        <div class="site-tags">
+          <span class="site-tag">メルカリ</span>
+          <span class="site-tag">ヤフーフリマ</span>
+          <span class="site-tag">ヤフオク</span>
+          <span class="site-tag">ラクマ</span>
+          <span class="site-tag">駿河屋</span>
+          <span class="site-tag">セカンドストリート</span>
+          <span class="site-tag">オフモール</span>
+          <span class="site-tag">トレジャーファクトリー</span>
+          <span class="site-tag">Yahoo!ショッピング</span>
+          <span class="site-tag">au PAY マーケット</span>
+        </div>
+        <p class="sites-note">
+          どこまで回ったかは、進捗パネルでいつでも確認できます。<br><br>
+          NEXT極では、メルカリ・ヤフーフリマ・オフモールの3サイトを<b>高速巡回</b>。
+          新着が出てから通知が届くまでの時間を、さらに縮めます。
+        </p>
+      </div>
+      <div>
+        <div class="phone">
+          <div class="phone-screen">
+            <img src="https://i.ibb.co/DHY8Ypwx/IMG-0994.png" alt="巡回進捗パネル" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SCREENS ============ -->
+<section class="screens" id="screens">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-eyebrow">Screens</div>
       <h2>実際の画面</h2>
-      <p>店頭でも、事務所でも。PC版とスマホ版、どちらも同じデータをリアルタイムで共有します。</p>
+      <p>PC版とスマホ版、どちらも同じデータを見ています。<br>店頭ではスマホ、事務所ではPC。そのまま続きができます。</p>
     </div>
     <div class="screen-grid">
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/nNvYtLZR/Chat-GPT-Image-2026-7-22-11-34-48.png" alt="ダッシュボード" loading="lazy">
-        <figcaption>ダッシュボード</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/xqsDVtC5/IMG-0993.png" alt="スナイパー" loading="lazy"></div></div>
+        <figcaption>高速巡回<span>3サイトを短い間隔で</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/cKD769f5/Chat-GPT-Image-2026-7-22-11-34-58.png" alt="仕入グラフ" loading="lazy">
-        <figcaption>仕入グラフ</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/GfrLBny2/IMG-0985.png" alt="Amazonリサーチ" loading="lazy"></div></div>
+        <figcaption>Amazonリサーチ<span>ランク・利益・自在庫まで</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/99BkRFdf/Chat-GPT-Image-2026-7-22-11-35-18.png" alt="販売グラフ" loading="lazy">
-        <figcaption>販売グラフ</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/mFddHmty/IMG-0990.png" alt="リサーチリスト" loading="lazy"></div></div>
+        <figcaption>リサーチリスト<span>自動で集めた候補</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/svzr9Xnh/Chat-GPT-Image-2026-7-22-11-35-09.png" alt="Amazonリサーチ・バーコードスキャン" loading="lazy">
-        <figcaption>Amazonリサーチ<br>（バーコードスキャン）</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/sprFfrNk/IMG-0991.png" alt="仕入れリスト" loading="lazy"></div></div>
+        <figcaption>仕入れリスト<span>巡回で見張る商品</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/7J7MtkGQ/Chat-GPT-Image-2026-7-22-11-35-29.png" alt="価格改定" loading="lazy">
-        <figcaption>価格改定</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/mVhMfy5D/IMG-0986.png" alt="販売管理" loading="lazy"></div></div>
+        <figcaption>販売管理<span>納品待ちから販売済みまで</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/3yLfNKCm/Chat-GPT-Image-2026-7-22-11-35-37.png" alt="販売管理" loading="lazy">
-        <figcaption>販売管理</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/JRrYx2Yy/IMG-0987.png" alt="価格改定" loading="lazy"></div></div>
+        <figcaption>価格改定<span>ライバル価格と手残り</span></figcaption>
       </figure>
-      <figure class="screen-item">
-        <img src="https://i.ibb.co/LzmZMf5p/Chat-GPT-Image-2026-7-22-11-35-49.png" alt="月別レポート（仕入れ情報）" loading="lazy">
-        <figcaption>月別レポート<br>（仕入れ情報）</figcaption>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/wrzx0j1F/IMG-0989.png" alt="月別販売情報" loading="lazy"></div></div>
+        <figcaption>月別販売情報<span>純利益まで自動集計</span></figcaption>
       </figure>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/G3MmVW32/IMG-0981.png" alt="ダッシュボード" loading="lazy"></div></div>
+        <figcaption>ダッシュボード<span>今日の仕入れと利益率</span></figcaption>
+      </figure>
+
     </div>
   </div>
 </section>
 
-<section class="pricing" id="pricing">
+<!-- ============ PRICING ============ -->
+<section id="pricing">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-eyebrow">Pricing</div>
-      <h2>早い者勝ちの、フェアな値段。</h2>
-      <p>先着200名限定の特別価格。埋まり次第、その価格帯は自動的に締め切られます<br>（201人目以降は¥2,980で引き続きご利用いただけます）。</p>
+      <h2>使う分だけの、3プラン。</h2>
+      <p>あとからいつでも変更できます。上げても下げても、これまでのデータはそのままです。</p>
     </div>
 
-    <div class="price-grid" id="priceGrid">
-      <div class="price-card" id="cardTier1">
-        <div class="tier-tag">1〜100人目限定</div>
-        <div class="price-num"><sup>¥</sup>980</div>
-        <div class="price-unit">/ 月（税込）</div>
-        <div class="price-trial">30日間無料トライアル</div>
-        <div class="stock-label"><span>残り枠</span><b id="stock1Text">-- / 100</b></div>
-        <div class="stock-bar"><div class="stock-fill" id="stock1Fill" style="width:0%"></div></div>
-        <a class="price-cta" id="cta1" href="#" target="_blank" rel="noopener">この価格ではじめる</a>
+    <div class="price-grid">
+
+      <div class="pcard">
+        <div class="pname">NEXTライト</div>
+        <div class="pfor">店舗仕入れが中心の方へ。<br>リサーチと管理をまとめたい。</div>
+        <div class="pnum"><sup>¥</sup>980</div>
+        <div class="punit">/ 月（税込）</div>
+        <ul class="plist">
+          <li>Amazonリサーチ（一発解析）</li>
+          <li>バーコード読み取り</li>
+          <li>販売管理・古物台帳CSV</li>
+          <li>価格改定</li>
+          <li>月別レポート・経費管理</li>
+          <li>一括商品登録</li>
+          <li class="off">自動巡回</li>
+          <li class="off">自動リサーチ</li>
+        </ul>
+        <a class="pcta" href="https://buy.stripe.com/8x2eVc2VMabd9beatv4AU09" target="_blank" rel="noopener">このプランではじめる</a>
       </div>
 
-      <div class="price-card reco" id="cardTier2">
-        <div class="reco-flag">2番目に選ばれています</div>
-        <div class="tier-tag">101〜200人目限定</div>
-        <div class="price-num"><sup>¥</sup>1,980</div>
-        <div class="price-unit">/ 月（税込）</div>
-        <div class="price-trial">30日間無料トライアル</div>
-        <div class="stock-label"><span>残り枠</span><b id="stock2Text">-- / 100</b></div>
-        <div class="stock-bar"><div class="stock-fill" id="stock2Fill" style="width:0%"></div></div>
-        <a class="price-cta" id="cta2" href="#" target="_blank" rel="noopener">この価格ではじめる</a>
+      <div class="pcard reco">
+        <div class="reco-flag">おすすめ</div>
+        <div class="pname">NEXT</div>
+        <div class="pfor">店に立てない時間も、<br>仕入れを止めたくない方へ。</div>
+        <div class="pnum"><sup>¥</sup>2,980</div>
+        <div class="punit">/ 月（税込）</div>
+        <ul class="plist">
+          <li>ライトの機能すべて</li>
+          <li><b>10サイトの自動巡回</b></li>
+          <li>条件に合えば通知</li>
+          <li>仕入れリスト</li>
+          <li>自動リサーチ（セラー巡回）</li>
+          <li class="off">高速巡回</li>
+        </ul>
+        <a class="pcta" href="https://buy.stripe.com/cNi4gy2VMfvx1IM7hj4AU07" target="_blank" rel="noopener">このプランではじめる</a>
       </div>
 
-      <div class="price-card" id="cardTier3">
-        <div class="tier-tag">201人目以降・通常価格</div>
-        <div class="price-num"><sup>¥</sup>2,980</div>
-        <div class="price-unit">/ 月（税込）</div>
-        <div class="price-trial">30日間無料トライアル</div>
-        <div class="stock-label"><span>受付状況</span><b>随時受付中</b></div>
-        <div class="stock-bar"><div class="stock-fill" style="width:100%; background:var(--navy-2);"></div></div>
-        <a class="price-cta" id="cta3" href="#" target="_blank" rel="noopener">この価格ではじめる</a>
+      <div class="pcard" id="cardKiwami">
+        <div class="slot-badge">月20名限定</div>
+        <div class="pname">NEXT極</div>
+        <div class="pfor">早い者勝ちの商品を<br>取り逃したくない方へ。</div>
+        <div class="pnum"><sup>¥</sup>4,980</div>
+        <div class="punit">/ 月（税込）</div>
+        <ul class="plist">
+          <li>NEXTの機能すべて</li>
+          <li><b>高速巡回</b></li>
+          <li>メルカリ・ヤフーフリマ・オフモール</li>
+          <li>通知までの時間を短縮</li>
+        </ul>
+        <div class="slot-label"><span>今月の残り枠</span><b id="slotText">確認中…</b></div>
+        <div class="slot-bar"><div class="slot-fill" id="slotFill"></div></div>
+        <a class="pcta" id="ctaKiwami" href="https://buy.stripe.com/7sY5kCaoebfh0EI9pr4AU08" target="_blank" rel="noopener">このプランではじめる</a>
       </div>
+
     </div>
 
-    <p class="price-foot-note">※ 一度ご契約いただいた価格は、以降ずっとそのままの金額でご利用いただけます。値上げの対象にはなりません。</p>
-    <p class="price-foot-note">※ ご利用には別途「Keepa」のAPIキー（有料）が必要です。詳しくはお申し込み後のご案内メールをご確認ください。</p>
+    <div class="price-notes">
+      <b>ご契約前に、必ずご確認ください。</b>
+      <ul>
+        <li>ご利用には別途 <b>Keepa</b> の有料プラン（月29€〜）が必要です。当ツールの料金には含まれません。</li>
+        <li>NEXT・NEXT極の自動巡回と自動リサーチは、Keepaのトークンを多く使います。<b>49€プランを前提</b>としてください。</li>
+        <li>自動巡回には、<b>電源を入れたままにできるパソコン（Windows・Chrome）</b>が必要です。スマホだけでは動きません。</li>
+        <li>Amazonセラーセントラルのアカウントが必要です。</li>
+        <li><b>NEXT極は月20名までの受付</b>です。埋まった場合は翌月1日にまた受付を再開します。</li>
+      </ul>
+    </div>
   </div>
 </section>
 
+<!-- ============ REQUIREMENTS ============ -->
+<section style="background:var(--mist);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Requirements</div>
+      <h2>できないことも、先に書いておきます。</h2>
+      <p>買ってから「思っていたのと違う」となるのが、いちばん困るからです。</p>
+    </div>
+    <div class="req-grid">
+      <div class="req">
+        <h3>全プランに必要なもの</h3>
+        <ul>
+          <li><b>Keepaの有料プラン</b>（月29€〜）。相場も手数料もKeepaから取っています。</li>
+          <li><b>Amazonセラーセントラル</b>のアカウント。</li>
+          <li>PC版はChrome、スマホ版はSafari・Chromeで動きます。</li>
+        </ul>
+      </div>
+      <div class="req warn">
+        <h3>NEXT・NEXT極に必要なもの</h3>
+        <ul>
+          <li><b>電源を入れたままにできるパソコン。</b>巡回はあなたのパソコンのChromeが動かします。スマホだけでは巡回できません。</li>
+          <li><b>Keepaの49€プラン。</b>29€プランでは、自動リサーチの途中でトークンが尽きます。</li>
+          <li>パソコンの設定（毎日決まった時刻に起きて巡回を始める設定）が必要です。手順書をお渡しします。15分ほどで終わります。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="wrap">
     <div class="sec-head">
@@ -362,87 +478,102 @@
     </div>
     <div class="faq">
       <div class="faq-item">
-        <p class="faq-q">無料トライアル期間中に解約したら、料金はかかりますか？</p>
-        <p class="faq-a">かかりません。お申し込みから30日間は完全無料でお使いいただけます。期間内に解約すれば、料金は一切発生しません。</p>
+        <p class="faq-q">Keepaは本当に必要ですか。</p>
+        <p class="faq-a">必要です。相場・手数料・出品者数・売れた回数は、すべてKeepaから取っています。お持ちでない場合はKeepaのサイトでご契約ください。当ツールの料金には含まれません。</p>
       </div>
       <div class="faq-item">
-        <p class="faq-q">PCとスマホ、両方で使えますか？</p>
-        <p class="faq-a">はい。ご契約後にお送りするメールから、PC版・スマホ版どちらもご利用いただけます。</p>
+        <p class="faq-q">スマホだけで使えますか。</p>
+        <p class="faq-a">NEXTライトはスマホだけでお使いいただけます。NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。</p>
       </div>
       <div class="faq-item">
-        <p class="faq-q">価格帯が変わるタイミングは、どうやって知ればいいですか？</p>
-        <p class="faq-a">このページの「残り枠」表示が、リアルタイムで反映されます。枠が埋まったボタンは自動的にグレーアウトしますので、その時点で次の価格帯にお申し込みください。</p>
+        <p class="faq-q">あとからプランを変えられますか。</p>
+        <p class="faq-a">いつでも変更できます。上げても下げても、それまでの販売管理・月別・経費のデータはすべてそのまま残ります。アプリの設定画面から手続きできます。</p>
       </div>
       <div class="faq-item">
-        <p class="faq-q">申し込み時のメールアドレスは、何に使われますか？</p>
-        <p class="faq-a">アプリへのログインアカウントとして使用します。決済時にご入力いただいたメールアドレスと同じアドレスで、アプリのご登録をお願いいたします。</p>
+        <p class="faq-q">解約したらどうなりますか。</p>
+        <p class="faq-a">その時点でアプリと拡張機能が使えなくなります。データはお預かりしたまま残るので、再開されたときは続きからお使いいただけます。解約はアプリの設定画面から、いつでも可能です。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">パソコンとスマホ、両方で使えますか。</p>
+        <p class="faq-a">はい。同じライセンスキーで、PC版とスマホ版の両方をお使いいただけます。データはリアルタイムで共有されます。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">巡回は何時から何時まで動きますか。</p>
+        <p class="faq-a">初期設定では朝6時から深夜0時までです。深夜はパソコンを休ませます。時間帯はご自身で変更できます。</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">申し込みのメールアドレスは何に使われますか。</p>
+        <p class="faq-a">ライセンスキーの送付先になります。決済時に入力されたアドレスへ、キーとアプリのURLをお送りします。</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="final-cta">
+<!-- ============ FINAL ============ -->
+<div class="final">
   <div class="wrap">
-    <h2>30日間、実際の仕入れで試してください。</h2>
-    <p>気に入らなければ、期間内の解約で料金は発生しません。</p>
-    <a class="btn-primary" href="#pricing">料金プランを見る</a>
+    <h2>探す時間を、他のことに使ってください。</h2>
+    <p>仕入れも、出品も、記帳も。全部ひとつの画面の中で。</p>
+    <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
   </div>
-</section>
+</div>
 
 <footer>
-  <div class="wrap">© SearchHub PLUS</div>
+  <div class="wrap">
+    <div style="margin-bottom:10px;">
+      <a href="tokushoho.html">特定商取引法に基づく表記</a>　|
+      <a href="privacy.html">プライバシーポリシー</a>　|
+      <a href="mailto:searchhubnext@gmail.com">お問い合わせ</a>
+    </div>
+    © SearchHub NEXT
+  </div>
 </footer>
 
 <script>
-  // ⚠️ 決済リンクはここに設定
-  const LINKS = {
-    tier1: "https://buy.stripe.com/cNi3cugMC9790EIeJL4AU03", // ¥980
-    tier2: "https://buy.stripe.com/7sY00i2VMabdbjm1WZ4AU04", // ¥1,980
-    tier3: "https://buy.stripe.com/7sY7sK3ZQ3MP4UYatv4AU05"  // ¥2,980
-  };
+  // ============================================================
+  // 🌟 NEXT極の残り枠。ここに公開キーを1つ入れるだけです。
+  //   Supabase → Settings → API → 「anon public」または
+  //   「publishable key」をコピーして貼り付けてください。
+  //   ※ service_role キーは絶対に貼らないでください。
+  //   空のままでも「月20名限定」の表示だけは出ます（数字が出ないだけ）。
+  // ============================================================
+  const SUPABASE_URL = "https://ihsjwsdwjuapfdhtocmq.supabase.co";
+  const SUPABASE_PUBLIC_KEY = "sb_publishable_B0Dl0AwnXKzculDEEyMXTQ_ifl052oV";
 
-  document.getElementById('cta1').href = LINKS.tier1;
-  document.getElementById('cta2').href = LINKS.tier2;
-  document.getElementById('cta3').href = LINKS.tier3;
+  (async function loadSlots(){
+    const textEl = document.getElementById('slotText');
+    const fillEl = document.getElementById('slotFill');
+    if (!textEl) return;
 
-  const SUPABASE_URL = "https://pxdxjlnoeqpfecovdhjl.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_eFu_C39G8tDL_aaTKeoMkQ_H8J9s3t0";
-  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-  async function loadStock() {
+    if (!SUPABASE_PUBLIC_KEY || SUPABASE_PUBLIC_KEY.indexOf('【') === 0) {
+      textEl.textContent = '20名 / 月';
+      fillEl.style.width = '0%';
+      return;
+    }
     try {
-      const { data, error } = await sb.rpc('get_license_total_count');
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+      const { data, error } = await sb.rpc('get_kiwami_slots');
       if (error) throw error;
-      const total = Number(data) || 0;
 
-      const tier1Left = Math.max(0, 100 - total);
-      const tier2Left = total >= 100 ? Math.max(0, 200 - total) : 100;
+      const limit = Number(data.limit) || 20;
+      const used  = Number(data.used)  || 0;
+      const left  = Math.max(0, limit - used);
 
-      document.getElementById('stock1Text').textContent = `${tier1Left} / 100`;
-      document.getElementById('stock1Fill').style.width = ((100 - tier1Left) / 100 * 100) + '%';
+      textEl.textContent = left + ' / ' + limit;
+      fillEl.style.width = Math.min(100, used / limit * 100) + '%';
 
-      document.getElementById('stock2Text').textContent = `${tier2Left} / 100`;
-      document.getElementById('stock2Fill').style.width = ((100 - tier2Left) / 100 * 100) + '%';
-
-      if (tier1Left <= 0) {
-        const c = document.getElementById('cardTier1');
-        c.classList.add('sold');
-        c.insertAdjacentHTML('afterbegin', '<div class="sold-flag">完売</div>');
-        document.getElementById('cta1').textContent = '受付終了しました';
-        document.getElementById('cta1').removeAttribute('href');
-      }
-      if (tier2Left <= 0) {
-        const c = document.getElementById('cardTier2');
-        c.classList.add('sold');
-        c.insertAdjacentHTML('afterbegin', '<div class="sold-flag">完売</div>');
-        document.getElementById('cta2').textContent = '受付終了しました';
-        document.getElementById('cta2').removeAttribute('href');
+      if (left <= 0) {
+        const card = document.getElementById('cardKiwami');
+        const cta  = document.getElementById('ctaKiwami');
+        card.classList.add('sold');
+        cta.textContent = '今月分は受付終了しました';
+        cta.removeAttribute('href');
       }
     } catch (e) {
-      console.error('在庫状況の取得に失敗:', e);
+      // 取れなかった時は、数字を出さずに限定の表示だけ残す
+      textEl.textContent = '20名 / 月';
     }
-  }
-  loadStock();
+  })();
 </script>
 
 </body>
