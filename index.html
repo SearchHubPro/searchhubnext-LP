@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SearchHub NEXT｜せどりの「探す時間」を、寝ている間に。</title>
-<meta name="description" content="Amazonリサーチ・在庫売上管理・価格改定に加え、10サイトを自動巡回して仕入れ候補を見つけ続ける、せどり専用ツール。月額980円から。">
+<meta name="description" content="Amazonリサーチ・在庫売上管理・価格改定に加え、10サイトを自動巡回して仕入れ候補を見つけ続ける、せどり専用ツール。まずは登録不要の無料版から。有料は月額980円。">
 <link rel="icon" href="https://i.ibb.co/zHBtVV9T/Chat-GPT-Image-2026-7-26-22-20-33.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,16 +103,22 @@
   .shot figcaption span{display:block; font-weight:400; font-size:12px; color:var(--slate); margin-top:2px;}
 
   /* ===== pricing ===== */
-  .price-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; align-items:stretch;}
-  .pcard{border:1px solid var(--line); border-radius:18px; padding:32px 26px; display:flex; flex-direction:column; background:#fff; position:relative;}
+  .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch;}
+  .picon{width:52px; height:52px; border-radius:13px; margin-bottom:14px; object-fit:cover;
+    box-shadow:0 8px 20px -8px rgba(15,23,41,.35), 0 0 0 1px rgba(15,23,41,.06);}
+  .pcard.free{background:var(--mist); border-style:dashed;}
+  .pcard.free .pcta{background:#fff; color:var(--ink); border:1px solid var(--line);}
+  .free-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
+    font-size:11px; font-weight:700; padding:5px 18px; border-radius:999px; white-space:nowrap;}
+  .pcard{border:1px solid var(--line); border-radius:18px; padding:30px 22px; display:flex; flex-direction:column; background:#fff; position:relative;}
   .pcard.reco{border:2px solid var(--gold); box-shadow:0 20px 50px -24px rgba(201,150,43,.5);}
   .reco-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--gold); color:#1a1206; font-size:11px; font-weight:700; padding:5px 18px; border-radius:999px; white-space:nowrap;}
   .pname{font-size:17px; font-weight:900; margin-bottom:4px;}
   .pfor{font-size:12px; color:var(--slate); margin-bottom:18px; min-height:3.4em;}
-  .pnum{font-size:40px; font-weight:900; line-height:1; margin-bottom:4px;}
+  .pnum{font-size:36px; font-weight:900; line-height:1; margin-bottom:4px;}
   .pnum sup{font-size:17px; margin-right:2px;}
   .punit{font-size:12px; color:var(--slate); margin-bottom:22px;}
-  .plist{list-style:none; padding:0; margin:0 0 26px; font-size:13.5px;}
+  .plist{list-style:none; padding:0; margin:0 0 24px; font-size:13px;}
   .plist li{padding:7px 0 7px 26px; position:relative; border-bottom:1px dashed var(--line);}
   .plist li:last-child{border-bottom:none;}
   .plist li::before{content:"✓"; position:absolute; left:2px; color:var(--green); font-weight:900;}
@@ -165,6 +171,9 @@
 
   footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; color:var(--slate); font-size:12px;}
 
+  @media (max-width:1080px){
+    .price-grid{grid-template-columns:repeat(2,1fr);}
+  }
   @media (max-width:960px){
     .screen-grid{grid-template-columns:repeat(2,1fr);}
     .sites-grid{grid-template-columns:1fr; gap:40px;}
@@ -201,10 +210,10 @@
         リサーチも、在庫も、価格改定も、帳簿も、これ1本で。
       </p>
       <div class="hero-actions">
-        <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
-        <a class="btn btn-ghost" href="#screens">画面を見る</a>
+        <a class="btn btn-gold" href="https://searchhubpro.github.io/searchhubnext-LP/free.html" target="_blank" rel="noopener">無料でリサーチを試す</a>
+        <a class="btn btn-ghost" href="#pricing">料金プランを見る</a>
       </div>
-      <p style="margin-top:22px; font-size:12px; color:#93A0B8;">月額980円から／いつでも解約できます</p>
+      <p style="margin-top:22px; font-size:12px; color:#93A0B8;">無料版は登録もライセンスも不要／有料は月額980円から、いつでも解約できます</p>
     </div>
     <div>
       <div class="phone lg">
@@ -375,13 +384,33 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-eyebrow">Pricing</div>
-      <h2>使う分だけの、3プラン。</h2>
+      <h2>まずは無料から。使う分だけの、4プラン。</h2>
       <p>あとからいつでも変更できます。上げても下げても、これまでのデータはそのままです。</p>
     </div>
 
     <div class="price-grid">
 
+      <div class="pcard free">
+        <div class="free-flag">登録不要</div>
+        <img class="picon" src="https://i.ibb.co/nxHB4y3/Chat-GPT-Image-2026-8-12-14-34-55.png" alt="">
+        <div class="pname">SearchHub リサーチ</div>
+        <div class="pfor">まず解析だけ試したい方へ。<br>ライセンスも登録も要りません。</div>
+        <div class="pnum">無料</div>
+        <div class="punit">1日20回まで</div>
+        <ul class="plist">
+          <li>Amazonリサーチ（一発解析）</li>
+          <li>バーコード読み取り</li>
+          <li>利益シミュレーション</li>
+          <li class="off">販売管理</li>
+          <li class="off">価格改定</li>
+          <li class="off">自動巡回</li>
+          <li class="off">自動リサーチ</li>
+        </ul>
+        <a class="pcta" href="https://searchhubpro.github.io/searchhubnext-LP/free.html" target="_blank" rel="noopener">無料ではじめる</a>
+      </div>
+
       <div class="pcard">
+        <img class="picon" src="https://i.ibb.co/WW9fmQLL/Chat-GPT-Image-2026-8-12-14-36-35.png" alt="">
         <div class="pname">NEXTライト</div>
         <div class="pfor">店舗仕入れが中心の方へ。<br>リサーチと管理をまとめたい。</div>
         <div class="pnum"><sup>¥</sup>980</div>
@@ -401,6 +430,7 @@
 
       <div class="pcard reco">
         <div class="reco-flag">おすすめ</div>
+        <img class="picon" src="https://i.ibb.co/zVsBjXN5/Chat-GPT-Image-2026-7-26-22-20-33.png" alt="">
         <div class="pname">NEXT</div>
         <div class="pfor">店に立てない時間も、<br>仕入れを止めたくない方へ。</div>
         <div class="pnum"><sup>¥</sup>2,980</div>
@@ -418,6 +448,7 @@
 
       <div class="pcard" id="cardKiwami">
         <div class="slot-badge">月20名限定</div>
+        <img class="picon" src="https://i.ibb.co/d0qNvwP6/Chat-GPT-Image-2026-7-26-22-19-43.png" alt="">
         <div class="pname">NEXT極</div>
         <div class="pfor">早い者勝ちの商品を<br>取り逃したくない方へ。</div>
         <div class="pnum"><sup>¥</sup>4,980</div>
@@ -438,6 +469,7 @@
     <div class="price-notes">
       <b>ご契約前に、必ずご確認ください。</b>
       <ul>
+        <li><b>無料版もKeepaの有料プランが必要です。</b>相場はKeepaから取っているため、無料版だけでは動きません。</li>
         <li>ご利用には別途 <b>Keepa</b> の有料プラン（月29€〜）が必要です。当ツールの料金には含まれません。</li>
         <li>NEXT・NEXT極の自動巡回と自動リサーチは、Keepaのトークンを多く使います。<b>49€プランを前提</b>としてください。</li>
         <li>自動巡回には、<b>電源を入れたままにできるパソコン（Windows・Chrome）</b>が必要です。スマホだけでは動きません。</li>
