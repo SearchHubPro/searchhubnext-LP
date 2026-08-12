@@ -27,6 +27,8 @@
   h1,h2,h3{font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif; font-weight:900; letter-spacing:.01em; margin:0;}
   a{color:inherit;}
   img{display:block; max-width:100%;}
+  /* 文のまとまりの途中で改行させない */
+  .nb{display:inline-block;}
   .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
 
   /* ===== スマホの枠 ===== */
@@ -256,7 +258,7 @@
     <div class="sec-head">
       <div class="sec-eyebrow">What it does</div>
       <h2>やることは、3つだけです。</h2>
-      <p>探す。見張る。管理する。この3つを1本につなげました。</p>
+      <p><span class="nb">探す。見張る。管理する。</span><span class="nb">この3つを1本につなげました。</span></p>
     </div>
     <div class="pillars">
       <div class="pillar">
@@ -614,7 +616,7 @@
 <div class="final">
   <div class="wrap">
     <h2>探す時間を、他のことに使ってください。</h2>
-    <p>仕入れも、出品も、記帳も。全部ひとつの画面の中で。</p>
+    <p><span class="nb">仕入れも、出品も、記帳も。</span><span class="nb">全部ひとつの画面の中で。</span></p>
     <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
     <p style="margin:28px 0 0; font-size:13px; color:#93A0B8;">
       迷われている点があれば、お気軽にご相談ください<br>
@@ -626,9 +628,12 @@
 <footer>
   <div class="wrap">
     <div style="margin-bottom:10px;">
-      <a href="tokushoho.html">特定商取引法に基づく表記</a>　|
-      <a href="privacy.html">プライバシーポリシー</a>　|
-      お問い合わせ：<a href="mailto:searchhubnext@gmail.com">searchhubnext@gmail.com</a>
+      <span class="nb"><a href="tokushoho.html">特定商取引法に基づく表記</a></span>
+      <span class="nb">　|　</span>
+      <span class="nb"><a href="privacy.html">プライバシーポリシー</a></span>
+    </div>
+    <div style="margin-bottom:10px;">
+      <span class="nb">お問い合わせ：</span><span class="nb"><a href="mailto:searchhubnext@gmail.com">searchhubnext@gmail.com</a></span>
     </div>
     © SearchHub NEXT
   </div>
