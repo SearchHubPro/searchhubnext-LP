@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>SearchHub NEXT 使い方ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1729; --ink-2:#1B2942; --paper:#FFFFFF; --mist:#F5F7FB;
+  --line:#E3E8F0; --slate:#5B6478; --gold:#C9962B; --gold-soft:#FBF3E2;
+  --green:#0E9F6E; --red:#C0392B; --blue:#2B6CB0;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Noto Sans JP',sans-serif; line-height:1.9; -webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif; font-weight:900; margin:0;}
+a{color:var(--blue);}
+p{margin:0 0 14px;}
+
+/* ===== レイアウト ===== */
+.shell{display:flex; max-width:1240px; margin:0 auto;}
+.side{width:264px; flex:none; border-right:1px solid var(--line); padding:28px 0 60px;
+  position:sticky; top:0; height:100vh; overflow-y:auto;}
+.side .brand{padding:0 24px 18px; border-bottom:1px solid var(--line); margin-bottom:14px;}
+.side .brand b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:16px; display:block;}
+.side .brand span{font-size:11px; color:var(--slate);}
+.side nav a{display:block; padding:7px 24px; font-size:13px; color:var(--slate);
+  text-decoration:none; border-left:3px solid transparent;}
+.side nav a:hover{background:var(--mist); color:var(--ink); border-left-color:var(--gold);}
+.side nav .grp{padding:16px 24px 4px; font-size:10px; font-weight:700; color:#9AA3B4; letter-spacing:.08em;}
+.main{flex:1; min-width:0; padding:40px 40px 120px;}
+
+/* ===== 見出し ===== */
+.hero{border-bottom:1px solid var(--line); padding-bottom:26px; margin-bottom:34px;}
+.hero h1{font-size:30px; line-height:1.4;}
+.hero p{color:var(--slate); font-size:14px; margin:10px 0 0;}
+h2{font-size:22px; margin:52px 0 14px; padding-top:14px;}
+h2:first-of-type{margin-top:8px;}
+h3{font-size:16px; margin:30px 0 10px;}
+h4{font-size:14px; margin:20px 0 6px; color:var(--ink-2);}
+.sec{border-top:3px solid var(--ink); margin-top:64px; padding-top:8px;}
+.sec:first-child{margin-top:0;}
+.sec .kicker{font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.1em;}
+
+/* ===== 部品 ===== */
+.note{background:var(--mist); border-radius:10px; padding:16px 18px; margin:16px 0; font-size:14px;}
+.warn{background:#FDF3F2; border:1px solid #F3D3D0; border-radius:10px; padding:16px 18px;
+  margin:16px 0; font-size:14px;}
+.warn b{color:var(--red);}
+.tip{background:var(--gold-soft); border:1px solid #EFDCB4; border-radius:10px; padding:16px 18px;
+  margin:16px 0; font-size:14px;}
+.steps{counter-reset:s; margin:16px 0; padding:0; list-style:none;}
+.steps li{counter-increment:s; position:relative; padding:0 0 14px 40px; font-size:14px;}
+.steps li::before{content:counter(s); position:absolute; left:0; top:2px; width:24px; height:24px;
+  border-radius:50%; background:var(--ink); color:#fff; font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;}
+table{width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px;}
+th,td{border-bottom:1px solid var(--line); padding:10px 12px; text-align:left; vertical-align:top;}
+th{background:var(--mist); font-weight:700; font-size:12.5px; white-space:nowrap;}
+td code, p code, li code{background:var(--mist); padding:2px 6px; border-radius:4px;
+  font-size:12.5px; font-family:ui-monospace,Menlo,Consolas,monospace;}
+pre{background:var(--ink); color:#E8EDF5; border-radius:10px; padding:16px 18px; overflow-x:auto;
+  font-size:12.5px; line-height:1.8; font-family:ui-monospace,Menlo,Consolas,monospace;}
+.plan{display:inline-block; font-size:10px; font-weight:700; padding:2px 8px; border-radius:99px;
+  vertical-align:middle; margin-left:6px; letter-spacing:.03em;}
+.p-lite{background:#EEF2F7; color:#5B6478;}
+.p-next{background:#E6F4EF; color:#0E7A56;}
+.p-kiwami{background:var(--gold-soft); color:#8A6510;}
+.cols{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; margin:18px 0;}
+.card{border:1px solid var(--line); border-radius:12px; padding:16px 18px;}
+.card b{display:block; font-size:14px; margin-bottom:4px;}
+.card span{font-size:13px; color:var(--slate);}
+.q{font-weight:700; margin:22px 0 4px; font-size:14.5px;}
+.q::before{content:"Q. "; color:var(--gold);}
+.a{font-size:14px; color:var(--ink-2); margin:0 0 4px;}
+hr{border:0; border-top:1px solid var(--line); margin:38px 0;}
+.top{display:inline-block; font-size:12px; color:var(--slate); text-decoration:none; margin-top:8px;}
+.foot{border-top:1px solid var(--line); margin-top:70px; padding-top:24px; font-size:12px; color:var(--slate);}
+
+/* ===== スマホ用の目次 ===== */
+.toc{display:none; border:1px solid var(--line); border-radius:12px; margin:0 0 28px;}
+.toc summary{cursor:pointer; padding:13px 16px; font-weight:700; font-size:14px; list-style:none;}
+.toc summary::-webkit-details-marker{display:none;}
+.toc summary::after{content:"＋"; float:right; color:var(--gold);}
+.toc[open] summary::after{content:"−";}
+.toc .in{padding:0 16px 14px;}
+.toc .g{font-size:10px; font-weight:700; color:#9AA3B4; letter-spacing:.08em; margin:12px 0 4px;}
+.toc a{display:block; font-size:13.5px; padding:5px 0; text-decoration:none; color:var(--ink-2);
+  border-bottom:1px solid var(--mist);}
+
+@media (max-width:900px){
+  .side{display:none;}
+  .toc{display:block;}
+  .main{padding:26px 20px 90px;}
+  .hero h1{font-size:23px;}
+  h2{font-size:19px;}
+  table{font-size:12.5px;}
+  th,td{padding:8px 8px;}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="side">
+  <div class="brand">
+    <b>SearchHub NEXT</b>
+    <span>使い方ガイド</span>
+  </div>
+  <nav>
+    <div class="grp">はじめに</div>
+    <a href="#plan">プランでできること</a>
+    <a href="#setup">最初の設定</a>
+    <a href="#map">画面の地図</a>
+
+    <div class="grp">調べる</div>
+    <a href="#amazon">Amazonリサーチ</a>
+    <a href="#history">販売履歴リサーチ</a>
+
+    <div class="grp">Manager（管理）</div>
+    <a href="#ledger">販売管理</a>
+    <a href="#price">価格改定</a>
+    <a href="#monthly">月別仕入・月別販売</a>
+    <a href="#bulk">一括商品登録</a>
+    <a href="#expense">経費一覧</a>
+    <a href="#info">情報設定</a>
+
+    <div class="grp">Researcher（開拓）</div>
+    <a href="#reslist">リサーチリスト</a>
+    <a href="#purchase">仕入れリスト</a>
+    <a href="#seller">セラー一時保管所・セラーリスト</a>
+    <a href="#ressetting">リサーチャー設定</a>
+
+    <div class="grp">巡回</div>
+    <a href="#watcher">ウォッチャー</a>
+    <a href="#sniper">スナイパー</a>
+    <a href="#progress">巡回進捗パネル</a>
+    <a href="#pc">巡回パソコンの設定</a>
+
+    <div class="grp">自動運転</div>
+    <a href="#schedule">実行予約</a>
+    <a href="#joblog">実行ログ</a>
+    <a href="#token">Keepaトークンの節約</a>
+
+    <div class="grp">こまったとき</div>
+    <a href="#daily">一日の流れの例</a>
+    <a href="#faq">よくあるつまづき</a>
+    <a href="#contact">お問い合わせ</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+<div class="hero">
+  <h1>SearchHub NEXT 使い方ガイド</h1>
+  <p>はじめて開いた日から、毎日回るようになるまで。上から順に読める形にしています。</p>
+</div>
+
+<details class="toc">
+  <summary>目次</summary>
+  <div class="in">
+    <div class="g">はじめに</div>
+    <a href="#plan">プランでできること</a>
+    <a href="#setup">最初の設定</a>
+    <a href="#map">画面の地図</a>
+    <div class="g">調べる</div>
+    <a href="#amazon">Amazonリサーチ</a>
+    <a href="#history">販売履歴リサーチ</a>
+    <div class="g">Manager（管理）</div>
+    <a href="#ledger">販売管理</a>
+    <a href="#price">価格改定</a>
+    <a href="#monthly">月別仕入・月別販売</a>
+    <a href="#bulk">一括商品登録</a>
+    <a href="#expense">経費一覧</a>
+    <a href="#info">情報設定</a>
+    <div class="g">Researcher（開拓）</div>
+    <a href="#reslist">リサーチリスト</a>
+    <a href="#purchase">仕入れリスト</a>
+    <a href="#seller">セラー一時保管所・セラーリスト</a>
+    <a href="#ressetting">リサーチャー設定</a>
+    <div class="g">巡回</div>
+    <a href="#watcher">ウォッチャー</a>
+    <a href="#sniper">スナイパー</a>
+    <a href="#progress">巡回進捗パネル</a>
+    <a href="#pc">巡回パソコンの設定</a>
+    <div class="g">自動運転</div>
+    <a href="#schedule">実行予約</a>
+    <a href="#joblog">実行ログ</a>
+    <a href="#token">Keepaトークンの節約</a>
+    <div class="g">こまったとき</div>
+    <a href="#daily">一日の流れの例</a>
+    <a href="#faq">よくあるつまづき</a>
+    <a href="#contact">お問い合わせ</a>
+  </div>
+</details>
+
+<!-- ============ プラン ============ -->
+<section class="sec" id="plan">
+  <div class="kicker">はじめに</div>
+  <h2>プランでできること</h2>
+
+  <p>ご契約のプランによって、使える機能がちがいます。まず自分がどれかを確かめてください。上位機能のボタンは全プランに出ていますが、押すと案内が出ます。</p>
+
+  <table>
+    <tr><th>できること</th><th>ライト</th><th>NEXT</th><th>極</th></tr>
+    <tr><td>Amazonリサーチ（一発解析）</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>販売履歴リサーチ</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>販売管理・月別・経費</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>価格改定</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>一括商品登録</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>低トークンモード</td><td>○</td><td>○</td><td>○</td></tr>
+    <tr><td>仕入れリスト</td><td>—</td><td>○</td><td>○</td></tr>
+    <tr><td>ウォッチャー巡回（10サイト）</td><td>—</td><td>○</td><td>○</td></tr>
+    <tr><td>自動リサーチ（セラー巡回）</td><td>—</td><td>○</td><td>○</td></tr>
+    <tr><td>スナイパー巡回（3サイト）</td><td>—</td><td>—</td><td>○</td></tr>
+  </table>
+
+  <div class="note">
+    <b>使えない機能のボタンを押したとき</b><br>
+    画面の下に「この機能は◯◯プランでご利用いただけます」という案内が出ます。エラーではありません。プランを上げれば、そのまま使えるようになります。データは何も消えません。
+  </div>
+
+  <div class="warn">
+    <b>Keepaの有料プランが前提です。</b>
+    Amazonリサーチと価格改定にKeepaを使います。ライトは月29€〜、NEXT・極は巡回と自動リサーチで大量にトークンを使うため<b>月49€プランが前提</b>です。ここが無いと、ほとんどの機能が動きません。
+  </div>
+</section>
+
+<!-- ============ 最初の設定 ============ -->
+<section class="sec" id="setup">
+  <div class="kicker">はじめに</div>
+  <h2>最初の設定</h2>
+
+  <p>ここだけは順番どおりにお願いします。10分ほどです。</p>
+
+  <h3>1　アプリを開く</h3>
+  <p>契約完了メールに入っているURLを開きます。ソフトのインストールはありません。ブラウザで開くだけです。</p>
+  <ul class="steps">
+    <li><b>PC版</b>… Chromeで開いて、ブックマークに入れておいてください。</li>
+    <li><b>スマホ版</b>… iPhoneはSafariで開いて、共有ボタン →「ホーム画面に追加」。アプリのように使えます。Androidは Chrome のメニュー →「ホーム画面に追加」です。</li>
+  </ul>
+
+  <h3>2　⚙️ アプリ基本設定に3つ入れる</h3>
+  <p>右上の歯車から「アプリ基本設定」を開いて、3つとも埋めてください。<b>3つそろわないと動きません。</b></p>
+  <table>
+    <tr><th>欄</th><th>入れるもの</th></tr>
+    <tr><td>ライセンスキー</td><td>契約完了メールに書いてあるキー。そのまま貼り付け。</td></tr>
+    <tr><td>Keepa APIキー</td><td>Keepaのサイト → Data → API から取得したキー。</td></tr>
+    <tr><td>AmazonセラーID</td><td>セラーセントラルの出品者ID。<code>A</code> から始まる英数字です。</td></tr>
+  </table>
+  <p>入れたら「設定を保存」。この画面には「プラン変更・解約・お支払い状況の確認はこちら」のリンクもあります。プランの変更や解約は、すべてここからです。</p>
+
+  <div class="tip">
+    ライセンスキーは<b>契約完了メールにしか載っていません。</b>メールは消さずに置いておいてください。パソコンとスマホの両方で使う場合は、それぞれに同じキーを入れます。台数の制限はありません。
+  </div>
+
+  <h3>3　⚙️ 情報設定を埋める</h3>
+  <p>ダッシュボード →「情報設定」。仕入先リストとコンディション別の商品説明が入っています。<b>はじめは代表的な10サイトと、商品説明の見本が入っています。</b>そのままでも使えますし、自分の言い回しに書き換えても構いません。<a href="#info">くわしくはこちら</a>。</p>
+
+  <h3>4　拡張機能を入れる<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h3>
+  <p>契約完了メールのリンクから、Chromeウェブストアで追加します。</p>
+  <ul class="steps">
+    <li><b>SearchHubNEXT</b>（ウォッチャー）… NEXT・極</li>
+    <li><b>SearchHub SniperNEXT</b>（スナイパー）… 極のみ</li>
+  </ul>
+  <p>追加したら、拡張機能の設定画面を開いて<b>同じライセンスキーを貼り付けてください。</b>ここを忘れると、巡回が1件も動きません。</p>
+
+  <h3>5　仕入れリストに商品を入れて、URL同期を押す<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h3>
+  <p>巡回は「仕入れリストに入っている商品」をさがしにいきます。まずは追いたい商品を何点か入れてください。<a href="#amazon">Amazonリサーチ</a>の「📋 仕入れリストへ追加」から入れられます。</p>
+  <div class="warn">
+    <b>入れたら「URL同期」を押してください。</b>検索URLが作られるのは毎晩2時なので、その時刻が来るまではURLが1本もありません。この状態で巡回しても<b>何も起きません。</b>初日に「動かへん」となるのは、ほとんどこれです。<a href="#progress">巡回進捗パネル</a>の「URL同期」を押せば、その場で作られます。
+  </div>
+
+  <h3>6　巡回パソコンの設定<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h3>
+  <p>毎日ほったらかしで回すための設定です。契約完了メールのリンクから設定一式をダウンロードして、中の手順書のとおりに進めてください。15分ほどです。<a href="#pc">概要はこちら</a>。</p>
+
+  <div class="note">ライトの方は、拡張機能も巡回パソコンの設定も必要ありません。ここまでで完了です。</div>
+</section>
+
+<!-- ============ 画面の地図 ============ -->
+<section class="sec" id="map">
+  <div class="kicker">はじめに</div>
+  <h2>画面の地図</h2>
+
+  <p>最初の画面（ダッシュボード）から、大きく5つに分かれます。</p>
+
+  <div class="cols">
+    <div class="card"><b>Amazon リサーチ</b><span>1商品を深掘りする。仕入れるかどうかをその場で決める画面。</span></div>
+    <div class="card"><b>SearchHub Manager</b><span>帳簿。販売管理・価格改定・月別・経費・一括登録・情報設定。</span></div>
+    <div class="card"><b>SearchHub Researcher</b><span>開拓。リサーチリスト・仕入れリスト・セラー関係・リサーチャー設定。</span></div>
+    <div class="card"><b>Watcher / Sniper</b><span>巡回の検索URLを登録する画面。ここに入れたURLを拡張機能が見に行きます。</span></div>
+    <div class="card"><b>巡回進捗パネル</b><span>今どこまで回ったか。動いているかを確かめる画面。</span></div>
+  </div>
+
+  <p>上のほうには、その日の数字が出ています。</p>
+  <table>
+    <tr><th>表示</th><th>意味</th></tr>
+    <tr><td>ダッシュボード / 仕入 / 販売</td><td>切り替えると、その月の集計が入れ替わります。</td></tr>
+    <tr><td>現在の売れ残り個数</td><td>今まだ売れていない在庫の数と、その仕入合計です。</td></tr>
+    <tr><td>期首在庫 / 期末在庫</td><td>その月のはじめと終わりの在庫金額。確定申告のときに使います。</td></tr>
+  </table>
+</section>
+
+<!-- ============ Amazonリサーチ ============ -->
+<section class="sec" id="amazon">
+  <div class="kicker">調べる</div>
+  <h2>Amazonリサーチ（一発解析）<span class="plan p-lite">全プラン</span></h2>
+
+  <p>いちばんよく使う画面です。<b>ASIN・JAN・キーワード・Amazonの商品URL</b>のどれを入れても解析できます。</p>
+
+  <ul class="steps">
+    <li>上の欄に入れて「解析」を押す。</li>
+    <li>Keepaから相場・出品者・ランクを取ってきて、まとめて表示します。</li>
+    <li>数字を見て仕入れるかどうかを決めます。</li>
+  </ul>
+
+  <h3>結果から次にできること</h3>
+  <table>
+    <tr><th>ボタン</th><th>すること</th></tr>
+    <tr><td>🧾 販売管理へ登録</td><td><b>もう仕入れた商品</b>を帳簿に記帳します。仕入値と仕入日を入れて登録。</td></tr>
+    <tr><td>📋 仕入れリストへ追加</td><td><b>これから追う商品</b>を登録します。ここに入れた商品が巡回の対象になります。<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></td></tr>
+    <tr><td>販売履歴リサーチ</td><td>その商品が過去いくらで売れてきたかを見にいきます。</td></tr>
+  </table>
+
+  <div class="tip">
+    <b>店頭で使うならスマホ版が便利です。</b>その場でJANを入れて解析して、仕入れたらそのまま「販売管理へ登録」。帰ってから入力し直す手間がなくなります。
+  </div>
+</section>
+
+<!-- ============ 販売履歴 ============ -->
+<section class="sec" id="history">
+  <div class="kicker">調べる</div>
+  <h2>販売履歴リサーチ<span class="plan p-lite">全プラン</span></h2>
+  <p>ASINを入れて「検索」を押すと、その商品が<b>過去にいくらで、どのくらいの間隔で売れてきたか</b>が出ます。</p>
+  <p>相場が下がり続けている商品なのか、たまたま今だけ安いのかを見分けるのに使います。一発解析の数字だけで迷ったときの、もうひと押しの画面です。</p>
+</section>
+
+<!-- ============ 販売管理 ============ -->
+<section class="sec" id="ledger">
+  <div class="kicker">Manager</div>
+  <h2>販売管理<span class="plan p-lite">全プラン</span></h2>
+
+  <p>仕入れた商品の帳簿です。この画面がすべての集計のもとになります。ここが埋まっていないと、月別も利益もダッシュボードも出ません。</p>
+
+  <h3>登録のしかたは3通り</h3>
+  <table>
+    <tr><th>やり方</th><th>向いている場面</th></tr>
+    <tr><td><b>Amazonリサーチから登録</b></td><td>1点ずつ。仕入れたその場で。いちばん確実です。</td></tr>
+    <tr><td><b>レポート取得</b></td><td>セラーセントラルから落としたレポートを枠にドロップすると、まとめて取り込みます。</td></tr>
+    <tr><td><b>フリマ登録</b></td><td>Amazonにカタログが無い商品を手入力します。商品名・写真・価格などを自分で入れます。</td></tr>
+  </table>
+
+  <h3>ボタンの意味</h3>
+  <table>
+    <tr><th>ボタン</th><th>すること</th></tr>
+    <tr><td>レポート取得</td><td>セラーセントラルのレポートを読み込みます。枠にファイルをドロップしてください。</td></tr>
+    <tr><td>フリマ登録</td><td>カタログの無い商品を手入力で登録します。</td></tr>
+    <tr><td>CSV出力</td><td>帳簿を書き出します。会計ソフトや税理士さんに渡すときに。</td></tr>
+    <tr><td>最新を取得</td><td>画面を最新の状態に読み直します。</td></tr>
+  </table>
+
+  <h3>商品ごとにできること</h3>
+  <p>行の中のボタンで、状態を変えられます。</p>
+  <table>
+    <tr><th>ボタン</th><th>すること</th></tr>
+    <tr><td>出品 / 取消</td><td>納品待ちの商品を「出品中」にします。押し間違えたら「取消」で戻せます。</td></tr>
+    <tr><td>再出品</td><td>返品などで戻ってきた商品を、もう一度出品中に戻します。</td></tr>
+    <tr><td>編集</td><td>仕入値・仕入日・仕入先・メモを直します。</td></tr>
+    <tr><td>削除</td><td>行ごと消します。<b>戻せません。</b></td></tr>
+  </table>
+
+  <div class="warn">
+    <b>仕入値と仕入日は、あとで直せますが放置しないでください。</b>ここが空のままだと、月別仕入情報にも利益にも出てきません。あとからまとめて直すのは、かなりしんどい作業になります。
+  </div>
+</section>
+
+<!-- ============ 価格改定 ============ -->
+<section class="sec" id="price">
+  <div class="kicker">Manager</div>
+  <h2>価格改定<span class="plan p-lite">全プラン</span></h2>
+
+  <p>出品中の商品を一覧にして、<b>ライバルの価格</b>と<b>今の値段で売れたときの手残り</b>を並べて見る画面です。</p>
+
+  <h3>見かた</h3>
+  <table>
+    <tr><th>列</th><th>意味</th></tr>
+    <tr><td>ライバル状況</td><td>同じ商品を出している人の価格とコンディション。押すと一覧が開きます。</td></tr>
+    <tr><td>現在価格 / 原価</td><td>今つけている値段と、仕入値です。</td></tr>
+    <tr><td>改定価格テスト</td><td>ここに新しい値段を打ち込むと、手残りがその場で計算し直されます。</td></tr>
+    <tr><td>手残り利益</td><td>手数料と送料を引いたあと、実際に残る金額です。</td></tr>
+  </table>
+
+  <h3>使う順番</h3>
+  <ul class="steps">
+    <li>「在庫更新」で最新の出品リストを取り込む。</li>
+    <li>ライバル状況を見ながら「改定価格テスト」に数字を入れて、手残りを確かめる。</li>
+    <li>納得したら、セラーセントラル側で値段を変えます。</li>
+  </ul>
+
+  <div class="note">
+    <b>この画面は値段を書き換えません。</b>あくまで「いくらにしたらいくら残るか」を確かめるための画面です。実際の変更はセラーセントラルで行ってください。
+  </div>
+
+  <h3>「この商品だけ詳細確認」ボタンが出ているとき</h3>
+  <p>低トークンモードがオンのとき、裏の処理はKeepaに問い合わせません。そのため、まだ値段を取っていない商品には紫の「この商品だけ詳細確認」ボタンが出ます。<b>気になる商品だけ押してください。</b>その1件だけKeepaに聞きにいきます。<a href="#token">くわしくはこちら</a>。</p>
+</section>
+
+<!-- ============ 月別 ============ -->
+<section class="sec" id="monthly">
+  <div class="kicker">Manager</div>
+  <h2>月別仕入情報 / 月別販売情報<span class="plan p-lite">全プラン</span></h2>
+
+  <p>販売管理に入れたデータを、月ごとにまとめた画面です。入力する場所ではなく、<b>見るだけの画面</b>です。</p>
+
+  <table>
+    <tr><th>画面</th><th>出るもの</th></tr>
+    <tr><td>月別仕入情報</td><td>その月に何をいくらで仕入れたか。仕入先ごとの金額も出ます。</td></tr>
+    <tr><td>月別販売情報</td><td>その月に何が売れたか。売上・手数料・手残りの合計。</td></tr>
+  </table>
+
+  <p>数字が合わないときは、この画面ではなく<b>販売管理の入力</b>を見直してください。ここはそれを集計しているだけです。</p>
+</section>
+
+<!-- ============ 一括商品登録 ============ -->
+<section class="sec" id="bulk">
+  <div class="kicker">Manager</div>
+  <h2>一括商品登録<span class="plan p-lite">全プラン</span></h2>
+
+  <p>Amazonの一括アップロードファイルに貼り付ける値を、<b>列ごとにコピーできる形</b>で作る画面です。1点ずつ出品画面を開かなくて済みます。</p>
+
+  <ul class="steps">
+    <li>「データを取得」を押すと、納品待ちの商品が並びます。</li>
+    <li>商品の状態と、提供条件に関する注記（商品説明）を確かめます。注記はセルを押すと編集できます。</li>
+    <li>列ごとのコピーボタンを押して、Amazonのファイルの該当する列に貼り付けます。</li>
+    <li>アップロードが終わったら「✅ 登録完了（出品中へ変更）」を押します。販売管理の状態が「出品中」に変わります。</li>
+  </ul>
+
+  <table>
+    <tr><th>列</th><th>Amazonファイルでの位置（目安）</th></tr>
+    <tr><td>ASIN</td><td>—</td></tr>
+    <tr><td>出品者SKU</td><td>E列付近</td></tr>
+    <tr><td>商品の状態</td><td>M列付近</td></tr>
+    <tr><td>提供条件に関する注記</td><td>N列付近</td></tr>
+    <tr><td>フルフィルメントチャネルコード</td><td>AL列付近</td></tr>
+    <tr><td>商品の販売価格</td><td>AQ列付近</td></tr>
+  </table>
+
+  <div class="note">
+    列の位置はAmazon側のファイルの版によってずれることがあります。<b>貼り付ける前に、見出しの名前が合っているか必ず確かめてください。</b>危険物の入力については「危険物入力フローガイド」のボタンから確認できます。
+  </div>
+
+  <p>ここに出る商品説明は、<a href="#info">情報設定</a>で登録したコンディション別のテンプレートです。先に情報設定を埋めておくと、この画面がそのまま使えます。</p>
+</section>
+
+<!-- ============ 経費 ============ -->
+<section class="sec" id="expense">
+  <div class="kicker">Manager</div>
+  <h2>経費一覧<span class="plan p-lite">全プラン</span></h2>
+
+  <p>仕入れ以外に出ていったお金を記録します。確定申告のときに効いてきます。</p>
+
+  <ul class="steps">
+    <li>「経費を新規入力」を押す。</li>
+    <li>発生月・日付・種類・金額・メモを入れる。</li>
+    <li>「🚀 経費を登録」で保存。</li>
+  </ul>
+
+  <p>種類は<b>📦 梱包資材</b>／<b>💻 ツール代</b>／<b>✍️ その他（手入力）</b>から選びます。その他を選ぶと自由に名前をつけられます。ガソリン代・駐車場代・通信費などはここに入れてください。</p>
+
+  <div class="tip">
+    <b>月に一度、まとめて入れるのがおすすめです。</b>レシートを撮っておいて、月末に一気に打ち込むと続きます。毎日入れようとすると、たいてい途中で止まります。
+  </div>
+</section>
+
+<!-- ============ 情報設定 ============ -->
+<section class="sec" id="info">
+  <div class="kicker">Manager</div>
+  <h2>情報設定<span class="plan p-lite">全プラン</span></h2>
+
+  <p>アプリ全体で使う「決まり文句」をここにまとめます。<b>最初にここを埋めておくと、あとの入力がぐっと楽になります。</b></p>
+
+  <h3>仕入れ先リスト</h3>
+  <p>販売管理で仕入先を選ぶときの候補になります。はじめは代表的な10サイト（メルカリ／ヤフーフリマ／ヤフオク／オフモール／セカストオンライン／ラクマ／駿河屋／ヤフショ／au PAY／トレファク）が入っています。</p>
+  <p>店舗仕入れをされる方は、<b>行き先の店名を1行ずつ足しておいてください。</b>「ハードオフ◯◯店」のように書いておくと、あとで月別仕入情報を見たときに、どの店が当たりだったかが分かります。</p>
+
+  <h3>コンディション別の商品説明</h3>
+  <p>「ほぼ新品」「非常に良い」「良い」「可」の4つに、それぞれ定型文を登録します。ここで登録した文章が、<a href="#bulk">一括商品登録</a>の「提供条件に関する注記」に自動で入ります。</p>
+  <p>はじめは見本の文章が入っています。そのままでも使えますが、<b>自分の言葉に書き換えたほうがクレームは減ります。</b>とくに「可」は、どこまで許容してもらうかをはっきり書いておいてください。</p>
+
+  <h3>🪙 低トークンモード</h3>
+  <p>Keepaのトークンを節約する設定です。<a href="#token">くわしくはこちら</a>。</p>
+
+  <h3>💳 カード支払い設定</h3>
+  <p>仕入れに使うカードを最大5枚まで登録できます。締め日を入れておくと、いつ払うことになるかの見通しが立てやすくなります。</p>
+
+  <p>全部入れたら、いちばん下の「この内容で保存」を押してください。<b>保存を押さないと反映されません。</b></p>
+</section>
+
+<!-- ============ リサーチリスト ============ -->
+<section class="sec" id="reslist">
+  <div class="kicker">Researcher</div>
+  <h2>リサーチリスト<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>自動リサーチが見つけてきた<b>利益が出そうな商品の候補</b>が並ぶ画面です。ここから「追う商品」を選びます。毎日いちばん最初に開く画面になると思います。</p>
+
+  <h3>使う順番</h3>
+  <ul class="steps">
+    <li>並んだ候補を上から見ていきます。</li>
+    <li>いらない商品にチェックを入れて「チェック削除」。</li>
+    <li>残った商品を「🚀 残った商品を『仕入れsheet』へ登録！」で仕入れリストへ送ります。</li>
+  </ul>
+
+  <div class="tip">
+    <b>チェック削除した商品は、10日間は自動リサーチに出てきません。</b>同じ商品が毎日出てきて、そのたびに消す、という無駄がなくなります。10日たつと、相場が変わっているかもしれないのでまた出てきます。
+  </div>
+
+  <h3>ボタンの意味</h3>
+  <table>
+    <tr><th>ボタン</th><th>すること</th></tr>
+    <tr><td>続きを実行</td><td>途中で止まっているリサーチを、その続きから進めます。</td></tr>
+    <tr><td>ASIN20件コピー</td><td>並んでいるASINを20件ずつコピーします。他のツールに貼るときに。</td></tr>
+    <tr><td>セラセン確認</td><td>選んだ商品をセラーセントラルで確認しにいきます。出品制限がかかっていないかを見るときに。</td></tr>
+    <tr><td>チェック削除</td><td>チェックを入れた商品を消します。10日間は再表示されません。</td></tr>
+    <tr><td>🚀 仕入れsheetへ登録</td><td>残った商品を仕入れリストへ送ります。</td></tr>
+    <tr><td>KeepaCSVをドロップ</td><td>Keepaから落としたCSVを直接読み込ませることもできます。</td></tr>
+  </table>
+</section>
+
+<!-- ============ 仕入れリスト ============ -->
+<section class="sec" id="purchase">
+  <div class="kicker">Researcher</div>
+  <h2>仕入れリスト<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p><b>これから追う商品</b>の一覧です。ここに入っている商品を、巡回が毎日さがしにいきます。</p>
+
+  <h3>検索キーワードが一番大事です</h3>
+  <p>行の「編集」を押すと、<b>「検索キーワード(手動調整OK)」</b>という欄があります。<b>巡回はこの言葉でフリマを検索します。</b></p>
+
+  <div class="warn">
+    <b>自分で登録した商品は、型番だけになっていることがあります。</b>たとえば <code>HD-LX4.0U3D</code> だけだと、まったく別のゴミ商品まで拾ってきます。<b>「バッファロー HD-LX4.0U3D」</b>のようにメーカー名を足してください。ここを直すだけで、拾ってくる商品の質がはっきり変わります。
+  </div>
+
+  <p>逆に、言葉を足しすぎると1件も引っかからなくなります。<b>メーカー名＋型番</b>くらいがちょうどいいです。色や容量まで入れると、出品者が書いていない場合に外れます。</p>
+
+  <h3>その他の操作</h3>
+  <table>
+    <tr><th>ボタン</th><th>すること</th></tr>
+    <tr><td>データを取得</td><td>一覧を最新にします。</td></tr>
+    <tr><td>編集</td><td>検索キーワード・仕入日・仕入値・メモなどを直します。</td></tr>
+    <tr><td>削除</td><td>追うのをやめます。巡回の対象から外れます。</td></tr>
+  </table>
+
+  <p>一覧には平均売価・中古最安・ランクも出ています。<b>精査日</b>が古い商品は相場が変わっている可能性があるので、たまに見直してください。</p>
+</section>
+
+<!-- ============ セラー ============ -->
+<section class="sec" id="seller">
+  <div class="kicker">Researcher</div>
+  <h2>セラー一時保管所 / セラーリスト / セラーグループ進捗<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>自動リサーチの心臓部です。<b>いい商品を扱っているセラーを見つけて、そのセラーの品揃えを丸ごと調べにいく</b>という考え方で動いています。</p>
+
+  <table>
+    <tr><th>画面</th><th>役割</th></tr>
+    <tr><td><b>セラー一時保管所</b></td><td>システムが見つけてきたセラーの候補が入ります。ここで<b>承認</b>か<b>見送り</b>を選びます。</td></tr>
+    <tr><td><b>セラーリスト</b></td><td>承認したセラーの一覧。ここに入ったセラーの品揃えを、順番に調べていきます。</td></tr>
+    <tr><td><b>セラーグループ進捗</b></td><td>今どのグループまで調べ終わったか。何人中何人まで進んだかが分かります。</td></tr>
+  </table>
+
+  <h3>承認するときの目安</h3>
+  <p>一時保管所には、良いセラーも普通のセラーも混ざって入ってきます。<b>全部承認しないでください。</b>数が増えるほど1周にかかる時間が延びて、肝心のセラーを調べる回数が減ります。</p>
+  <p>自分が扱いたいジャンルを中心に扱っているセラーだけを承認して、あとは見送りにするのがコツです。見送っても、また出てくることがあります。</p>
+</section>
+
+<!-- ============ リサーチャー設定 ============ -->
+<section class="sec" id="ressetting">
+  <div class="kicker">Researcher</div>
+  <h2>リサーチャー設定<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>自動リサーチの「合格ライン」を決める画面です。4つのタブに分かれています。<b>ここの数字で、拾ってくる商品の量と質が決まります。</b></p>
+
+  <h3>⚙️ 各種設定</h3>
+  <table>
+    <tr><th>項目</th><th>意味</th></tr>
+    <tr><td>💰 目標利益率 (%)</td><td>この利益率に届かない商品は候補に出しません。高くすると数が減り、低くすると増えます。</td></tr>
+    <tr><td>💴 仕入値基準設定</td><td>巡回の検索URLに使う「いくらまでなら買うか」の計算のしかたです。<b>【A】90日平均から出す</b>と<b>【B】最安値から出す</b>のどちらか。Aのほうが強気、Bのほうが堅めになります。</td></tr>
+    <tr><td>🚫 除外ワード</td><td>検索URLの末尾に付けて、いらない商品をはじきます。「ジャンク」「部品取り」などを入れておくと効きます。</td></tr>
+    <tr><td>🚫 除外ブランド</td><td>扱わないブランドを改行区切りで。出品制限がかかっているブランドを入れておくと無駄が減ります。</td></tr>
+    <tr><td>🔁 連続実行URL数</td><td>一度に何件のURLを続けて回すか。増やすと速いですが、パソコンとサイト側の負担も上がります。</td></tr>
+    <tr><td>✅ ヤフオク合格ライン</td><td>ヤフオクで何件以上ヒットしたら合格とみなすか。</td></tr>
+    <tr><td>📉 下落商品削除 (%)</td><td>90日平均に対して直近30日平均がこの割合以上下がっている商品を、対象から外します。<b>0にすると働きません。</b></td></tr>
+    <tr><td>👥 飽和商品削除（出品者数）</td><td>中古の出品者がこの人数以上の商品を外します。<b>0にすると働きません。</b></td></tr>
+    <tr><td>🎯 ターゲットカテゴリー</td><td>チェックしたカテゴリーだけを抽出します。</td></tr>
+  </table>
+
+  <div class="tip">
+    <b>最初は既定のままで1週間ほど回してみてください。</b>候補が多すぎて見きれないなら目標利益率を上げる、少なすぎるなら下げる。この2つだけで、たいてい調整できます。全部いっぺんに変えると、何が効いたのか分からなくなります。
+  </div>
+
+  <h3>🔢 バッチ設定 / 🏆 ランク選別 / 👤 セラー抽出</h3>
+  <p>一度に処理する件数、Amazonランクでの足切り、セラーを拾ってくるときの条件です。ここも最初は既定のままで構いません。<b>Keepaのトークンが足りなくなってきたら、バッチ設定の件数を減らすのが一番効きます。</b></p>
+
+  <p>変えたら、いちばん下の「この内容で保存」を押してください。</p>
+</section>
+
+<!-- ============ ウォッチャー ============ -->
+<section class="sec" id="watcher">
+  <div class="kicker">巡回</div>
+  <h2>ウォッチャー<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>10サイトを広く見張って、<b>条件に合う出品が出たら記録する</b>のがウォッチャーです。買うのは自分です。</p>
+
+  <p>対象は メルカリ／ヤフーフリマ／ヤフオク／オフモール／セカストオンライン／ラクマ／駿河屋／ヤフショ／au PAY／トレファク の10サイトです。</p>
+
+  <h3>やること</h3>
+  <ul class="steps">
+    <li>画面の上でサイトを選びます。</li>
+    <li>そのサイトの検索URLが並んでいます。仕入れリストに商品を入れると、ここに自動で作られます。</li>
+    <li>拡張機能を入れたパソコンでNEXTのページを開いておけば、あとは自動で回ります。</li>
+  </ul>
+
+  <div class="note">
+    <b>検索URLは自動で作られます。</b>もとになるのは、仕入れリストの「検索キーワード」と、リサーチャー設定の仕入値基準・除外ワードです。拾ってくる商品がおかしいときは、URLをいじるより先に<a href="#purchase">検索キーワード</a>を見直してください。
+  </div>
+
+  <div class="warn">
+    <b>はじめて使うときは「URL同期」を押してください。</b><br>
+    検索URLが作られるのは<b>毎晩2時</b>です。仕入れリストに商品を入れても、その時刻が来るまではURLが1本もありません。この状態で巡回しても、<b>回るものが無いので何も起きません。</b>「初日は動かんかった」となるのは、ほとんどこれです。<br>
+    <a href="#progress">巡回進捗パネル</a>の「URL同期」を押すと、その場で作られます。押したあとにウォッチャーの画面を開いて、URLが並んでいれば準備完了です。
+  </div>
+
+  <p>回さないサイトは、拡張機能の設定でチェックを外せます。<b>使わないサイトを外すと、1周が速くなります。</b></p>
+</section>
+
+<!-- ============ スナイパー ============ -->
+<section class="sec" id="sniper">
+  <div class="kicker">巡回</div>
+  <h2>スナイパー<span class="plan p-kiwami">極</span></h2>
+
+  <p>メルカリ・ヤフーフリマ・オフモールの3サイトを<b>短い間隔で見張って、条件に合う出品が出たら即座に知らせる</b>のがスナイパーです。ウォッチャーより狭く、そのぶん速いです。</p>
+
+  <p>安く出た中古は、出品から数分で消えます。ウォッチャーの1周を待っていると間に合わないので、その3サイトだけを集中して見にいきます。</p>
+
+  <h3>オプションで調整できること</h3>
+  <p>スナイパー拡張の設定画面（オプション）で、動きを細かく変えられます。</p>
+  <table>
+    <tr><th>項目</th><th>意味</th></tr>
+    <tr><td>⏳ 判定開始までの待ち時間（秒）</td><td>ページを開いてから中身を見るまでの待ち時間。<b>短すぎると、まだ表示が終わっていないので「なし」と誤判定します。</b></td></tr>
+    <tr><td>リトライ回数</td><td>中身が読めなかったときに、何回やり直すか。</td></tr>
+    <tr><td>強制タイムアウト（秒）</td><td>ここまで待って駄目なら、あきらめて次に行きます。</td></tr>
+  </table>
+
+  <div class="warn">
+    <b>「待ち時間 ＋ リトライ回数 × 2秒」が強制タイムアウトより短くなるようにしてください。</b>ここが逆転していると、リトライの途中で打ち切られて、いつまでも拾えません。
+  </div>
+
+  <p>商品が出ているのに「なし」ばかりになるときは、まず<b>待ち時間を1〜2秒増やして</b>ください。ほとんどの場合これで直ります。</p>
+</section>
+
+<!-- ============ 巡回進捗 ============ -->
+<section class="sec" id="progress">
+  <div class="kicker">巡回</div>
+  <h2>巡回進捗パネル<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p><b>ちゃんと動いているか</b>を確かめる画面です。朝いちばんにここを見る癖をつけておくと、止まっていてもすぐ気づけます。</p>
+
+  <table>
+    <tr><th>表示</th><th>見かた</th></tr>
+    <tr><td>ウォッチャー / スナイパー</td><td>切り替えて、それぞれの進み具合を見ます。</td></tr>
+    <tr><td>📊 サイト別進捗</td><td>直近6時間の巡回サイクルで、どのサイトがどこまで進んだか。</td></tr>
+    <tr><td>📋 直近の活動ログ</td><td>いつ・どのサイトを・何件見たか。ここが止まっていたら、巡回が動いていません。</td></tr>
+    <tr><td>URL同期</td><td>仕入れリストの内容を、巡回用のURLに作り直します。</td></tr>
+  </table>
+
+  <div class="tip">
+    <b>「URL同期」を押すのは、こういうときです。</b>
+    <ul style="margin:8px 0 0; padding-left:20px;">
+      <li><b>はじめて使うとき。</b>まだURLが1本も無いので、押さないと巡回するものがありません。</li>
+      <li>仕入れリストにたくさん追加したのに、巡回に出てこないとき。</li>
+      <li>リサーチャー設定の仕入値基準を変えたとき、除外ワードを足したとき。</li>
+    </ul>
+    <p style="margin:10px 0 0;">ふだんは<b>毎晩2時</b>に自動で走るので、押さなくて構いません。すぐ反映させたいときだけ押してください。</p>
+  </div>
+</section>
+
+<!-- ============ 巡回PC ============ -->
+<section class="sec" id="pc">
+  <div class="kicker">巡回</div>
+  <h2>巡回パソコンの設定<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>拡張機能は、<b>NEXTのページがChromeで開いていること</b>を目印に動きます。逆に言えば、パソコンが寝ていたりページが閉じていたら、その間はまったく巡回しません。</p>
+
+  <p>そこで、朝パソコンが自分で起きて、勝手にページを開くようにします。契約完了メールのリンクから設定一式をダウンロードして、中の手順書のとおりに進めてください。15分ほどで終わります。</p>
+
+  <h3>設定一式に入っているもの</h3>
+  <table>
+    <tr><th>セット</th><th>向いている使い方</th></tr>
+    <tr><td><b>A 通し運転</b></td><td>1台で全部やる方、または巡回専用機でウォッチャーとスナイパーを両方回す方。一日中動くので取りこぼしが少ないです。</td></tr>
+    <tr><td><b>B 朝と夕方</b></td><td>2台に分けていて、その機械ではウォッチャーだけを回す方。朝と夕方だけ動いて、昼間は寝ています。</td></tr>
+  </table>
+
+  <div class="warn">
+    <b>AとBを混ぜて入れないでください。</b>同じ名前のタスクが上書きされて、起きる時刻と寝る時刻がちぐはぐになります。どちらか一方だけを取り込んでください。
+  </div>
+
+  <h3>いちばん多いつまづき</h3>
+  <p>「朝パソコンが起きていない」の原因は、ほぼ<b>電源設定の『スリープ解除タイマーの許可』が無効になっている</b>ことです。手順書の該当箇所を見直してください。</p>
+  <p>「起きてはいるがChromeが開いていない」は、ロック画面で止まっています。スリープ復帰時にパスワードを求めない設定にしてください。</p>
+</section>
+
+<!-- ============ 実行予約 ============ -->
+<section class="sec" id="schedule">
+  <div class="kicker">自動運転</div>
+  <h2>実行予約<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>ダッシュボードの「実行予約」から開きます。<b>毎日決まった時刻に、決まった作業を自動で走らせる設定です。</b>ここを埋めると、ほったらかしになります。</p>
+
+  <table>
+    <tr><th>作業</th><th>初期の時刻</th><th>すること</th></tr>
+    <tr><td>🔍 自動リサーチ開始</td><td>0時</td><td>Keepaから情報を取って、ヤフオクを回ります。<b>最初からオン</b>になっています。</td></tr>
+    <tr><td>📦 セラーリスト挿入</td><td>18時</td><td>承認したセラーを、調べる列に並べます。</td></tr>
+    <tr><td>🗑️ 期限切れチェック</td><td>23時</td><td>古くなった候補を整理します。</td></tr>
+    <tr><td>🔄 在庫データ更新</td><td>22時</td><td>出品中の在庫を最新にします。</td></tr>
+    <tr><td>🚀 自動巡回（1回目）</td><td>6時</td><td>ウォッチャーの巡回を始めます。</td></tr>
+    <tr><td>🚀 自動巡回（2回目）</td><td>17時</td><td>2周目です。1日2回まわしたい方向け。</td></tr>
+    <tr><td>💰 価格改定を自動実行</td><td>0時</td><td>価格改定のリストを自動で作り直します。</td></tr>
+  </table>
+
+  <div class="warn">
+    <b>巡回パソコンが起きている時間に合わせてください。</b>ここで6時と17時に予約しても、その時刻にパソコンが寝ていたら何も起きません。巡回パソコンの設定Bセット（5:59起床・16:59起床）は、この2つに合わせた時刻になっています。
+  </div>
+
+  <p>使わない作業はオフのままで構いません。オンにするほどKeepaのトークンを使います。設定したら「保存する」を押してください。</p>
+</section>
+
+<!-- ============ 実行ログ ============ -->
+<section class="sec" id="joblog">
+  <div class="kicker">自動運転</div>
+  <h2>実行ログ<span class="plan p-next">NEXT</span><span class="plan p-kiwami">極</span></h2>
+
+  <p>直近100件の実行記録です。<b>予約した作業がちゃんと走ったか</b>を確かめる画面です。</p>
+  <p>「昨日の夜、リサーチが動いたはずなのに候補が増えていない」というときは、まずここを見てください。走った形跡が無ければ予約の設定、走ったのに0件ならリサーチャー設定の条件が厳しすぎる、という切り分けができます。</p>
+</section>
+
+<!-- ============ トークン ============ -->
+<section class="sec" id="token">
+  <div class="kicker">自動運転</div>
+  <h2>Keepaトークンの節約<span class="plan p-lite">全プラン</span></h2>
+
+  <p>Keepaには「トークン」という持ち点があって、問い合わせるたびに減ります。<b>毎分すこしずつ回復しますが、一度にたくさん調べると底をつきます。</b>そうなると回復を待つあいだ調べられません。そのための逃げ道を用意しています。</p>
+
+  <h3>🪙 低トークンモード</h3>
+  <p>情報設定の中にあるチェックです。オンにすると、<b>価格改定の裏の処理がKeepaに一切問い合わせなくなります。</b>出品中の一覧だけを作って、値段とライバル情報は取りにいきません。</p>
+  <p>そのかわり、値段を知りたい商品は価格改定の画面で<b>紫の「この商品だけ詳細確認」ボタン</b>を押してください。押した1件だけを取りにいきます。</p>
+
+  <table>
+    <tr><th>プラン</th><th>はじめの状態</th></tr>
+    <tr><td>ライト</td><td><b>オン</b>（Keepaの安いプランでも回るように）</td></tr>
+    <tr><td>NEXT / 極</td><td>オフ（49€プランが前提なので、ふつうに取りにいきます）</td></tr>
+  </table>
+
+  <p>NEXT・極の方でも、<b>トークンが底をついたときに一時的にオンにする</b>という使い方ができます。いつでも切り替えられます。落ち着いたらオフに戻してください。</p>
+
+  <h3>ほかに効くところ</h3>
+  <ul class="steps">
+    <li>実行予約で、使っていない作業をオフにする。</li>
+    <li>リサーチャー設定の「🔢 バッチ設定」で、一度に処理する件数を減らす。</li>
+    <li>仕入れリストから、もう追わない商品を削除する。</li>
+  </ul>
+</section>
+
+<!-- ============ 一日の流れ ============ -->
+<section class="sec" id="daily">
+  <div class="kicker">こまったとき</div>
+  <h2>一日の流れの例</h2>
+
+  <p>慣れてきたら、だいたいこういう形に落ち着きます。</p>
+
+  <h3>朝（10分）</h3>
+  <ul class="steps">
+    <li><b>巡回進捗パネル</b>を開いて、昨日ちゃんと回ったかを見る。</li>
+    <li><b>リサーチリスト</b>を上から見て、いらない候補をチェック削除。</li>
+    <li>残ったものを仕入れリストへ登録。</li>
+  </ul>
+
+  <h3>日中</h3>
+  <ul class="steps">
+    <li>店頭や自宅で仕入れたら、<b>Amazonリサーチ</b>から「販売管理へ登録」。その場で入れてしまう。</li>
+    <li>ウォッチャーの記録を見て、良い出品があれば自分で買いにいく。</li>
+  </ul>
+
+  <h3>夜（15分）</h3>
+  <ul class="steps">
+    <li>納品する商品を<b>一括商品登録</b>でまとめて出品。</li>
+    <li>「✅ 登録完了（出品中へ変更）」を押して状態を更新。</li>
+    <li>気が向いたら<b>価格改定</b>で、売れ残っている商品の値段を見直す。</li>
+  </ul>
+
+  <h3>月末（30分）</h3>
+  <ul class="steps">
+    <li><b>経費一覧</b>にその月の経費をまとめて入力。</li>
+    <li><b>月別販売情報</b>で、その月いくら残ったかを確認。</li>
+    <li><b>月別仕入情報</b>で、どの仕入先が当たりだったかを確認。</li>
+  </ul>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" id="faq">
+  <div class="kicker">こまったとき</div>
+  <h2>よくあるつまづき</h2>
+
+  <div class="q">画面を開いても何も出てきません</div>
+  <p class="a">⚙️ アプリ基本設定の3つ（ライセンスキー・Keepa APIキー・AmazonセラーID）が全部入っているか確かめてください。1つでも空だと動きません。</p>
+
+  <div class="q">巡回がまったく動きません</div>
+  <p class="a">順に見てください。①ウォッチャーの画面に検索URLが並んでいるか（<b>1本も無ければ「URL同期」を押してください</b>。はじめて使う日はこれが原因です）②拡張機能にライセンスキーを入れたか ③Chromeで NEXTのページを開いているか ④拡張機能の設定で、そのサイトのチェックが入っているか ⑤パソコンが起きているか。</p>
+
+  <div class="q">商品が出ているのに「なし」と判定されます</div>
+  <p class="a">拡張機能の判定待ち時間が短すぎます。オプションで1〜2秒増やしてください。ページの表示が終わる前に見にいくと、何も無いように見えてしまいます。</p>
+
+  <div class="q">巡回が関係ない商品ばかり拾ってきます</div>
+  <p class="a">仕入れリストの「検索キーワード」が型番だけになっていませんか。メーカー名を足してください。<a href="#purchase">くわしくはこちら</a>。</p>
+
+  <div class="q">リサーチの候補が1件も出てきません</div>
+  <p class="a">リサーチャー設定の条件が厳しすぎる可能性があります。目標利益率を少し下げてみてください。あわせて実行ログを見て、そもそも作業が走っているかも確かめてください。</p>
+
+  <div class="q">候補が多すぎて見きれません</div>
+  <p class="a">目標利益率を上げるか、「👥 飽和商品削除」の人数を小さくしてください。承認しているセラーが多すぎる場合もあります。</p>
+
+  <div class="q">Keepaのトークンがすぐ無くなります</div>
+  <p class="a"><a href="#token">低トークンモード</a>を試してください。あわせて実行予約で使っていない作業をオフに、バッチ設定の件数を小さくしてください。</p>
+
+  <div class="q">ボタンを押したら「◯◯プランでご利用いただけます」と出ました</div>
+  <p class="a">そのプランでは使えない機能です。⚙️ アプリ基本設定の「プラン変更・解約・お支払い状況の確認はこちら」からプランを上げれば、そのまま使えるようになります。<b>データは何も消えません。</b></p>
+
+  <div class="q">パソコンとスマホの両方で使えますか</div>
+  <p class="a">使えます。同じライセンスキーを両方に入れてください。データは同じものを見ているので、外で入れた仕入れが家のパソコンにも出てきます。</p>
+
+  <div class="q">ライセンスキーを無くしました</div>
+  <p class="a">契約完了メールを探してください。見つからない場合はお問い合わせください。再発行の手続きをご案内します。</p>
+
+  <div class="q">プランを下げたらデータは消えますか</div>
+  <p class="a">消えません。販売管理・月別・経費のデータはそのまま残ります。上のプランに戻したときは、続きから使えます。</p>
+</section>
+
+<!-- ============ 問い合わせ ============ -->
+<section class="sec" id="contact">
+  <div class="kicker">こまったとき</div>
+  <h2>お問い合わせ</h2>
+  <p>このガイドで解決しないことがあれば、契約完了メールにそのまま返信してください。または <b>searchhubnext@gmail.com</b> までどうぞ。</p>
+  <p>お問い合わせのときは、<b>どの画面で</b>、<b>何を押したら</b>、<b>どうなったか</b>の3つを書いていただけると早く片付きます。画面の写真があるとなお助かります。</p>
+
+  <div class="foot">
+    SearchHub NEXT 使い方ガイド<br>
+    仕様は改良のため予告なく変わることがあります。
+  </div>
+</section>
+
+</main>
+</div>
+</body>
+</html>
