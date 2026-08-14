@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SearchHub NEXT｜せどりの「探す時間」を、寝ている間に。</title>
-<meta name="description" content="Amazonリサーチ・在庫売上管理・価格改定に加え、10サイトを自動巡回して仕入れ候補を見つけ続ける、せどり専用ツール。まずは登録不要の無料版から。有料は月額980円。">
+<title>SearchHub NEXT｜賢く稼ぐ電脳せどり</title>
+<meta name="description" content="賢く稼ぐ電脳せどり。店舗でも電脳でも使える、せどり専用のリサーチ・在庫管理ツール。棚の前の判断は1画面で、家にいる間は10サイトを自動巡回。まずは登録不要の無料版から。有料は月額980円。">
 <link rel="icon" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -57,6 +57,7 @@
   .hero{background:linear-gradient(160deg,#0F1729 0%,#1B2942 55%,#243A5E 100%); color:#fff; padding:80px 0 92px; position:relative; overflow:hidden;}
   .hero::after{content:""; position:absolute; right:-160px; top:-140px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,rgba(201,150,43,.22),transparent 65%);}
   .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; position:relative; z-index:2;}
+  .hero-tag{font-size:12.5px; font-weight:700; letter-spacing:.1em; color:#93A0B8; margin-bottom:14px;}
   .eyebrow{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; color:#F0D89B; border:1px solid rgba(201,150,43,.5); background:rgba(201,150,43,.12); padding:6px 14px; border-radius:999px; margin-bottom:24px;}
   .hero h1{font-size:42px; line-height:1.4; color:#fff; margin-bottom:24px;}
   .hero p.lead{font-size:16px; color:#C3CCDD; max-width:44ch; margin:0 0 34px;}
@@ -87,6 +88,7 @@
   .pillar .n{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:.1em; margin-bottom:14px;}
   .pillar h3{font-size:19px; margin-bottom:12px; line-height:1.5;}
   .pillar p{font-size:14px; color:var(--slate); margin:0;}
+  .pillar-note{margin-top:14px; font-size:11.5px; line-height:1.85; color:#8A93A6;}
 
   /* ===== sites ===== */
   .sites{background:var(--ink); color:#fff; padding:84px 0;}
@@ -113,6 +115,41 @@
   .shot{margin:0; text-align:center;}
   .shot figcaption{margin-top:16px; font-size:13px; font-weight:700; line-height:1.6;}
   .shot figcaption span{display:block; font-weight:400; font-size:12px; color:var(--slate); margin-top:2px;}
+
+  /* ===== loop ===== */
+  .loop-steps{max-width:760px; margin:0 auto;}
+  .lstep{display:grid; grid-template-columns:46px 1fr; gap:20px; padding:24px 0; border-bottom:1px solid var(--line);}
+  .lstep:last-of-type{border-bottom:none;}
+  .lnum{width:36px; height:36px; border-radius:50%; background:var(--gold-soft); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px;}
+  .lstep h3{font-size:16.5px; line-height:1.6; margin-bottom:9px;}
+  .lstep p{font-size:13.5px; line-height:2; color:var(--slate); margin:0;}
+  .lstep b{color:var(--ink);}
+  .lbadge{display:inline-block; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:99px; background:var(--gold-soft); color:var(--gold); margin-left:8px; vertical-align:2px; white-space:nowrap;}
+  .loop-end{max-width:760px; margin:30px auto 0; background:var(--ink); color:#fff; border-radius:16px; padding:26px 28px; text-align:center;}
+  .loop-end h3{font-size:19px; line-height:1.65; margin-bottom:10px;}
+  .loop-end p{font-size:13.5px; line-height:2; color:#B9C3D6; margin:0;}
+
+  /* ===== story ===== */
+  .story{background:var(--mist);}
+  .story-body{max-width:700px; margin:0 auto;}
+  .story-body p{font-size:15px; line-height:2.15; color:var(--ink-2); margin:0 0 24px;}
+  .story-body p:last-child{margin-bottom:0;}
+  .story-body b{color:var(--ink);}
+  .story-line{max-width:700px; margin:0 auto 24px; padding:18px 22px; background:#fff; border-left:4px solid var(--gold); border-radius:0 12px 12px 0; font-size:16px; font-weight:700; line-height:1.9;}
+  .brake{max-width:700px; margin:38px auto 0; background:#fff; border:1px solid var(--line); border-radius:16px; padding:30px 30px;}
+  .brake h3{font-size:17px; margin-bottom:16px;}
+  .brake p{font-size:14px; line-height:2.05; color:var(--slate); margin:0 0 14px;}
+  .brake p:last-child{margin-bottom:0;}
+  .brake b{color:var(--ink);}
+
+  /* ===== for whom ===== */
+  .forwho{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:26px;}
+  .forwho-c{border:1px solid var(--line); border-radius:16px; padding:28px 26px; background:#fff;}
+  .forwho-c .fw-tag{font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--gold); margin-bottom:10px;}
+  .forwho-c h3{font-size:16px; line-height:1.6; margin-bottom:14px;}
+  .forwho-c p{font-size:13.5px; line-height:2; color:var(--slate); margin:0 0 12px;}
+  .forwho-c p:last-child{margin-bottom:0;}
+  .forwho-c b{color:var(--ink);}
 
   /* ===== 選び方 ===== */
   .pick{background:var(--mist); border-radius:16px; padding:24px 26px; margin-bottom:26px;}
@@ -147,7 +184,13 @@
   .plist li::before{content:"✓"; position:absolute; left:2px; color:var(--green); font-weight:900;}
   .plist li.off{color:#AAB2C0;}
   .plist li.off::before{content:"—"; color:#C7CDD8;}
-  .pcta{margin-top:auto; text-align:center; text-decoration:none; padding:15px; border-radius:10px; font-weight:700; font-size:14px; background:var(--ink); color:#fff;}
+  .pgive{margin-top:auto; padding:14px 14px 12px; background:var(--mist); border-radius:10px; font-size:11.5px; line-height:1.8; color:var(--slate); margin-bottom:14px;}
+  .pcard.free .pgive{background:#fff;}
+  .pgive b{display:block; color:var(--ink); font-size:11px; letter-spacing:.06em; margin-bottom:7px;}
+  .pgive ul{list-style:none; padding:0; margin:0;}
+  .pgive li{padding-left:12px; position:relative;}
+  .pgive li::before{content:"・"; position:absolute; left:0;}
+  .pcta{margin-top:0; text-align:center; text-decoration:none; padding:15px; border-radius:10px; font-weight:700; font-size:14px; background:var(--ink); color:#fff;}
   .pcard.reco .pcta{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206;}
   /* 残り枠 */
   .sale-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#C0392B; color:#fff;
@@ -211,7 +254,8 @@
     .hero-grid{grid-template-columns:1fr; gap:40px;}
     .hero h1{font-size:29px;}
     .hero{padding:54px 0 64px;}
-    .prob-grid,.pillars,.price-grid,.req-grid{grid-template-columns:1fr;}
+    .prob-grid,.pillars,.price-grid,.req-grid,.forwho{grid-template-columns:1fr;}
+    .story-line{font-size:15px;}
     .pick-row{grid-template-columns:1fr; gap:8px;}
     .pick-bar{max-width:120px;}
     .head-cta{display:none;}
@@ -233,11 +277,12 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">せどり専用・リサーチ／在庫管理ツール</div>
-      <h1>店に立てる時間だけが、<br>仕入れの時間じゃない。</h1>
+      <div class="hero-tag">フリマ対応 Amazonせどり特化ツール</div>
+      <div class="eyebrow">賢く稼ぐ電脳せどり</div>
+      <h1>店舗も、電脳も。<br>これ1本で回せます。</h1>
       <p class="lead">
-        あなたが利益を出した商品を、10サイト分ずっと見張り続けます。
-        条件に合うものが出た瞬間に通知。<br>
+        <span class="nb">棚の前では、1画面で買うか決められる。</span>
+        <span class="nb">家にいる間は、10サイトが勝手に候補を集めてくる。</span><br>
         リサーチも、在庫も、価格改定も、帳簿も、これ1本で。
       </p>
       <div class="hero-actions">
@@ -252,7 +297,7 @@
           <img src="images/watcher-list.png" alt="巡回で見つかった新着の一覧" loading="eager">
         </div>
       </div>
-      <p class="hero-cap">寝ている間に集まった、今日の候補</p>
+      <p class="hero-cap">巡回で集まった、今日の候補</p>
     </div>
   </div>
 </section>
@@ -292,88 +337,86 @@
     <div class="pillars">
       <div class="pillar">
         <div class="n">01 / SEARCH</div>
-        <h3>1秒で、仕入れの可否を決める</h3>
-        <p>ASINかバーコードを読ませるだけで、<b>実際にカートを取って売れている値段</b>・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に。値動きが上がりか下がりか横ばいかも札で出ます。自分の在庫が何個あるかも同時に出るので、二重仕入れも防げます。</p>
+        <h3>寝ている間に、利益商品を探しておく</h3>
+        <p>あなたが寝ているあいだ、こちらのサーバーが<b>自動で利益の出る商品を探します</b>。見つかった商品を出しているセラーを辿って、また次の候補を探す。パソコンは切ったままで構いません。朝には候補が溜まっています。</p>
       </div>
       <div class="pillar">
         <div class="n">02 / WATCH</div>
-        <h3>寝ている間も、探し続ける</h3>
-        <p>一度売れた商品を登録しておくと、10サイトを自動で巡回します。あなたが決めた仕入上限より安く出た瞬間に通知。店にいない時間も、仕入れの時間になります。</p>
+        <h3>本業をしている間も、探し続ける</h3>
+        <p><b>利益商品を登録しておくと</b>、10サイトを自動で巡回します。あなたが決めた仕入上限より安く出た瞬間に通知。別の作業をしている時間も、本業をしている時間も、仕入れの時間になります。</p>
+        <p class="pillar-note">※ 自動巡回はあなたのパソコンのChromeが動かします。電源を入れたままにしておく必要があります。</p>
       </div>
       <div class="pillar">
         <div class="n">03 / MANAGE</div>
         <h3>仕入れから記帳まで、二重入力なし</h3>
-        <p>仕入れた瞬間に販売管理へ。出品、価格改定、販売、返金までひと続き。月別の利益も、古物台帳用のCSVも、そのまま出せます。</p>
+        <p>仕入れた瞬間に販売管理へ。出品、価格改定、販売、返金までひと続き。月別の利益も、古物台帳用のCSVも、そのまま出せます。Amazonで販売した商品は、ダウンロードしたCSV等で必要事項を自動入力できます。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SOLID ============ -->
-<section>
+<!-- ============ LOOP ============ -->
+<section id="loop">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-eyebrow">Solid price</div>
-      <h2>「この値段なら、出したら即売れる」を数字にしました。</h2>
-      <p><span class="nb">よこよこの相場から一瞬だけ落ちて、</span><span class="nb">すぐ買われて消える値段。</span><br>
-      ベテランがチャートを見て掴んでいたその感覚を、90日分の値動きから数えて出します。</p>
+      <div class="sec-eyebrow">Loop</div>
+      <h2>探すのをやめません。<br>あなたが寝ていても。</h2>
+      <p><span class="nb">利益商品を探し、それを売っているセラーを辿り、</span><span class="nb">出てきた瞬間に知らせる。</span><span class="nb">この輪がずっと回り続けます。</span></p>
     </div>
-    <div class="psec">
-      <div>
-        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">鉄板値</h3>
-        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
-          相場が1万円の商品に、たまに9,000円が出て、数時間で消える。<br>
-          あれは「9,000円なら誰かが必ず買う」という値段です。<br><br>
-          90日の値動きから、<b>短い時間で消えた安値</b>だけを拾い、同じ値段が繰り返し現れているかを数えます。
-          <b>何回あったか</b>と<b>何時間で消えたか</b>まで出るので、その値段の固さが一目で分かります。
-          回数が多くて、消えるのが速いほど固い値段です。
-        </p>
-        <ul class="psec-list">
-          <li>◆ <b>buybox平均</b>…実際にカートを取って売れている値段の90日平均。売れない高値に引っ張られません。</li>
-          <li>◆ <b>値動きの札</b>…上昇／下降（継続中・品薄で跳ね）／下降が終了／もみもみ。%ではなく、向きで出します。</li>
-          <li>◆ <b>SR・SSR</b>…中古が点でしか出ないのに売れている商品。供給が絶えているのに需要がある、いわゆるお宝です。</li>
-        </ul>
-        <div class="psec-note">
-          鉄板値は<b>仕入上限としてそのまま使えます</b>。巡回で見つかった商品がこの値段以下なら、赤い「鉄板」の札が付きます。迷う時間がなくなります。
-        </div>
-      </div>
-      <div>
-        <img class="psec-img sm" src="images/amazon-research.jpg" alt="Amazonリサーチ 鉄板値" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============ PANEL ============ -->
-<section style="background:var(--mist);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Panel</div>
-      <h2>仕入れ先のページを開いたまま、そこに出ます。</h2>
-      <p><span class="nb">メルカリを見ながら、Amazonの相場を確かめる。</span><span class="nb">アプリに切り替える必要はありません。</span></p>
-    </div>
-    <div class="psec">
-      <div>
-        <img class="psec-img" src="images/panel.png" alt="リサーチパネル" loading="lazy">
-      </div>
-      <div>
-        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">リサーチパネル（Chrome拡張機能）</h3>
-        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
-          メルカリ・ヤフーフリマ・ヤフオク・オフモール・セカンドストリート・ラクマ、そしてAmazon。
-          商品ページの型番をなぞるか、打ち込むだけで、その場でAmazonの相場が出ます。
-        </p>
-        <ul class="psec-list">
-          <li>◆ buybox平均・中古最安・カート価格・<b>鉄板値</b></li>
-          <li>◆ ランク（回転の速さ）と値動きの札</li>
-          <li>◆ 仕入れ値を打てば、手数料を引いた手取りと想定利益がその場で出る</li>
-          <li>◆ <b>自在庫</b>…同じ商品を自分が何個持っているか。1つでもあれば赤くなります</li>
-          <li>◆ その商品を<b>過去いくらで売ってきたか</b>もその場で開けます</li>
-          <li>◆ 仕入れたら<b>そのまま販売管理へ登録</b>。仕入先も仕入れ元のURLも自動で入ります</li>
-        </ul>
-        <div class="psec-note">
-          <b>NEXTライトからお使いいただけます。</b>店舗仕入れが中心の方でも、フリマの新着を見ながらそのまま判断できます。
+    <div class="loop-steps">
+      <div class="lstep">
+        <div class="lnum">1</div>
+        <div>
+          <h3>寝ている間に、利益商品をリサーチ<span class="lbadge">NEXT以上</span></h3>
+          <p>あなたが寝ている間に、こちらのサーバーが自動で利益の出る商品を探します。パソコンは切ったままで構いません。</p>
         </div>
       </div>
+
+      <div class="lstep">
+        <div class="lnum">2</div>
+        <div>
+          <h3>見つけた商品から、セラーを抜き出す<span class="lbadge">NEXT以上</span></h3>
+          <p>利益商品が見つかったら、それを出している<b>セラーを抽出</b>します。良い商品を扱っている人は、他にも良い商品を持っているからです。そのセラーを辿って、また次の候補を探す。<b>半永久的に候補が増え続けます。</b></p>
+        </div>
+      </div>
+
+      <div class="lstep">
+        <div class="lnum">3</div>
+        <div>
+          <h3>1日2回、今まさに出ている物を探す<span class="lbadge">NEXT以上</span></h3>
+          <p>溜まった利益商品のリストを使って、<b>あなたが指定した時刻に1日2回</b>、10サイトを回ります。今この瞬間に、あなたの仕入上限より安く出品されている物だけを拾ってリストにします。</p>
+        </div>
+      </div>
+
+      <div class="lstep">
+        <div class="lnum">4</div>
+        <div>
+          <h3>取りこぼしたくないなら、何周でも<span class="lbadge">NEXT極</span></h3>
+          <p>NEXT極は、指定した時間帯のあいだ<b>何回も探しにいきます</b>。早い者勝ちの1件は、見た回数の多いほうが取れます。</p>
+        </div>
+      </div>
+
+      <div class="lstep">
+        <div class="lnum">5</div>
+        <div>
+          <h3>見つかったら、通知<span class="lbadge">NEXT極</span></h3>
+          <p>条件に合う物が出た瞬間に知らせます。あとは開いて、買うか見送るかを決めるだけです。</p>
+        </div>
+      </div>
+
+      <div class="lstep">
+        <div class="lnum">6</div>
+        <div>
+          <h3>買ったら、その場で登録</h3>
+          <p>仕入れた商品は<b>その場で販売管理へ登録</b>できます。仕入先も自動で入ります。<b>古物台帳用のCSVもそのまま出せる</b>ので、帳簿をつけるために後からまとめて打ち直す手間がありません。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop-end">
+      <h3>パソコンの前にいる必要は、ありません。</h3>
+      <p>通知はスマホに届きます。仕事中でも、出先でも、電車の中でも。<br>その場で開いて、その場で買えます。</p>
     </div>
   </div>
 </section>
@@ -416,6 +459,91 @@
     </div>
   </div>
 </div>
+
+<!-- ============ RESEARCH ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Amazon research</div>
+      <h2>棚の前で、10分。</h2>
+      <p><span class="nb">見つけた商品が、本当に買って売れるのか。</span><span class="nb">プライスターを見て、Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、棚の前に立ったままです。</span></p>
+    </div>
+    <div class="story-line">Amazonリサーチは、その往復を1画面にしました。</div>
+    <div class="story-body" style="margin-top:26px;">
+      <p>ASINかバーコードを読ませるだけで、<b>実際にカートを取って売れている値段</b>・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に出ます。値動きが上がりか下がりか横ばいかも札で出ます。</p>
+      <p>自分の在庫が何個あるかも同時に出るので、<b>二重仕入れも防げます</b>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLID ============ -->
+<section style="background:var(--mist);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Solid price</div>
+      <h2>「この値段なら、出したら即売れる」を数字にしました。</h2>
+      <p><span class="nb">よこよこの相場から一瞬だけ落ちて、</span><span class="nb">すぐ買われて消える値段。</span><br>
+      ベテランがチャートを見て掴んでいたその感覚を、90日分の値動きから数えて出します。</p>
+    </div>
+    <div class="psec">
+      <div>
+        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">鉄板値</h3>
+        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
+          相場が1万円の商品に、たまに9,000円が出て、数時間で消える。<br>
+          あれは「9,000円なら誰かが必ず買う」という値段です。<br><br>
+          90日の値動きから、<b>短い時間で消えた安値</b>だけを拾い、同じ値段が繰り返し現れているかを数えます。
+          <b>何回あったか</b>と<b>何時間で消えたか</b>まで出るので、その値段の固さが一目で分かります。
+          回数が多くて、消えるのが速いほど固い値段です。
+        </p>
+        <ul class="psec-list">
+          <li>◆ <b>buybox平均</b>…実際にカートを取って売れている値段の90日平均。売れない高値に引っ張られません。</li>
+          <li>◆ <b>値動きの札</b>…上昇／下降（継続中・品薄で跳ね）／下降が終了／もみもみ。%ではなく、向きで出します。</li>
+          <li>◆ <b>SR・SSR</b>…中古が点でしか出ないのに売れている商品。供給が絶えているのに需要がある、いわゆるお宝です。</li>
+        </ul>
+        <div class="psec-note">
+          鉄板値は<b>仕入上限としてそのまま使えます</b>。巡回で見つかった商品がこの値段以下なら、赤い「鉄板」の札が付きます。迷う時間がなくなります。
+        </div>
+      </div>
+      <div>
+        <img class="psec-img sm" src="images/amazon-research.jpg" alt="Amazonリサーチ 鉄板値" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Panel</div>
+      <h2>仕入れ先のページに、間借りします。</h2>
+      <p><span class="nb">手動の電脳仕入れで、判断のために</span><span class="nb">いくつものサイトを行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上にそのまま出る、補助のツールです。</span></p>
+    </div>
+    <div class="psec">
+      <div>
+        <img class="psec-img" src="images/panel.png" alt="リサーチパネル" loading="lazy">
+      </div>
+      <div>
+        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">リサーチパネル（Chrome拡張機能）</h3>
+        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
+          メルカリ・ヤフーフリマ・ヤフオク・オフモール・セカンドストリート・ラクマ、そしてAmazon。
+          商品ページの型番をなぞるか、打ち込むだけで、その場でAmazonの相場が出ます。
+        </p>
+        <ul class="psec-list">
+          <li>◆ buybox平均・中古最安・カート価格・<b>鉄板値</b></li>
+          <li>◆ ランク（回転の速さ）と値動きの札</li>
+          <li>◆ 仕入れ値を打てば、手数料を引いた手取りと想定利益がその場で出る</li>
+          <li>◆ <b>自在庫</b>…同じ商品を自分が何個持っているか。1つでもあれば赤くなります</li>
+          <li>◆ その商品を<b>過去いくらで売ってきたか</b>もその場で開けます</li>
+          <li>◆ 仕入れたら<b>そのまま販売管理へ登録</b>。仕入先も自動で入ります</li>
+        </ul>
+        <div class="psec-note">
+          <b>NEXTライトからお使いいただけます。</b>店舗仕入れが中心の方でも、フリマの新着を見ながらそのまま判断できます。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ SCREENS ============ -->
 <section class="screens" id="screens">
@@ -491,6 +619,37 @@
   </div>
 </section>
 
+<!-- ============ STORY ============ -->
+<section class="story" id="story">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Story</div>
+      <h2>これは、自分のために作りました。</h2>
+    </div>
+
+    <div class="story-body">
+      <p>大阪から、奈良・和歌山・三重・京都・兵庫。月に最低1回はそれぞれの店を回っていました。近所の店はほぼ毎日です。本業の自営をやりながらでした。</p>
+      <p>利益率は高い。けれどガソリン代と高速代が消えていくし、時間も縛られる。大型商品が中心になるので、帰ってから荷ほどきをして、寝るのが2時ということも珍しくありませんでした。</p>
+      <p>そこへ物価高が来ました。<b>仕入れ値は上がるのに、相場は横ばいか下がる。</b>仕入れられる数そのものが減っていきました。</p>
+      <p>店をやめて、手動の電脳に切り替えました。行かなくてよくなった代わりに、拾える小物が少なくて、結局は中型と大型が中心のまま。利益率は下がったのに、<b>作業時間は変わりませんでした</b>。</p>
+      <p>次に、スプレッドシートで半自動の仕組みを作りました。今度は小物が拾えるようになった。それでも<b>作業時間は変わりません</b>。出品されていない商品を開いては閉じ、開いては閉じ。1日1,000件以上です。</p>
+    </div>
+
+    <div class="story-line">道具を変えても、仕入れ先を変えても、時間だけは減らなかった。</div>
+
+    <div class="story-body">
+      <p>それで作ったのが、GASとWEBアプリのハイブリッド版でした。ここでやっと、ほとんど時間をかけずに利益を出せるようになりました。残りの大半は、システムを作っている時間でした。</p>
+      <p>それをサーバーで動くように作り直したのが、SearchHub NEXT です。</p>
+    </div>
+
+    <div class="brake">
+      <h3>特別なことは、していません。</h3>
+      <p>電脳せどりで、みんながやっている当たり前の手順です。それを極限まで半自動にしただけです。ただし<b>最終判断だけは、あなたにやってもらいます</b>。そこがブレーキだからです。</p>
+      <p>拾うところまでは全部こちらでやります。買うか見送るかを決めるのは人間です。全部を機械に任せてしまうと、機械が止まった日に何もできなくなる。判断を自分でやり続けた人だけが、道具が無くても稼げるようになります。</p>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PRICING ============ -->
 <section id="pricing">
   <div class="wrap">
@@ -498,6 +657,21 @@
       <div class="sec-eyebrow">Pricing</div>
       <h2>まずは無料から。使う分だけの、4プラン。</h2>
       <p>あとからいつでも変更できます。上げても下げても、これまでのデータはそのままです。</p>
+    </div>
+
+    <div class="forwho">
+      <div class="forwho-c">
+        <div class="fw-tag">すでにやっている方へ</div>
+        <h3>やり方を変えてください、とは言いません。</h3>
+        <p>自分のスタイルがあるはずです。預けてほしいのは<b>「探す作業」だけ</b>です。そこだけこちらに渡してもらえれば、あとは今まで通りで構いません。</p>
+        <p>それでも時間は確実に減ります。</p>
+      </div>
+      <div class="forwho-c">
+        <div class="fw-tag">これから始める方へ</div>
+        <h3>何を仕入れたらいいのか分からない、が最初の壁です。</h3>
+        <p>SearchHub NEXT は、条件に合った商品を集めて通知します。ただ「通知が来たものを買うだけで稼げます」とは言いません。実際には選んでいます。回転が速いか、値動きが下降していないか、標準サイズか。</p>
+        <p><b>その判断の基準も、隠さず全部お渡しします。</b>必要なのは「考えなくていい」ではなく、「これで合っているという確信」のはずだからです。</p>
+      </div>
     </div>
 
     <div class="pick">
@@ -509,7 +683,7 @@
       <div class="pick-row">
         <span class="pick-name">NEXT</span>
         <span class="pick-bar"><i style="width:25%"></i></span>
-        <span class="pick-txt"><b>電脳が主戦場</b>の方。10サイトを寝ている間に回して、条件に合えば通知。店舗はついでに回る、くらいの比重。</span>
+        <span class="pick-txt"><b>電脳が主戦場</b>の方。指定した時刻に10サイトを回して、条件に合えば通知。店舗はついでに回る、くらいの比重。</span>
       </div>
       <div class="pick-row">
         <span class="pick-name">NEXT極</span>
@@ -540,6 +714,13 @@
           <li class="off">自動巡回</li>
           <li class="off">自動リサーチ</li>
         </ul>
+        <div class="pgive">
+          <b>お渡しするもの</b>
+          <ul>
+            <li>ありません</li>
+            <li>ページを開けばすぐ使えます</li>
+          </ul>
+        </div>
         <a class="pcta" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料ではじめる</a>
       </div>
 
@@ -563,6 +744,14 @@
           <li class="off">自動巡回</li>
           <li class="off">自動リサーチ</li>
         </ul>
+        <div class="pgive">
+          <b>お渡しするもの</b>
+          <ul>
+            <li>ライセンスキー</li>
+            <li>アプリ（PC版・スマホ版）</li>
+            <li>リサーチパネル（Chrome拡張・LITE）</li>
+          </ul>
+        </div>
         <a class="pcta" href="https://buy.stripe.com/8x2eVc2VMabd9beatv4AU09" target="_blank" rel="noopener">このプランではじめる</a>
       </div>
 
@@ -582,6 +771,14 @@
           <li>自動リサーチ（セラー巡回）</li>
           <li class="off">高速巡回</li>
         </ul>
+        <div class="pgive">
+          <b>お渡しするもの</b>
+          <ul>
+            <li>ライセンスキー</li>
+            <li>アプリ（PC版・スマホ版）</li>
+            <li>Chrome拡張（リサーチパネル＋自動巡回）</li>
+          </ul>
+        </div>
         <a class="pcta" href="https://buy.stripe.com/cNi4gy2VMfvx1IM7hj4AU07" target="_blank" rel="noopener">このプランではじめる</a>
       </div>
 
@@ -598,6 +795,14 @@
           <li>メルカリ・ヤフーフリマ・オフモール<br><b>高速巡回</b></li>
           <li>新着商品通知</li>
         </ul>
+        <div class="pgive">
+          <b>お渡しするもの</b>
+          <ul>
+            <li>ライセンスキー</li>
+            <li>アプリ（PC版・スマホ版）</li>
+            <li>Chrome拡張（リサーチパネル＋自動巡回＋高速巡回）</li>
+          </ul>
+        </div>
         <div class="slot-label"><span>今月の残り枠</span><b id="slotText">確認中…</b></div>
         <div class="slot-bar"><div class="slot-fill" id="slotFill"></div></div>
         <a class="pcta" id="ctaKiwami" href="https://buy.stripe.com/7sY5kCaoebfh0EI9pr4AU08" target="_blank" rel="noopener">このプランではじめる</a>
@@ -695,7 +900,7 @@
       <div class="faq-item">
         <p class="faq-q">スマホだけで使えますか。</p>
         <p class="faq-a">NEXTライトはスマホだけでお使いいただけます。ただし<b>リサーチパネル（拡張機能）はパソコンのChrome専用</b>です。スマホでは、アプリのAmazonリサーチをお使いください。出るものは同じです。<br>
-        NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。</p>
+        NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。その他の機能はスマホでご使用いただけます。</p>
       </div>
       <div class="faq-item">
         <p class="faq-q">あとからプランを変えられますか。</p>
