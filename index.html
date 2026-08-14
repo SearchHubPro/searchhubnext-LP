@@ -114,6 +114,16 @@
   .shot figcaption{margin-top:16px; font-size:13px; font-weight:700; line-height:1.6;}
   .shot figcaption span{display:block; font-weight:400; font-size:12px; color:var(--slate); margin-top:2px;}
 
+  /* ===== 選び方 ===== */
+  .pick{background:var(--mist); border-radius:16px; padding:24px 26px; margin-bottom:26px;}
+  .pick-row{display:grid; grid-template-columns:96px 84px 1fr; gap:16px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line);}
+  .pick-row:last-of-type{border-bottom:none;}
+  .pick-name{font-size:13px; font-weight:700; white-space:nowrap;}
+  .pick-bar{display:block; height:7px; background:#E2E7F0; border-radius:99px; overflow:hidden;}
+  .pick-bar i{display:block; height:100%; background:var(--gold); border-radius:99px;}
+  .pick-txt{font-size:13px; line-height:1.85; color:var(--slate);}
+  .pick-note{font-size:11px; color:#9AA3B4; margin-top:12px;}
+
   /* ===== pricing ===== */
   .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch;}
   .picon{width:52px; height:52px; border-radius:13px; margin-bottom:14px; object-fit:cover;
@@ -202,6 +212,8 @@
     .hero h1{font-size:29px;}
     .hero{padding:54px 0 64px;}
     .prob-grid,.pillars,.price-grid,.req-grid{grid-template-columns:1fr;}
+    .pick-row{grid-template-columns:1fr; gap:8px;}
+    .pick-bar{max-width:120px;}
     .head-cta{display:none;}
     section{padding:60px 0;}
     .sec-head h2{font-size:23px;}
@@ -488,6 +500,25 @@
       <p>あとからいつでも変更できます。上げても下げても、これまでのデータはそのままです。</p>
     </div>
 
+    <div class="pick">
+      <div class="pick-row">
+        <span class="pick-name">NEXTライト</span>
+        <span class="pick-bar"><i style="width:75%"></i></span>
+        <span class="pick-txt"><b>店舗が7割、電脳が3割</b>くらいの方。店で見つけた物をその場で調べて、そのまま帳簿まで。フリマも見るけれど、張り付くほどではない。</span>
+      </div>
+      <div class="pick-row">
+        <span class="pick-name">NEXT</span>
+        <span class="pick-bar"><i style="width:25%"></i></span>
+        <span class="pick-txt"><b>電脳が主戦場</b>の方。10サイトを寝ている間に回して、条件に合えば通知。店舗はついでに回る、くらいの比重。</span>
+      </div>
+      <div class="pick-row">
+        <span class="pick-name">NEXT極</span>
+        <span class="pick-bar"><i style="width:10%"></i></span>
+        <span class="pick-txt"><b>電脳をがっつり、取りこぼしたくない</b>方。人気の3サイトは別枠で何周も回します。早い者勝ちの1件を、人より先に見たい方向け。</span>
+      </div>
+      <div class="pick-note">左の帯は、店舗仕入れの比重の目安です。</div>
+    </div>
+
     <div class="price-grid">
 
       <div class="pcard free">
@@ -516,7 +547,7 @@
         <img class="picon" src="images/icon-lite.png" alt="">
         <div class="sale-flag">リリース記念</div>
         <div class="pname">NEXTライト</div>
-        <div class="pfor">店舗仕入れが中心の方へ。<br>リサーチと管理をまとめたい。</div>
+        <div class="pfor"><b>店舗せどりが中心</b>で、<br>電脳も少しやる方へ。</div>
         <div class="pnum"><span class="pold">¥1,980</span><sup>¥</sup>980</div>
         <div class="punit">/ 月（税込）</div>
         <div class="sale-note">リリース記念価格</div>
@@ -539,7 +570,7 @@
         <div class="reco-flag">おすすめ</div>
         <img class="picon" src="images/logo-next.png" alt="">
         <div class="pname">NEXT</div>
-        <div class="pfor">店に立てない時間も、<br>仕入れを止めたくない方へ。</div>
+        <div class="pfor"><b>電脳をがっつり。</b><br>店舗はおまけで回したい方へ。</div>
         <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>2,980</div>
         <div class="punit">/ 月（税込）</div>
         <div class="sale-note" style="visibility:hidden;">-</div>
@@ -558,7 +589,7 @@
         <div class="slot-badge">月20名限定</div>
         <img class="picon" src="images/icon-kiwami.png" alt="">
         <div class="pname">NEXT極</div>
-        <div class="pfor">早い者勝ちの商品を<br>取り逃したくない方へ。</div>
+        <div class="pfor"><b>電脳をがっつり</b>やって、<br>1件も取り逃したくない方へ。</div>
         <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>4,980</div>
         <div class="punit">/ 月（税込）</div>
         <div class="sale-note" style="visibility:hidden;">-</div>
