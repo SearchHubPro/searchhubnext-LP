@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="images/favicon.png">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&family=Yomogi&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0F1729;
@@ -85,17 +85,22 @@
   .sec-head.left h2{font-size:32px;}
   .sec-head.left .sec-eyebrow{letter-spacing:.2em;}
 
-  /* ===== 手書き ===== */
-  .hand{font-family:'Yomogi',cursive; font-weight:400;}
-  .memo{font-family:'Yomogi',cursive; font-size:15px; line-height:1.9; color:var(--gold); position:relative; display:inline-block;}
-  .memo-wrap{text-align:center; margin:-14px auto 34px; max-width:700px;}
-  .memo-wrap.left{text-align:left; margin-left:0;}
-  .mark{position:relative; display:inline-block;}
-  .mark svg{position:absolute; left:-8px; right:-8px; top:-6px; bottom:-6px; width:calc(100% + 16px); height:calc(100% + 12px); overflow:visible; pointer-events:none;}
-  .uline{position:relative; display:inline-block;}
-  .uline svg{position:absolute; left:-4px; bottom:-10px; width:calc(100% + 8px); height:12px; overflow:visible;}
-
   /* ===== 挿絵 ===== */
+  .headrow{display:grid; grid-template-columns:1fr 210px; gap:48px; align-items:center; margin-bottom:46px;}
+  .headrow .sec-head{margin-bottom:0;}
+  .headrow .fig{margin:0;}
+  .fig img{width:100%; height:auto; display:block;}
+  .fig-c{max-width:190px; margin:0 auto 44px;}
+  .figs{display:flex; gap:36px; justify-content:center; align-items:center; margin:0 auto 46px; max-width:520px;}
+  .figs img{width:100%; max-width:180px; height:auto; display:block;}
+  @media (max-width:820px){
+    .headrow{grid-template-columns:1fr; gap:26px; margin-bottom:34px;}
+    .headrow .fig{max-width:160px;}
+    .figs{gap:22px; max-width:340px;}
+    .figs img{max-width:140px;}
+    .fig-c{max-width:150px; margin-bottom:32px;}
+  }
+
   .ill{max-width:500px; margin:0 auto 46px; display:block;}
   .ill svg{width:100%; height:auto; display:block;}
   .ill.tilt{transform:rotate(-1.4deg);}
@@ -340,9 +345,12 @@
 <!-- ============ PROBLEM ============ -->
 <div class="problem">
   <div class="wrap">
-    <div class="sec-head left" style="margin-bottom:0;">
-      <div class="sec-eyebrow">Why</div>
-      <h2>せどりで消えていく時間は、<br>だいたい決まっています。</h2>
+    <div class="headrow">
+      <div class="sec-head left" style="margin-bottom:0;">
+        <div class="sec-eyebrow">Why</div>
+        <h2>せどりで消えていく時間は、<br>だいたい決まっています。</h2>
+      </div>
+      <figure class="fig"><img src="images/ill-time.png" alt="時間に追われる" loading="lazy"></figure>
     </div>
     <div class="prob-grid">
       <div class="prob">
@@ -399,6 +407,7 @@
       <p><span class="nb">利益商品を探し、それを売っているセラーを辿り、</span><span class="nb">出てきた瞬間に知らせる。</span><span class="nb">この輪がずっと回り続けます。</span></p>
     </div>
 
+    <figure class="fig fig-c"><img src="images/ill-night.png" alt="寝ているあいだも探し続ける" loading="lazy"></figure>
     <div class="loop-steps">
       <div class="lstep">
         <div class="lnum">1</div>
@@ -498,13 +507,15 @@
 <!-- ============ RESEARCH ============ -->
 <section id="research">
   <div class="wrap">
-    <div class="sec-head left">
-      <div class="sec-eyebrow">Amazon research</div>
-      <h2>棚の前で、10分。</h2>
-      <p><span class="nb">見つけた商品が、本当に買って売れるのか。</span><span class="nb">プライスターを見て、Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、棚の前に立ったままです。</span></p>
+    <div class="headrow">
+      <div class="sec-head left">
+        <div class="sec-eyebrow">Amazon research</div>
+        <h2>棚の前で、10分。</h2>
+        <p><span class="nb">見つけた商品が、本当に買って売れるのか。</span><span class="nb">プライスターを見て、Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、棚の前に立ったままです。</span></p>
+      </div>
+      <figure class="fig"><img src="images/ill-shelf-1.png" alt="棚の前で迷う" loading="lazy"></figure>
     </div>
-        <div class="memo-wrap left"><span class="memo">この10分が、1商品ごとに。</span></div>
-<div class="story-line">Amazonリサーチは、その往復を1画面にしました。</div>
+    <div class="story-line">Amazonリサーチは、その往復を1画面にしました。</div>
     <div class="story-body" style="margin-top:26px;">
       <p>ASINかバーコードを読ませるだけで、<b>実際にカートを取って売れている値段</b>・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に出ます。値動きが上がりか下がりか横ばいかも札で出ます。</p>
       <p>自分の在庫が何個あるかも同時に出るので、<b>二重仕入れも防げます</b>。</p>
@@ -521,8 +532,11 @@
       <p><span class="nb">よこよこの相場から一瞬だけ落ちて、</span><span class="nb">すぐ買われて消える値段。</span><br>
       ベテランがチャートを見て掴んでいたその感覚を、90日分の値動きから数えて出します。</p>
     </div>
-        <div class="memo-wrap"><span class="memo">↑ この金色の線が、鉄板値</span></div>
-<div class="psec">
+    <div class="figs">
+      <img src="images/ill-chart-1.png" alt="値動きを見る" loading="lazy">
+      <img src="images/ill-chart-2.png" alt="繰り返し現れる安値" loading="lazy">
+    </div>
+    <div class="psec">
       <div>
         <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">鉄板値</h3>
         <p style="font-size:14px; line-height:1.95; color:var(--slate);">
@@ -551,10 +565,13 @@
 <!-- ============ PANEL ============ -->
 <section>
   <div class="wrap">
-    <div class="sec-head left">
-      <div class="sec-eyebrow">Panel</div>
-      <h2>仕入れ先のページに、間借りします。</h2>
-      <p><span class="nb">手動の電脳仕入れで、判断のために</span><span class="nb">いくつものサイトを行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上にそのまま出る、補助のツールです。</span></p>
+    <div class="headrow">
+      <div class="sec-head left">
+        <div class="sec-eyebrow">Panel</div>
+        <h2>仕入れ先のページに、間借りします。</h2>
+        <p><span class="nb">手動の電脳仕入れで、判断のために</span><span class="nb">いくつものサイトを行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上にそのまま出る、補助のツールです。</span></p>
+      </div>
+      <figure class="fig"><img src="images/ill-pc.png" alt="パソコンで作業する" loading="lazy"></figure>
     </div>
     <div class="psec">
       <div>
@@ -659,12 +676,14 @@
 <!-- ============ STORY ============ -->
 <section class="story" id="story">
   <div class="wrap">
-    <div class="sec-head left">
-      <div class="sec-eyebrow">Story</div>
-      <h2>これは、自分のために作りました。</h2>
+    <div class="headrow">
+      <div class="sec-head left">
+        <div class="sec-eyebrow">Story</div>
+        <h2>これは、自分のために作りました。</h2>
+      </div>
+      <figure class="fig"><img src="images/ill-car.png" alt="車で店を回る" loading="lazy"></figure>
     </div>
 
-    <div class="memo-wrap left"><span class="memo">帰って荷ほどきして、寝るのが2時。</span></div>
     <div class="story-body">
       <p>大阪から、奈良・和歌山・三重・京都・兵庫。月に最低1回はそれぞれの店を回っていました。近所の店はほぼ毎日です。本業の自営をやりながらでした。</p>
       <p>利益率は高い。けれどガソリン代と高速代が消えていくし、時間も縛られる。大型商品が中心になるので、帰ってから荷ほどきをして、寝るのが2時ということも珍しくありませんでした。</p>
@@ -869,6 +888,10 @@
       <div class="sec-eyebrow">Requirements</div>
       <h2>できないことも、先に書いておきます。</h2>
       <p>買ってから「思っていたのと違う」となるのが、いちばん困るからです。</p>
+    </div>
+    <div class="figs">
+      <img src="images/ill-device-1.png" alt="電源を入れたままのパソコン" loading="lazy">
+      <img src="images/ill-device-2.png" alt="手元のスマホ" loading="lazy">
     </div>
     <div class="req-grid">
       <div class="req">
