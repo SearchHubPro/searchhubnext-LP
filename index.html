@@ -91,24 +91,29 @@
   .sec-head.left .sec-eyebrow{letter-spacing:.2em;}
 
   /* ===== 挿絵 ===== */
-  .headrow{display:grid; grid-template-columns:1fr 210px; gap:48px; align-items:center; margin-bottom:46px;}
+  .headrow{display:grid; grid-template-columns:1fr auto; gap:44px; align-items:center; margin-bottom:46px;}
   .headrow > .sec-head{order:1; margin-bottom:0;}
   .headrow > .fig{order:2; margin:0;}
+  .headrow > .fig img{width:auto; max-width:200px; max-height:160px; margin-left:auto;}
   .fig img{width:100%; height:auto; display:block;}
   .fig-c{max-width:190px; margin:0 auto 44px;}
-  .figs{display:flex; gap:36px; justify-content:center; align-items:center; margin:0 auto 46px; max-width:520px;}
-  .figs img{width:100%; max-width:180px; height:auto; display:block;}
+  .fig-c img{width:auto; max-width:100%; max-height:150px; margin:0 auto;}
+  /* 縦長の絵と横長の絵が並んでも、高さをそろえて同じ大きさに見せる */
+  .figs{display:flex; gap:26px; justify-content:center; align-items:center; margin:0 auto 34px;}
+  .figs img{width:auto; max-width:180px; max-height:118px; height:auto; display:block;}
   @media (max-width:820px){
     /* スマホでは絵を右に浮かせて、文字が横に回り込むようにする */
     .headrow{display:block; margin-bottom:30px;}
-    .headrow > .fig{float:right; width:28%; max-width:104px; margin:28px 0 10px 16px;}
+    .headrow > .fig{float:right; width:auto; margin:28px 0 10px 16px;}
+    .headrow > .fig img{width:auto; max-width:102px; max-height:96px;}
     .headrow > .sec-head{margin-bottom:0;}
     .headrow::after{content:""; display:block; clear:both;}
     .headrow .sec-head.left h2{font-size:23px; line-height:1.45;}
     .headrow .sec-head.left h2 br{display:none;}
-    .figs{gap:22px; max-width:340px;}
-    .figs img{max-width:140px;}
-    .fig-c{max-width:150px; margin-bottom:32px;}
+    .figs{gap:18px; max-width:340px; margin-bottom:26px;}
+    .figs img{max-width:140px; max-height:92px;}
+    .fig-c{max-width:150px; margin-bottom:30px;}
+    .fig-c img{max-height:118px;}
   }
 
   .ill{max-width:500px; margin:0 auto 46px; display:block;}
@@ -517,7 +522,7 @@
       <div class="sec-head left">
         <div class="sec-eyebrow">Amazon research</div>
         <h2>棚の前で、10分。</h2>
-        <p><span class="nb">見つけた商品が、本当に買って売れるのか。</span><span class="nb">プライスターを見て、Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、棚の前に立ったままです。</span></p>
+        <p><span class="nb">見つけた商品が、</span><span class="nb">本当に買って売れるのか。</span><span class="nb">プライスターを見て、</span><span class="nb">Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、</span><span class="nb">棚の前に立ったままです。</span></p>
       </div>
     </div>
     <div class="story-line">Amazonリサーチは、その往復を1画面にしました。</div>
@@ -575,7 +580,7 @@
       <div class="sec-head left">
         <div class="sec-eyebrow">Panel</div>
         <h2>仕入れ先のページに、間借りします。</h2>
-        <p><span class="nb">手動の電脳仕入れで、判断のために</span><span class="nb">いくつものサイトを行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上にそのまま出る、補助のツールです。</span></p>
+        <p><span class="nb">手動の電脳仕入れで、</span><span class="nb">判断のために</span><span class="nb">いくつものサイトを</span><span class="nb">行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上に</span><span class="nb">そのまま出る、</span><span class="nb">補助のツールです。</span></p>
       </div>
     </div>
     <div class="psec">
