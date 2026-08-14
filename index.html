@@ -311,11 +311,14 @@
     .psec{grid-template-columns:1fr; gap:32px;}
   }
   @media (max-width:820px){
+    /* サイト名は2列にそろえる。幅がバラバラだと散らかって見えるため */
+    .site-tags{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
+    .site-tag{padding:10px 8px; font-size:13px; text-align:center;}
     /* スマホでは画面写真をやめて、絵を右に回り込ませる */
     .hero-grid{grid-template-columns:1fr; gap:0;}
     .hero-grid > div:last-child{display:none;}
     .hero-fig{display:block; float:right; width:auto; margin:2px 0 8px 16px;}
-    .hero-fig img{width:auto; max-width:138px; max-height:172px; display:block;}
+    .hero-fig img{width:auto; max-width:158px; max-height:216px; display:block;}
     .hero-actions{clear:both; padding-top:6px;}
     .hero h1{font-size:29px;}
     .hero{padding:54px 0 64px;}
