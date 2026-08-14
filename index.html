@@ -138,6 +138,10 @@
   .pcta{margin-top:auto; text-align:center; text-decoration:none; padding:15px; border-radius:10px; font-weight:700; font-size:14px; background:var(--ink); color:#fff;}
   .pcard.reco .pcta{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206;}
   /* 残り枠 */
+  .sale-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#C0392B; color:#fff;
+    font-size:11px; font-weight:700; padding:5px 18px; border-radius:999px; white-space:nowrap;}
+  .pold{display:block; font-size:15px; font-weight:700; color:var(--slate); text-decoration:line-through; margin-bottom:2px;}
+  .sale-note{font-size:11px; font-weight:700; color:#C0392B; margin:-16px 0 22px;}
   .slot-badge{display:inline-block; background:#FBEAEA; color:#C0392B; border:1px solid #F0C4C4; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; margin-bottom:12px;}
   .slot-label{display:flex; justify-content:space-between; font-size:12px; color:var(--slate); margin-bottom:6px;}
   .slot-label b{color:var(--ink);}
@@ -335,7 +339,7 @@
     </div>
     <div class="psec">
       <div>
-        <img class="psec-img" src="https://i.ibb.co/99MpngkJ/2026-08-14-150131.png" alt="リサーチパネル" loading="lazy">
+        <img class="psec-img" src="https://i.ibb.co/pDk1Msv/2026-08-14-161333.png" alt="リサーチパネル" loading="lazy">
       </div>
       <div>
         <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">リサーチパネル（Chrome拡張機能）</h3>
@@ -500,10 +504,12 @@
 
       <div class="pcard">
         <img class="picon" src="https://i.ibb.co/WW9fmQLL/Chat-GPT-Image-2026-8-12-14-36-35.png" alt="">
+        <div class="sale-flag">リリース記念</div>
         <div class="pname">NEXTライト</div>
         <div class="pfor">店舗仕入れが中心の方へ。<br>リサーチと管理をまとめたい。</div>
-        <div class="pnum"><sup>¥</sup>980</div>
+        <div class="pnum"><span class="pold">¥1,980</span><sup>¥</sup>980</div>
         <div class="punit">/ 月（税込）</div>
+        <div class="sale-note">リリース記念価格</div>
         <ul class="plist">
           <li>Amazonリサーチ（一発解析）</li>
           <li><b>リサーチパネル（拡張機能）</b></li>
