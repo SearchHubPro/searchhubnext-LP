@@ -127,6 +127,7 @@
   .pname{font-size:17px; font-weight:900; margin-bottom:4px;}
   .pfor{font-size:12px; color:var(--slate); margin-bottom:18px; min-height:3.4em;}
   .pnum{font-size:36px; font-weight:900; line-height:1; margin-bottom:4px;}
+  .pfor{min-height:44px;}
   .pnum sup{font-size:17px; margin-right:2px;}
   .punit{font-size:12px; color:var(--slate); margin-bottom:22px;}
   .plist{list-style:none; padding:0; margin:0 0 24px; font-size:13px;}
@@ -141,8 +142,9 @@
   .sale-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#C0392B; color:#fff;
     font-size:11px; font-weight:700; padding:5px 18px; border-radius:999px; white-space:nowrap;}
   .pold{display:block; font-size:15px; font-weight:700; color:var(--slate); text-decoration:line-through; margin-bottom:2px;}
-  .sale-note{font-size:11px; font-weight:700; color:#C0392B; margin:-16px 0 22px;}
-  .slot-badge{display:inline-block; background:#FBEAEA; color:#C0392B; border:1px solid #F0C4C4; font-size:11px; font-weight:700; padding:4px 12px; border-radius:999px; margin-bottom:12px;}
+  .sale-note{font-size:11px; font-weight:700; color:#C0392B; margin:-16px 0 22px; min-height:15px;}
+  .plist-red{color:#C0392B !important; font-weight:700;}
+  .slot-badge{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#FBEAEA; color:#C0392B; border:1px solid #F0C4C4; font-size:11px; font-weight:700; padding:4px 14px; border-radius:999px; white-space:nowrap;}
   .slot-label{display:flex; justify-content:space-between; font-size:12px; color:var(--slate); margin-bottom:6px;}
   .slot-label b{color:var(--ink);}
   .slot-bar{height:8px; border-radius:99px; background:#EDF0F5; overflow:hidden; margin-bottom:20px;}
@@ -486,8 +488,9 @@
         <img class="picon" src="https://i.ibb.co/nxHB4y3/Chat-GPT-Image-2026-8-12-14-34-55.png" alt="">
         <div class="pname">SearchHub リサーチ</div>
         <div class="pfor">まず解析だけ試したい方へ。<br>ライセンスも登録も要りません。</div>
-        <div class="pnum">無料</div>
+        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span>無料</div>
         <div class="punit">1日20回まで</div>
+        <div class="sale-note" style="visibility:hidden;">-</div>
         <ul class="plist">
           <li>Amazonリサーチ（一発解析）</li>
           <li><b>鉄板値・buybox平均</b></li>
@@ -530,10 +533,11 @@
         <img class="picon" src="https://i.ibb.co/zVsBjXN5/Chat-GPT-Image-2026-7-26-22-20-33.png" alt="">
         <div class="pname">NEXT</div>
         <div class="pfor">店に立てない時間も、<br>仕入れを止めたくない方へ。</div>
-        <div class="pnum"><sup>¥</sup>2,980</div>
+        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>2,980</div>
         <div class="punit">/ 月（税込）</div>
+        <div class="sale-note" style="visibility:hidden;">-</div>
         <ul class="plist">
-          <li>ライトの機能すべて</li>
+          <li class="plist-red">ライトの機能すべて</li>
           <li><b>10サイトの自動巡回</b></li>
           <li>条件に合えば通知</li>
           <li>仕入れリスト</li>
@@ -548,10 +552,11 @@
         <img class="picon" src="https://i.ibb.co/d0qNvwP6/Chat-GPT-Image-2026-7-26-22-19-43.png" alt="">
         <div class="pname">NEXT極</div>
         <div class="pfor">早い者勝ちの商品を<br>取り逃したくない方へ。</div>
-        <div class="pnum"><sup>¥</sup>4,980</div>
+        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>4,980</div>
         <div class="punit">/ 月（税込）</div>
+        <div class="sale-note" style="visibility:hidden;">-</div>
         <ul class="plist">
-          <li>NEXTの機能すべて</li>
+          <li class="plist-red">NEXTの機能すべて</li>
           <li><b>高速巡回</b></li>
           <li>メルカリ・ヤフーフリマ・オフモール</li>
           <li>通知までの時間を短縮</li>
