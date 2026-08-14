@@ -97,6 +97,15 @@
   .sites-note{color:#9BA7BE; font-size:13px; margin-top:26px;}
   .sites-note b{color:#F0C465;}
 
+  /* ===== panel section ===== */
+  .psec{display:grid; grid-template-columns:1.02fr 1fr; gap:44px; align-items:center;}
+  .psec-img{width:100%; border-radius:14px; border:1px solid var(--line); box-shadow:0 14px 40px -18px rgba(15,23,41,.45); display:block;}
+  .psec-img.sm{max-width:330px; margin:0 auto;}
+  .psec-list{margin-top:18px; list-style:none; padding-left:0;}
+  .psec-list li{margin-bottom:10px; font-size:14px; line-height:1.9;}
+  .psec-note{margin-top:22px; padding:16px 18px; background:var(--mist); border-radius:12px; font-size:13px; line-height:1.9; color:var(--slate);}
+  .psec-note b{color:var(--ink);}
+
   /* ===== screens ===== */
   .screens{background:var(--mist);}
   .screen-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px 24px;}
@@ -179,6 +188,7 @@
   @media (max-width:960px){
     .screen-grid{grid-template-columns:repeat(2,1fr);}
     .sites-grid{grid-template-columns:1fr; gap:40px;}
+    .psec{grid-template-columns:1fr; gap:32px;}
   }
   @media (max-width:820px){
     .hero-grid{grid-template-columns:1fr; gap:40px;}
@@ -264,7 +274,7 @@
       <div class="pillar">
         <div class="n">01 / SEARCH</div>
         <h3>1秒で、仕入れの可否を決める</h3>
-        <p>ASINかバーコードを読ませるだけで、90日平均・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に。自分の在庫が何個あるかも同時に出るので、二重仕入れも防げます。</p>
+        <p>ASINかバーコードを読ませるだけで、<b>実際にカートを取って売れている値段</b>・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に。値動きが上がりか下がりか横ばいかも札で出ます。自分の在庫が何個あるかも同時に出るので、二重仕入れも防げます。</p>
       </div>
       <div class="pillar">
         <div class="n">02 / WATCH</div>
@@ -275,6 +285,75 @@
         <div class="n">03 / MANAGE</div>
         <h3>仕入れから記帳まで、二重入力なし</h3>
         <p>仕入れた瞬間に販売管理へ。出品、価格改定、販売、返金までひと続き。月別の利益も、古物台帳用のCSVも、そのまま出せます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLID ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Solid price</div>
+      <h2>「この値段なら、出したら即売れる」を数字にしました。</h2>
+      <p><span class="nb">よこよこの相場から一瞬だけ落ちて、</span><span class="nb">すぐ買われて消える値段。</span><br>
+      ベテランがチャートを見て掴んでいたその感覚を、90日分の値動きから数えて出します。</p>
+    </div>
+    <div class="psec">
+      <div>
+        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">鉄板値</h3>
+        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
+          相場が1万円の商品に、たまに9,000円が出て、数時間で消える。<br>
+          あれは「9,000円なら誰かが必ず買う」という値段です。<br><br>
+          90日の値動きから、<b>短い時間で消えた安値</b>だけを拾い、同じ値段が繰り返し現れているかを数えます。
+          <b>何回あったか</b>と<b>何時間で消えたか</b>まで出るので、その値段の固さが一目で分かります。
+          回数が多くて、消えるのが速いほど固い値段です。
+        </p>
+        <ul class="psec-list">
+          <li>◆ <b>buybox平均</b>…実際にカートを取って売れている値段の90日平均。売れない高値に引っ張られません。</li>
+          <li>◆ <b>値動きの札</b>…上昇／下降（継続中・品薄で跳ね）／下降が終了／もみもみ。%ではなく、向きで出します。</li>
+          <li>◆ <b>SR・SSR</b>…中古が点でしか出ないのに売れている商品。供給が絶えているのに需要がある、いわゆるお宝です。</li>
+        </ul>
+        <div class="psec-note">
+          鉄板値は<b>仕入上限としてそのまま使えます</b>。巡回で見つかった商品がこの値段以下なら、赤い「鉄板」の札が付きます。迷う時間がなくなります。
+        </div>
+      </div>
+      <div>
+        <img class="psec-img sm" src="https://i.ibb.co/vxJQvLLr/S-374751234.jpg" alt="Amazonリサーチ 鉄板値" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PANEL ============ -->
+<section style="background:var(--mist);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Panel</div>
+      <h2>仕入れ先のページを開いたまま、そこに出ます。</h2>
+      <p><span class="nb">メルカリを見ながら、Amazonの相場を確かめる。</span><span class="nb">アプリに切り替える必要はありません。</span></p>
+    </div>
+    <div class="psec">
+      <div>
+        <img class="psec-img" src="https://i.ibb.co/99MpngkJ/2026-08-14-150131.png" alt="リサーチパネル" loading="lazy">
+      </div>
+      <div>
+        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">リサーチパネル（Chrome拡張機能）</h3>
+        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
+          メルカリ・ヤフーフリマ・ヤフオク・オフモール・セカンドストリート・ラクマ、そしてAmazon。
+          商品ページの型番をなぞるか、打ち込むだけで、その場でAmazonの相場が出ます。
+        </p>
+        <ul class="psec-list">
+          <li>◆ buybox平均・中古最安・カート価格・<b>鉄板値</b></li>
+          <li>◆ ランク（回転の速さ）と値動きの札</li>
+          <li>◆ 仕入れ値を打てば、手数料を引いた手取りと想定利益がその場で出る</li>
+          <li>◆ <b>自在庫</b>…同じ商品を自分が何個持っているか。1つでもあれば赤くなります</li>
+          <li>◆ その商品を<b>過去いくらで売ってきたか</b>もその場で開けます</li>
+          <li>◆ 仕入れたら<b>そのまま販売管理へ登録</b>。仕入先も仕入れ元のURLも自動で入ります</li>
+        </ul>
+        <div class="psec-note">
+          <b>NEXTライトからお使いいただけます。</b>店舗仕入れが中心の方でも、フリマの新着を見ながらそのまま判断できます。
+        </div>
       </div>
     </div>
   </div>
@@ -331,14 +410,20 @@
 
       <figure class="shot">
         <div class="phone"><div class="phone-screen">
+          <img src="https://i.ibb.co/21rCYJYy/S-374751237-0.jpg" alt="ウォッチャー" loading="lazy"></div></div>
+        <figcaption>ウォッチャー<span>仕入上限より安く出た商品</span></figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone"><div class="phone-screen">
           <img src="https://i.ibb.co/xqsDVtC5/IMG-0993.png" alt="スナイパー" loading="lazy"></div></div>
         <figcaption>高速巡回<span>3サイトを短い間隔で</span></figcaption>
       </figure>
 
       <figure class="shot">
         <div class="phone"><div class="phone-screen">
-          <img src="https://i.ibb.co/GfrLBny2/IMG-0985.png" alt="Amazonリサーチ" loading="lazy"></div></div>
-        <figcaption>Amazonリサーチ<span>ランク・利益・自在庫まで</span></figcaption>
+          <img src="https://i.ibb.co/vxJQvLLr/S-374751234.jpg" alt="Amazonリサーチ" loading="lazy"></div></div>
+        <figcaption>Amazonリサーチ<span>鉄板値・buybox平均・自在庫まで</span></figcaption>
       </figure>
 
       <figure class="shot">
@@ -349,8 +434,8 @@
 
       <figure class="shot">
         <div class="phone"><div class="phone-screen">
-          <img src="https://i.ibb.co/sprFfrNk/IMG-0991.png" alt="仕入れリスト" loading="lazy"></div></div>
-        <figcaption>仕入れリスト<span>巡回で見張る商品</span></figcaption>
+          <img src="https://i.ibb.co/9HHFTG6t/S-374751236-0.jpg" alt="仕入れリスト" loading="lazy"></div></div>
+        <figcaption>仕入れリスト<span>巡回で見張る商品と仕入上限</span></figcaption>
       </figure>
 
       <figure class="shot">
@@ -401,8 +486,10 @@
         <div class="punit">1日20回まで</div>
         <ul class="plist">
           <li>Amazonリサーチ（一発解析）</li>
+          <li><b>鉄板値・buybox平均</b></li>
           <li>バーコード読み取り</li>
           <li>利益シミュレーション</li>
+          <li class="off">リサーチパネル</li>
           <li class="off">販売管理</li>
           <li class="off">価格改定</li>
           <li class="off">自動巡回</li>
@@ -419,6 +506,8 @@
         <div class="punit">/ 月（税込）</div>
         <ul class="plist">
           <li>Amazonリサーチ（一発解析）</li>
+          <li><b>リサーチパネル（拡張機能）</b></li>
+          <li><b>鉄板値・buybox平均</b></li>
           <li>バーコード読み取り</li>
           <li>販売管理・古物台帳CSV</li>
           <li>価格改定</li>
@@ -497,6 +586,7 @@
           <li><b>Keepaの有料プラン</b>（月29€〜）。相場も手数料もKeepaから取っています。</li>
           <li><b>Amazonセラーセントラル</b>のアカウント。</li>
           <li>PC版はChrome、スマホ版はSafari・Chromeで動きます。</li>
+          <li>29€プランでも足りるように作っています。<b>1商品あたり1トークン</b>で調べる設定を用意し、一度調べた商品は控えておくので、次からは商品を探す問い合わせが要りません。</li>
         </ul>
       </div>
       <div class="req warn">
@@ -550,11 +640,14 @@
       <div class="faq-item">
         <p class="faq-q">Keepaは本当に必要ですか。</p>
         <p class="faq-a">必要です。相場・手数料・出品者数・売れた回数は、すべてKeepaから取っています。当ツールの料金には含まれません。<br>
-        NEXTライトは月29€のプランでもお使いいただけます。NEXT・NEXT極は、自動巡回と自動リサーチで数千件を一度に解析するため、<b>月49€のプランが前提</b>です。決して安くはありませんが、その作業を人に頼むことを考えれば、はるかに安く済みます。</p>
+        NEXTライトは<b>月29€のプランでお使いいただけます</b>。29€は1時間に60回ぶんの持ち点なので、そのままだと1時間に20商品で止まります。そこで、<b>1商品あたり1トークンで調べる設定</b>（buybox平均とカート価格だけを省き、鉄板値もランクも値動きもそのまま出ます）を用意しました。この設定なら1時間に60商品まで見られます。<br>
+        さらに、一度調べた商品の型番とASINを控えているので、<b>次からは「その型番はどの商品か」を探す問い合わせ（1回10トークン）が要りません</b>。よく扱う商品ほど軽くなっていきます。<br>
+        NEXT・NEXT極は、自動巡回と自動リサーチで数千件を一度に解析するため、<b>月49€のプランが前提</b>です。決して安くはありませんが、その作業を人に頼むことを考えれば、はるかに安く済みます。</p>
       </div>
       <div class="faq-item">
         <p class="faq-q">スマホだけで使えますか。</p>
-        <p class="faq-a">NEXTライトはスマホだけでお使いいただけます。NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。</p>
+        <p class="faq-a">NEXTライトはスマホだけでお使いいただけます。ただし<b>リサーチパネル（拡張機能）はパソコンのChrome専用</b>です。スマホでは、アプリのAmazonリサーチをお使いください。出るものは同じです。<br>
+        NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。</p>
       </div>
       <div class="faq-item">
         <p class="faq-q">あとからプランを変えられますか。</p>
