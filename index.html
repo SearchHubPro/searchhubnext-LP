@@ -325,6 +325,13 @@
     .psec-mini img{width:auto; max-width:158px; max-height:330px; border:1px solid var(--line); border-radius:2px; display:block;}
     .psec-list::after{content:""; display:block; clear:both;}
     /* 料金カードは縦に長いので、機能一覧を折りたたむ */
+    /* 値段と「/月（税込）」を横並びにして、高さそろえ用の空行も消す */
+    /* カードを縦積みの箱に戻す（flexのままだと横並びにできない） */
+    .pcard{display:block;}
+    .pnum{display:inline-block; margin-bottom:0; vertical-align:baseline;}
+    .punit{display:inline-block; margin:0 0 0 10px; vertical-align:baseline;}
+    .sale-note{margin:8px 0 0;}
+    [style*="visibility:hidden"]{display:none !important;}
     .pbody{display:block;}
     .pcard:not(.open) .pbody{display:none;}
     .ptoggle{display:block; width:100%; margin:4px 0 0; padding:12px; background:#fff;
