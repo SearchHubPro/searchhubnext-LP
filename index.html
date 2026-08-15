@@ -109,9 +109,9 @@
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     padding:0 20px 26px; box-shadow:0 20px 40px -16px rgba(201,150,43,.7);}
   .hbadge .t{font-size:15px; font-weight:700; color:#6A5320;}
-  .hbadge b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:64px; font-weight:900;
-    color:#C0392B; line-height:1.02; margin:2px 0;}
-  .hbadge b i{font-style:normal; font-size:24px; color:#C0392B;}
+  .hbadge b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:21px; font-weight:900;
+    color:#C0392B; line-height:1.05; margin:6px 0 0; white-space:nowrap;}
+  .hbadge b i{font-style:normal; font-size:58px; color:#C0392B; line-height:1;}
   .hbadge .s{font-size:14px; font-weight:700; color:#6A5320;}
 
   .hlap{position:absolute; right:100px; bottom:0; width:190px; z-index:2;}
@@ -415,6 +415,10 @@
       border:1px solid var(--line); border-radius:2px; font-family:inherit; font-size:13px;
       font-weight:700; color:var(--slate); cursor:pointer;}
     .pcard.free .ptoggle{background:rgba(255,255,255,.7);}
+    /* 閉じているときも「このプランではじめる」とくっつかないように */
+    .ptoggle{margin-bottom:12px;}
+    /* 極は下に残り枠の帯があるので、そのまま */
+    #cardKiwami:not(.open) .ptoggle{margin-bottom:4px;}
     .pcard.open .ptoggle{margin-bottom:16px;}
     .picon{width:42px; height:42px; margin-bottom:10px;}
     /* サイト名は2列にそろえる。幅がバラバラだと散らかって見えるため */
@@ -435,8 +439,8 @@
     .hdots{bottom:5px;} .hdots i{width:4px; height:4px;} .hdots i.on{width:11px;}
     .hbadge{right:0; top:0; width:178px; height:178px; padding:0 14px 24px;}
     .hbadge .t{font-size:12px;}
-    .hbadge b{font-size:52px; margin:1px 0;}
-    .hbadge b i{font-size:19px;}
+    .hbadge b{font-size:15px; margin:4px 0 0;}
+    .hbadge b i{font-size:42px;}
     .hbadge .s{font-size:10.5px; white-space:nowrap;}
     .hlap{right:64px; bottom:0; width:136px;}
     .hlap-scr{border-width:4px; border-top-width:6px; height:78px; border-radius:5px 5px 0 0;}
@@ -557,11 +561,10 @@
     .hdots i.on{width:19px;}
 
     /* 丸＋ノートPC＋マスコットのセット。文字の下、ボタンの右 */
-    .hbadge{right:338px; top:auto; bottom:148px; width:204px; height:204px; padding:0 16px 22px;}
-    .hbadge .t{font-size:13px;}
-    .hbadge b{font-size:55px;}
-    .hbadge b i{font-size:20px;}
-    .hbadge .s{font-size:12px;}
+    .hbadge{right:360px; top:auto; bottom:132px; width:248px; height:248px; padding:0 16px 16px;}
+    .hbadge .t{font-size:15.5px;}
+    .hbadge b{font-size:21px; margin-top:8px;}
+    .hbadge b i{font-size:60px;}
     .hlap{right:408px; bottom:82px; width:178px;}
     .hlap-scr{height:100px; border-width:6px; border-top-width:9px;}
     .hlap-base{height:10px; margin:0 -13px;}
@@ -614,9 +617,8 @@
       </div>
 
       <div class="hbadge">
-        <span class="t">通知が来た物を買うだけ</span>
-        <b><i>利益率</i>32<i>%</i></b>
-        <span class="s">※NEXTプラン以上</span>
+        <span class="t">自動化システムで</span>
+        <b>作業量<i>80</i>%カット</b>
       </div>
 
       <div class="hlap">
@@ -627,7 +629,7 @@
       <img class="hmascot" src="images/mascot.png" alt="" loading="lazy">
     </div>
 
-    <div class="hribbon"><em>リリース記念</em> 月<b>980</b>円からはじめられます</div>
+    <div class="hribbon"><em>リリース記念</em> <b>980</b>円/月 からはじめられます</div>
 
     <div class="hact">
       <a class="btn btn-gold hcta" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す<small>登録もライセンスも不要・30秒</small></a>
