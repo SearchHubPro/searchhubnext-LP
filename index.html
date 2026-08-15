@@ -444,6 +444,74 @@
     section{padding:60px 0;}
     .sec-head h2{font-size:23px;}
   }
+
+  /* =========================================================
+     パソコンで見たときの余白づめ（961px以上でだけ効く）
+     スマホの見た目には一切さわりません。
+     ========================================================= */
+  @media (min-width:961px){
+
+    /* ① 文の途中で切っている「かたまり」を、パソコンでは切らない。
+          スマホの改行のために入れている印なので、幅が広い画面では
+          そのまま流したほうが右側があきません。 */
+    .nb{display:inline;}
+
+    /* ② 本文が左に寄っていて、右が大きくあいていた場所。
+          ほかの節と同じように、まん中にそろえます。 */
+    .story-body,.story-line,.brake{max-width:820px;}
+    .story .story-body,.story .story-line,.story .brake,
+    #research .story-body,#research .story-line{margin-left:auto; margin-right:auto;}
+
+    /* 見出しの行も同じ幅のまん中にそろえて、本文と縦のラインを合わせる */
+    #story .headrow,#research .headrow{max-width:820px; margin-left:auto; margin-right:auto;}
+    #story .headrow > .sec-head.left,
+    #research .headrow > .sec-head.left{max-width:none;}
+
+    /* ③ 見出し横のイラストが小さくて、文字とのあいだがあいていた分 */
+    .headrow{gap:36px;}
+    .headrow > .fig img{max-width:230px; max-height:176px;}
+    .problem .headrow > .sec-head.left,
+    section > .wrap > .headrow > .sec-head.left{max-width:none;}
+
+    /* ④ 中央の見出しの幅。680pxだと見出しが変なところで折れて、
+          そのぶん両側があいて見えていた */
+    .sec-head{max-width:820px;}
+
+    /* ⑤ Solid price のイラスト2枚。小さすぎて左右があいていた */
+    .figs{gap:46px;}
+    .figs img{max-width:280px; max-height:174px;}
+
+    /* ⑥ Patrol（10サイト）。スマホの画面写真が縦に長すぎて、
+          左のサイト名の上下が大きくあいていた。高さで止めます */
+    .sites-grid{grid-template-columns:1fr auto; gap:56px;}
+    .sites-note{font-size:14.5px; line-height:2.05;}
+    .sites-img{width:auto; max-width:none; max-height:400px;}
+
+    /* Solid price の右側も同じく縦長。高さで止めて、列も細くする */
+    .psec:has(.psec-img.sm){grid-template-columns:1fr 280px;}
+    .psec-img.sm{width:auto; max-width:none; max-height:500px; margin:0 auto;}
+
+    /* ⑦ ヒーローの絵の舞台。588pxだと画面のまん中に小さく浮くので
+          そのままの比率で1.2倍にします */
+    .hvis{width:706px; height:374px; margin-top:18px;}
+    .hphone{left:17px; width:180px; border-radius:28px; padding:7px;}
+    .hphone-in{border-radius:22px;}
+    .hdots{bottom:11px;}
+    .hdots i{width:7px; height:7px;}
+    .hdots i.on{width:19px;}
+    .hbadge{right:17px; width:288px; height:288px; padding:0 24px 31px;}
+    .hbadge .t{font-size:18px;}
+    .hbadge b{font-size:77px;}
+    .hbadge b i{font-size:29px;}
+    .hbadge .s{font-size:16.5px;}
+    .hlap{right:120px; width:228px;}
+    .hlap-scr{height:127px; border-width:7px; border-top-width:10px;}
+    .hlap-base{height:11px; margin:0 -15px;}
+    .hmascot{width:127px;}
+    .hribbon{max-width:620px; font-size:16.5px; padding:12px 16px;}
+    .hribbon b{font-size:25px;}
+    .hact{max-width:470px;}
+  }
 </style>
 </head>
 <body>
