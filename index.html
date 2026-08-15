@@ -500,26 +500,46 @@
     .psec:has(.psec-img.sm){grid-template-columns:1fr 280px;}
     .psec-img.sm{width:auto; max-width:none; max-height:500px; margin:0 auto;}
 
-    /* ⑦ ヒーローの絵の舞台。588pxだと画面のまん中に小さく浮くので
-          そのままの比率で1.2倍にします */
-    .hvis{width:706px; height:374px; margin-top:18px;}
-    .hphone{left:17px; width:180px; border-radius:28px; padding:7px;}
-    .hphone-in{border-radius:22px;}
-    .hdots{bottom:11px;}
-    .hdots i{width:7px; height:7px;}
-    .hdots i.on{width:19px;}
-    .hbadge{right:17px; width:288px; height:288px; padding:0 24px 31px;}
-    .hbadge .t{font-size:18px;}
-    .hbadge b{font-size:77px;}
-    .hbadge b i{font-size:29px;}
-    .hbadge .s{font-size:16.5px;}
-    .hlap{right:120px; width:228px;}
-    .hlap-scr{height:127px; border-width:7px; border-top-width:10px;}
-    .hlap-base{height:11px; margin:0 -15px;}
-    .hmascot{width:127px;}
-    .hribbon{max-width:620px; font-size:16.5px; padding:12px 16px;}
-    .hribbon b{font-size:25px;}
-    .hact{max-width:470px;}
+  }
+
+  /* =========================================================
+     ヒーローだけ、幅がじゅうぶんある画面（1180px以上）で
+     元ネタと同じ左右2列にします。それより狭いと文字と絵が
+     ぶつかるので、中央寄せの1列のままにします。
+     ========================================================= */
+  @media (min-width:1180px){
+    /* ⑦ ヒーロー。パソコンでは元ネタと同じ左右2列にします。
+          左に文字とボタン、右に絵。まん中寄せは スマホ だけ。 */
+    .hgrid{display:grid; grid-template-columns:1fr 540px; column-gap:44px;
+      align-items:center; text-align:left; padding:46px 0 44px;}
+    .hcopy{grid-column:1; grid-row:1; max-width:none; margin:0;}
+    .hvis{grid-column:2; grid-row:1 / span 3; align-self:center; margin:0;}
+    .hribbon{grid-column:1; grid-row:2; margin:20px 0 0; max-width:none;}
+    .hact{grid-column:1; grid-row:3; margin:16px 0 0; max-width:430px;}
+
+    .hkicker{font-size:28px; margin-bottom:11px;}
+    /* ヨコ1行に収める。折れると「×」だけが行末に残って見た目が悪い */
+    .hero h1{font-size:38px; justify-content:flex-start; flex-wrap:nowrap;
+      gap:0 8px; margin-bottom:15px; white-space:nowrap;}
+    .hero h1 mark{padding:2px 10px 5px;}
+    .hero h1 .hx{font-size:29px;}
+    .hbrand{font-size:19px;}
+    .hbrand b{font-size:27px;}
+    .hribbon{font-size:15.5px; padding:11px 15px;}
+    .hribbon b{font-size:24px;}
+    .hmicro{text-align:left;}
+
+    /* 絵の舞台。右の列に収まる大きさへ */
+    .hvis{width:540px; height:287px;}
+    .hphone{left:12px; width:138px;}
+    .hbadge{right:12px; width:221px; height:221px; padding:0 18px 24px;}
+    .hbadge .t{font-size:14px;}
+    .hbadge b{font-size:59px;}
+    .hbadge b i{font-size:22px;}
+    .hbadge .s{font-size:13px;}
+    .hlap{right:92px; width:175px;}
+    .hlap-scr{height:98px;}
+    .hmascot{width:98px;}
   }
 </style>
 </head>
