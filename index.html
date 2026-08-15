@@ -242,6 +242,18 @@
   .loop-end h3{font-size:19px; line-height:1.65; margin-bottom:10px;}
   .loop-end p{font-size:13.5px; line-height:2; color:#B9C3D6; margin:0;}
 
+  /* ===== 事故を防ぐ ===== */
+  .guard{display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:920px; margin:0 auto;}
+  .guard-item{border:1px solid var(--line); border-left:4px solid #C0392B; border-radius:2px;
+    padding:24px 24px; background:#fff;}
+  .guard-item h3{font-size:16px; line-height:1.6; margin-bottom:12px;}
+  .guard-item p{font-size:13.5px; line-height:2; color:var(--slate); margin:0;}
+  .guard-item b{color:var(--ink);}
+  .guard-note{max-width:920px; margin:26px auto 0; background:var(--mist); border-radius:2px;
+    padding:20px 22px; font-size:13.5px; line-height:2; color:var(--slate);}
+  .guard-note b{color:var(--ink);}
+  @media (max-width:820px){ .guard{grid-template-columns:1fr; gap:14px;} .guard-item{padding:18px 18px;} }
+
   /* ===== story ===== */
   .story{background:var(--mist);}
   .story-body{max-width:700px; margin:0 auto;}
@@ -744,6 +756,48 @@
           <b>NEXTライトからお使いいただけます。</b>店舗仕入れが中心の方でも、フリマの新着を見ながらそのまま判断できます。
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARD ============ -->
+<section id="guard" style="background:var(--mist);">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Safeguards</div>
+      <h2>間違ったものを、出さない。</h2>
+      <p><span class="nb">機能の数より、こちらのほうが大事だと思っています。</span><span class="nb">一度の事故で、その月の利益は消えるからです。</span></p>
+    </div>
+
+    <div class="guard">
+      <div class="guard-item">
+        <h3>型番が一致しなければ、何も出しません</h3>
+        <p>型番で調べたとき、<b>打った型番とぴったり同じ商品だけ</b>を出します。1文字違いの別商品は出しません。見つからなければ「ありません」と正直に言います。<b>似ているものを出すほうが親切に見えますが、それを買ってしまう事故のほうが高くつきます。</b></p>
+      </div>
+
+      <div class="guard-item">
+        <h3>その商品を何個持っているか、同時に出します</h3>
+        <p>解析した瞬間に<b>自分の在庫の数</b>が出ます。1つでも持っていれば赤くなります。売れ残っているものをもう一度仕入れる、という一番もったいない事故を止めるためです。</p>
+      </div>
+
+      <div class="guard-item">
+        <h3>1つに決まらないときは、勝手に決めません</h3>
+        <p>色違いやセット品など、候補が複数あるときは<b>写真付きで並べて選んでもらいます</b>。こちらで適当に1つ選ぶことはしません。選び直しても<b>追加のトークンはかかりません</b>。</p>
+      </div>
+
+      <div class="guard-item">
+        <h3>古くなった鉄板値は、出しません</h3>
+        <p>鉄板値が<b>直近30日の平均より高くなっていたら、その値は捨てます</b>。相場が下がったのに昔の高値を出し続けると、その値段で仕入れて売れ残ります。出ないことが答えの場合もあります。</p>
+      </div>
+
+      <div class="guard-item" style="grid-column:1 / -1;">
+        <h3>良さそうに見えても、危ない兆しがあれば評価を下げます</h3>
+        <p>高いランクが付きそうな商品でも、<b>値崩れが起きている・ライバルが急に増えている・直近30日で1つも売れていない</b>、このどれかに当てはまるときはランクを下げます。売れた回数が多いだけで良く見える商品はありますが、それを買うのは今ではない、ということがあるからです。</p>
+      </div>
+    </div>
+
+    <div class="guard-note">
+      <b>なぜここにこだわるのか。</b>これらは全部、実際にやってみて損をしたことがある場面です。棚の前で慌てて型番を打ち込んで、1文字違いの商品を買って帰る。売れ残っている物をもう一度仕入れる。半年前の高値を見て買う。<b>作った人間が毎日仕入れをしているので、どこで事故が起きるかを知っています。</b>
     </div>
   </div>
 </section>
