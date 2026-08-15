@@ -57,6 +57,15 @@
   .brand{display:flex; align-items:center; gap:10px; font-weight:900; font-size:18px;}
   .brand img{width:30px; height:30px; border-radius:3px;}
   .head-cta{background:var(--ink); color:#fff; padding:10px 22px; border-radius:3px; font-weight:700; font-size:13px; text-decoration:none;}
+  /* 目次（ヘッダーの項目）。狭い画面では出しません */
+  .headnav{display:none; align-items:center; gap:24px; margin:0 auto;}
+  .headnav a{color:var(--ink-2); font-size:13.5px; font-weight:700; text-decoration:none; white-space:nowrap;}
+  .headnav a:hover{color:var(--gold);}
+  .headact{display:flex; align-items:center; gap:10px;}
+  .head-free{border:2px solid var(--ink); color:var(--ink); background:#fff;
+    padding:8px 18px; border-radius:3px; font-weight:700; font-size:13px; text-decoration:none;}
+  /* 目次から飛んだとき、ヘッダーの下にもぐらないように */
+  #loop,#sites,#screens,#pricing,#faq{scroll-margin-top:74px;}
 
   /* ===== ボタン ===== */
   .btn{display:inline-block; text-decoration:none; font-weight:700; border-radius:3px; transition:transform .15s ease;}
@@ -354,6 +363,9 @@
   /* ===== 注意 ===== */
   .caution{border:1px solid #F0C4C4; background:#FDF6F6; border-radius:2px; padding:32px 30px;}
   .caution h3{font-size:16px; margin-bottom:12px; color:#A03030;}
+  .caution h3 .plan{display:inline-block; margin-left:10px; vertical-align:2px;
+    background:#A03030; color:#fff; font-size:11px; font-weight:700;
+    letter-spacing:.04em; padding:3px 9px; border-radius:2px;}
   .caution p{font-size:14px; color:var(--slate); margin:0 0 14px;}
   .caution p:last-child{margin-bottom:0;}
   .caution b{color:var(--ink);}
@@ -441,6 +453,7 @@
     .pick-row{grid-template-columns:1fr; gap:8px;}
     .pick-bar{max-width:120px;}
     .head-cta{display:none;}
+    .head-free{display:none;}
     section{padding:60px 0;}
     .sec-head h2{font-size:23px;}
   }
@@ -463,8 +476,7 @@
     #research .story-body,#research .story-line{margin-left:auto; margin-right:auto;}
 
     /* 見出しの行も同じ幅のまん中にそろえて、本文と縦のラインを合わせる */
-    #story .headrow,#research .headrow{max-width:820px; margin-left:auto; margin-right:auto;}
-    #story .headrow > .sec-head.left,
+    #research .headrow{max-width:820px; margin-left:auto; margin-right:auto;}
     #research .headrow > .sec-head.left{max-width:none;}
 
     /* ③ 見出し横のイラストが小さくて、文字とのあいだがあいていた分 */
@@ -477,10 +489,10 @@
             まん中が大きくあいていた。文字と絵をひとかたまりにして
             まん中に置きます（本文が横いっぱいの節だけ） */
     .problem > .wrap > .headrow,
-    section:not(#story):not(#research) > .wrap > .headrow{
+    section:not(#research) > .wrap > .headrow{
       grid-template-columns:auto auto; justify-content:center; column-gap:44px;}
     .problem > .wrap > .headrow > .sec-head.left,
-    section:not(#story):not(#research) > .wrap > .headrow > .sec-head.left{max-width:620px;}
+    section:not(#research) > .wrap > .headrow > .sec-head.left{max-width:620px;}
 
     /* ④ 中央の見出しの幅。680pxだと見出しが変なところで折れて、
           そのぶん両側があいて見えていた */
@@ -508,38 +520,52 @@
      ぶつかるので、中央寄せの1列のままにします。
      ========================================================= */
   @media (min-width:1180px){
-    /* ⑦ ヒーロー。パソコンでは元ネタと同じ左右2列にします。
-          左に文字とボタン、右に絵。まん中寄せは スマホ だけ。 */
-    .hgrid{display:grid; grid-template-columns:1fr 540px; column-gap:44px;
-      align-items:center; text-align:left; padding:46px 0 44px;}
-    .hcopy{grid-column:1; grid-row:1; max-width:none; margin:0;}
-    .hvis{grid-column:2; grid-row:1 / span 3; align-self:center; margin:0;}
-    .hribbon{grid-column:1; grid-row:2; margin:20px 0 0; max-width:none;}
-    .hact{grid-column:1; grid-row:3; margin:16px 0 0; max-width:430px;}
+    /* 目次を出す */
+    .headnav{display:flex;}
 
-    .hkicker{font-size:28px; margin-bottom:11px;}
-    /* ヨコ1行に収める。折れると「×」だけが行末に残って見た目が悪い */
-    .hero h1{font-size:38px; justify-content:flex-start; flex-wrap:nowrap;
-      gap:0 8px; margin-bottom:15px; white-space:nowrap;}
-    .hero h1 mark{padding:2px 10px 5px;}
-    .hero h1 .hx{font-size:29px;}
-    .hbrand{font-size:19px;}
-    .hbrand b{font-size:27px;}
-    .hribbon{font-size:15.5px; padding:11px 15px;}
+    /* ===== ヒーロー（元ネタと同じ左右の組み方） =====
+       ・左に大きい文字。リリース記念の枠より右まで伸ばす
+       ・その下の右側に「丸＋ノートPC＋マスコット」
+       ・右はしにスマホ。上は見出しの頭、下は注意書きの行まで
+       絵は舞台（.hvis）をやめて、ヒーロー全体を基準に置きます */
+    .hgrid{position:relative; display:block; text-align:left; padding:54px 0 46px;}
+    .hcopy{max-width:none; margin:0;}
+
+    .hkicker{font-size:36px; margin-bottom:12px;}
+    .hero h1{font-size:48px; justify-content:flex-start; flex-wrap:nowrap;
+      white-space:nowrap; gap:0 10px; margin-bottom:18px;}
+    .hero h1 mark{padding:3px 14px 7px;}
+    .hero h1 .hx{font-size:36px;}
+    .hbrand{font-size:23px;}
+    .hbrand b{font-size:32px;}
+
+    /* リリース記念の枠は、下のボタンと同じ幅にそろえる */
+    .hribbon{max-width:430px; margin:26px 0 0; font-size:15.5px; padding:12px 16px;}
     .hribbon b{font-size:24px;}
+    .hact{max-width:430px; margin:15px 0 0;}
     .hmicro{text-align:left;}
 
-    /* 絵の舞台。右の列に収まる大きさへ */
-    .hvis{width:540px; height:287px;}
-    .hphone{left:12px; width:138px;}
-    .hbadge{right:12px; width:221px; height:221px; padding:0 18px 24px;}
-    .hbadge .t{font-size:14px;}
-    .hbadge b{font-size:59px;}
-    .hbadge b i{font-size:22px;}
-    .hbadge .s{font-size:13px;}
-    .hlap{right:92px; width:175px;}
-    .hlap-scr{height:98px;}
-    .hmascot{width:98px;}
+    /* 舞台をやめる。中の絵は全部 .hgrid が基準になる */
+    .hvis{position:static; width:0; height:0; margin:0;}
+
+    /* 右はしのスマホ。大きくする */
+    .hphone{left:auto; right:24px; top:54px; bottom:auto; width:240px;
+      border-radius:32px; padding:7px;}
+    .hphone-in{border-radius:24px;}
+    .hdots{bottom:12px;}
+    .hdots i{width:7px; height:7px;}
+    .hdots i.on{width:19px;}
+
+    /* 丸＋ノートPC＋マスコットのセット。文字の下、ボタンの右 */
+    .hbadge{right:290px; top:auto; bottom:116px; width:204px; height:204px; padding:0 16px 22px;}
+    .hbadge .t{font-size:13px;}
+    .hbadge b{font-size:55px;}
+    .hbadge b i{font-size:20px;}
+    .hbadge .s{font-size:12px;}
+    .hlap{right:360px; bottom:50px; width:178px;}
+    .hlap-scr{height:100px; border-width:6px; border-top-width:9px;}
+    .hlap-base{height:10px; margin:0 -13px;}
+    .hmascot{right:278px; bottom:48px; width:100px;}
   }
 </style>
 </head>
@@ -548,7 +574,17 @@
 <header>
   <div class="headbar wrap">
     <div class="brand"><img src="images/logo-next.png" alt="SearchHub NEXT">SearchHub NEXT</div>
-    <a class="head-cta" href="#pricing">料金を見る</a>
+    <nav class="headnav">
+      <a href="#loop">機能</a>
+      <a href="#sites">対応サイト</a>
+      <a href="#screens">画面</a>
+      <a href="#pricing">料金</a>
+      <a href="#faq">よくある質問</a>
+    </nav>
+    <div class="headact">
+      <a class="head-free" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す</a>
+      <a class="head-cta" href="#pricing">料金を見る</a>
+    </div>
   </div>
 </header>
 
@@ -726,7 +762,7 @@
 </section>
 
 <!-- ============ SITES ============ -->
-<div class="sites">
+<div class="sites" id="sites">
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-eyebrow">Patrol</div>
@@ -1233,19 +1269,19 @@
     <div class="sec-head">
       <div class="sec-eyebrow">Notice</div>
       <h2>ご利用にあたって</h2>
-      <p><span class="nb">都合の良いことだけを</span><span class="nb">書くつもりはありません。</span><br><span class="nb">知っておいていただきたいことを、</span><span class="nb">先にお伝えします。</span></p>
+      <p><span class="nb">都合の良いことだけを</span><span class="nb">書くつもりはありません。</span><br><span class="nb">知っておいていただきたいことを、</span><span class="nb">先にお伝えします。</span><br><span class="nb">ここは自動巡回のある</span><span class="nb"><b>NEXTプラン以上</b>のお話です。</span><span class="nb">NEXTライトは対象外です。</span></p>
     </div>
     <div style="max-width:820px; margin:0 auto;">
 
       <div class="caution">
-        <h3>アカウント停止のリスクについて</h3>
+        <h3>アカウント停止のリスクについて<span class="plan">NEXT以上</span></h3>
         <p><b>「100%安全」なツールは、この世に存在しません。</b>ご利用は自己責任でお願いいたします。</p>
         <p>本サービスの自動巡回は、一定の間隔で機械的に動くのではなく、開く間隔をばらつかせるなどして、できる限り人の操作に近い動きになるよう設計しています。それでも、各サイトの規約上、自動での操作が推奨されているわけではありません。リスクはゼロではありません。</p>
         <p><b>「1%でもアカウントが止まるのが怖い」という方は、導入をお控えください。</b>手作業でのリサーチをお願いいたします。</p>
       </div>
 
       <div class="caution">
-        <h3>各サイトの仕様変更について</h3>
+        <h3>各サイトの仕様変更について<span class="plan">NEXT以上</span></h3>
         <p>巡回先のサイトが大きく作り変えられた場合、一時的に動かなくなったり、特定の機能が使えなくなることがあります。ウェブの性質上、動作を永続的にお約束することはできません。</p>
         <p>そうなった場合は、開発者として速やかな修正に全力を尽くします。ただし、サイト側の変更があまりに大きい場合、技術的に対応できないことも稀にあり得ます。その際は免責とさせていただきますので、あらかじめご了承のうえご検討ください。</p>
         <p>常に使える状態を保てるよう、日々手を入れ続けることをお約束します。</p>
