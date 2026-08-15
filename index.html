@@ -61,18 +61,40 @@
   /* ===== hero ===== */
   .hero{background:linear-gradient(160deg,#0F1729 0%,#1B2942 55%,#243A5E 100%); color:#fff; padding:80px 0 92px; position:relative; overflow:hidden;}
   .hero::after{content:""; position:absolute; right:-160px; top:-140px; width:520px; height:520px; border-radius:50%; background:radial-gradient(circle,rgba(201,150,43,.22),transparent 65%);}
-  .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:center; position:relative; z-index:2;}
   .hero-tag{font-size:12.5px; font-weight:700; letter-spacing:.1em; color:#93A0B8; margin-bottom:14px;}
   .eyebrow{display:inline-block; font-size:12px; font-weight:700; letter-spacing:.08em; color:#F0D89B; border:1px solid rgba(201,150,43,.5); background:rgba(201,150,43,.12); padding:6px 14px; border-radius:2px; margin-bottom:24px;}
   .hero h1{font-size:42px; line-height:1.4; color:#fff; margin-bottom:24px;}
-  .hero p.lead{font-size:16px; color:#C3CCDD; max-width:44ch; margin:0 0 34px;}
   .hero-actions{display:flex; gap:14px; align-items:center; flex-wrap:wrap;}
   .btn{display:inline-block; text-decoration:none; font-weight:700; border-radius:3px; transition:transform .15s ease;}
   .btn:hover{transform:translateY(-2px);}
   .btn-gold{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206; padding:16px 34px; font-size:15px; box-shadow:0 12px 26px rgba(201,150,43,.32);}
   .btn-ghost{border:1px solid rgba(255,255,255,.35); color:#fff; padding:15px 28px; font-size:14px;}
   .hero-cap{text-align:center; margin-top:16px; font-size:12px; color:#93A0B8;}
-  .hero-fig{display:none; margin:0;}
+
+  /* ===== hero（案D：実物の画面を主役に） ===== */
+  .hero-grid{display:grid; grid-template-columns:1.08fr .92fr; gap:0 52px;
+    grid-template-areas:"head shot" "act shot"; align-items:start; position:relative; z-index:2;}
+  .hero-head{grid-area:head;}
+  .hero-shot{grid-area:shot; position:relative; align-self:center;}
+  .hero-act{grid-area:act; padding-top:26px;}
+  .hero-tag{font-size:12.5px; font-weight:700; letter-spacing:.1em; color:#93A0B8; margin-bottom:12px;}
+  .hero h1 em{font-style:normal; color:#F0C465;}
+  .hero p.lead{font-size:16px; color:#C3CCDD; margin:0;}
+  .hero-cta{display:block; max-width:340px; text-align:center; padding:17px 20px; font-size:17px; line-height:1.35;}
+  .hero-cta small{display:block; font-size:11.5px; font-weight:700; opacity:.78; margin-top:3px;}
+  .hero-micro{margin:16px 0 0; font-size:11.5px; color:#93A0B8; line-height:1.8;}
+  .hshot{position:relative; width:300px; height:404px; overflow:hidden; margin-left:auto;}
+  .hshot img{position:absolute; left:0; top:-104px; width:300px; transform:rotate(-3deg);
+    border-radius:8px; border:1px solid rgba(255,255,255,.35);
+    box-shadow:0 30px 54px -16px rgba(0,0,0,.66);}
+  .hshot-fade{position:absolute; left:0; right:0; bottom:0; height:70px;
+    background:linear-gradient(180deg,rgba(21,35,58,0),#1B2942 82%);}
+  .hbubble{position:absolute; right:-10px; top:52px; z-index:3; width:196px;
+    background:#fff; color:var(--ink); border-radius:12px; padding:11px 13px;
+    box-shadow:0 18px 34px -10px rgba(0,0,0,.6); transform:rotate(3deg);}
+  .hbubble b{display:block; font-size:12px; font-weight:900; margin-bottom:3px;}
+  .hbubble span{display:block; font-size:11.5px; color:var(--slate); line-height:1.6;}
+  .hbubble i{font-style:normal; color:#0E9F6E; font-weight:900;}
 
   /* ===== problem ===== */
   .problem{background:var(--mist); padding:76px 0;}
@@ -343,14 +365,23 @@
     /* サイト名は2列にそろえる。幅がバラバラだと散らかって見えるため */
     .site-tags{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
     .site-tag{padding:10px 8px; font-size:13px; text-align:center;}
-    /* スマホでは画面写真をやめて、絵を右に回り込ませる */
-    .hero-grid{grid-template-columns:1fr; gap:0;}
-    .hero-grid > div:last-child{display:none;}
-    .hero-fig{display:block; float:right; width:auto; margin:2px 0 8px 16px;}
-    .hero-fig img{width:auto; max-width:158px; max-height:216px; display:block;}
-    .hero-actions{clear:both; padding-top:6px;}
-    .hero h1{font-size:29px;}
-    .hero{padding:54px 0 64px;}
+    /* ヒーローは 見出し → 画面 → ボタン の縦並びにする */
+    .hero{padding:22px 0 26px;}
+    .hero-grid{grid-template-columns:1fr; gap:0; grid-template-areas:"head" "shot" "act";}
+    .hero-shot{margin:0 -24px;}
+    .hero-act{padding-top:0;}
+    .hero h1{font-size:27px; line-height:1.4; margin-bottom:10px;}
+    .hero p.lead{font-size:13.5px;}
+    .hero-tag{font-size:11px; margin-bottom:8px;}
+    .hero .eyebrow{margin-bottom:12px;}
+    .hshot{width:auto; height:198px; margin:12px 0 10px 20px;}
+    .hshot img{width:206px; top:-104px;}
+    .hshot-fade{height:52px;}
+    .hbubble{right:14px; top:34px; width:176px; padding:9px 11px;}
+    .hbubble b{font-size:11px;}
+    .hbubble span{font-size:10.5px;}
+    .hero-cta{max-width:none; margin:0 24px; font-size:15.5px; padding:15px 12px;}
+    .hero-micro{margin:10px 24px 0; font-size:10.5px; line-height:1.65;}
     .prob-grid,.pillars,.price-grid,.req-grid,.forwho{grid-template-columns:1fr;}
     .story-line{font-size:15px;}
     .pick-row{grid-template-columns:1fr; gap:8px;}
@@ -373,30 +404,32 @@
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="wrap hero-grid">
-    <div>
+
+    <div class="hero-head">
       <div class="hero-tag">フリマ対応 Amazonせどり特化ツール</div>
       <div class="eyebrow">賢く稼ぐ電脳せどり</div>
-      <h1>店舗も、電脳も。<br>これ1本で回せます。</h1>
-      <figure class="hero-fig"><img src="images/ill-guts.png" alt="仕入れが決まる" loading="lazy"></figure>
-      <p class="lead">
-        <span class="nb">店舗では、</span><span class="nb">1画面で</span><span class="nb">買うか決められる。</span>
-        <span class="nb">家にいる間は、</span><span class="nb">10サイトが勝手に</span><span class="nb">候補を集めてくる。</span><br>
-        <span class="nb">リサーチも、在庫も、</span><span class="nb">価格改定も、帳簿も、</span><span class="nb">これ1本で。</span>
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-gold" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料でリサーチを試す</a>
-        <a class="btn btn-ghost" href="#pricing">料金プランを見る</a>
-      </div>
-      <p style="margin-top:22px; font-size:12px; color:#93A0B8;">無料版は登録もライセンスも不要／有料は月額980円から、いつでも解約できます</p>
+      <h1><span class="nb">通知が来た物を買うだけで、</span><br><em>利益率32%</em>。</h1>
+      <p class="lead"><span class="nb">探していません。</span><span class="nb">店にも行っていません。</span></p>
     </div>
-    <div>
-      <div class="phone lg">
-        <div class="phone-screen">
-          <img src="images/watcher-list.png" alt="巡回で見つかった新着の一覧" loading="eager">
-        </div>
+
+    <div class="hero-shot">
+      <div class="hshot">
+        <img src="images/hero-shot.jpg" alt="Amazonリサーチの解析画面" loading="eager">
+        <div class="hshot-fade"></div>
       </div>
-      <p class="hero-cap">巡回で集まった、今日の候補</p>
+      <div class="hbubble">
+        <b>SearchHub NEXT</b>
+        <span>ヤフーフリマに新着<br>想定利益 <i>¥2,434（32%）</i></span>
+      </div>
     </div>
+
+    <div class="hero-act">
+      <a class="btn btn-gold hero-cta" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">
+        無料で試す<small>登録もライセンスも不要・30秒</small>
+      </a>
+      <p class="hero-micro"><span class="nb">画面は開発者の実際の解析結果です。</span><span class="nb">成果を保証するものではありません。</span><br><span class="nb">有料は月額980円から、</span><span class="nb">いつでも解約できます</span></p>
+    </div>
+
   </div>
 </section>
 
