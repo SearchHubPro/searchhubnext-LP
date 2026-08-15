@@ -473,6 +473,15 @@
     .problem .headrow > .sec-head.left,
     section > .wrap > .headrow > .sec-head.left{max-width:none;}
 
+    /* ③-2 Why と Panel の見出し。文字が左はし、絵が右はしで、
+            まん中が大きくあいていた。文字と絵をひとかたまりにして
+            まん中に置きます（本文が横いっぱいの節だけ） */
+    .problem > .wrap > .headrow,
+    section:not(#story):not(#research) > .wrap > .headrow{
+      grid-template-columns:auto auto; justify-content:center; column-gap:44px;}
+    .problem > .wrap > .headrow > .sec-head.left,
+    section:not(#story):not(#research) > .wrap > .headrow > .sec-head.left{max-width:620px;}
+
     /* ④ 中央の見出しの幅。680pxだと見出しが変なところで折れて、
           そのぶん両側があいて見えていた */
     .sec-head{max-width:820px;}
