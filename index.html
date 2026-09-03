@@ -1446,6 +1446,37 @@
     }
   })();
 </script>
+<script>
+  // ============================================================
+  // 🌟【追加】このページを開いた人を1行だけ記録する。
+  //
+  //   何人来たのかが今まで一度も分からなかったため、
+  //   lp_visits という表に「いつ・どこから来たか」だけを残します。
+  //   名前もメールも取りません。ページの見た目も一切変わりません。
+  //
+  //   ・タブごとに1回だけ。読み込み直しても増えません。
+  //   ・記録に失敗しても、画面には何も出しません。
+  //     数を数えることより、ページが普通に見えることが大事なためです。
+  //   ・上の SUPABASE_URL / SUPABASE_PUBLIC_KEY をそのまま使います。
+  // ============================================================
+  (function countVisit(){
+    try {
+      if (sessionStorage.getItem('lp_counted')) return;
+    } catch (e) {}
+    try {
+      if (!window.supabase || !SUPABASE_PUBLIC_KEY) return;
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
+      sb.from('lp_visits').insert({
+        referrer: document.referrer || null,
+        path: location.pathname + location.search,
+        ua: navigator.userAgent
+      }).then(function(res){
+        if (res && res.error) return;   // 失敗した回は覚えない
+        try { sessionStorage.setItem('lp_counted', '1'); } catch (e) {}
+      });
+    } catch (e) {}
+  })();
+</script>
 
 <script>
 (function(){
