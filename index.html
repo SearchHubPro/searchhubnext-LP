@@ -73,6 +73,12 @@ p { margin: 0; }
 .mark { color: var(--orange); }
 .mark-b { color: var(--blue); }
 
+/* PV */
+.pg.pv { background: var(--cream); padding: calc(24px + env(safe-area-inset-top, 0px)) 20px calc(22px + env(safe-area-inset-bottom, 0px)); gap: 14px; align-items: center; text-align: center; }
+.pv h2 { font-size: clamp(26px, 7.6vw, 38px); }
+.pv p { margin-top: 6px; color: var(--sub); font-weight: 700; }
+.pv video { display: block; height: min(64dvh, 620px); width: auto; max-width: 86vw; aspect-ratio: 9 / 16; border-radius: 24px; background: #1a1f2b; box-shadow: 0 18px 40px rgba(27, 42, 68, .25); }
+
 /* 乗り換え */
 .pg.switch { background: var(--cream); padding: calc(28px + env(safe-area-inset-top, 0px)) 20px 24px; gap: 18px; }
 .switch h2 { font-size: clamp(25px, 7.4vw, 36px); }
@@ -153,6 +159,8 @@ footer a { color: #fff; }
   .pg.shot:nth-of-type(odd) .vis { order: 2; }
   .pg.shot .phone { height: 600px; max-width: none; }
   .pg.shot .panel, .pg.shot .panel img { max-height: 640px; }
+  .pg.pv { text-align: left; }
+  .pv video { height: 640px; max-width: none; justify-self: center; }
   .pg.switch { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
   .switch .mascot { width: 220px; margin: 24px 0 0; }
   .pg.price { display: block; padding-block: 72px; }
@@ -172,7 +180,7 @@ footer a { color: #fff; }
 <body>
 <header class="topbar">
   <a class="logo" href="#top"><img src="images/lp/mascot.webp" alt="">SearchHub NEXT</a>
-  <nav><a href="#research">調べる</a><a href="#patrol">巡回</a><a href="#ledger">帳簿</a><a href="#switch">乗り換え</a><a href="#price">料金</a><a href="guide.html">使い方ガイド</a></nav>
+  <nav><a href="#pv">動画</a><a href="#research">調べる</a><a href="#patrol">巡回</a><a href="#ledger">帳簿</a><a href="#switch">乗り換え</a><a href="#price">料金</a><a href="guide.html">使い方ガイド</a></nav>
   <a class="btn" href="#price">申し込む</a>
 </header>
 
@@ -192,6 +200,16 @@ footer a { color: #fff; }
       </div>
     </div>
   </section>
+
+  <!-- PV -->
+  <div class="pg pv" id="pv">
+    <div class="txt">
+      <span class="chip">動画でわかる</span>
+      <h2 style="margin-top:8px">まずは、<span class="mark">動画で。</span></h2>
+      <p>店舗せどりも、電脳せどりも。<br>リサーチから帳簿まで、まるっと。</p>
+    </div>
+    <video src="videos/pv.mp4" poster="images/lp/pv_poster.webp" controls playsinline preload="none" aria-label="SearchHub NEXT の紹介動画（約37秒）"></video>
+  </div>
 
   <!-- 2 困りごと -->
   <section class="pg art dark">
@@ -345,7 +363,7 @@ footer a { color: #fff; }
   var pages = Array.prototype.slice.call(document.querySelectorAll('.pg'));
   var dots = document.getElementById('dots'), mini = document.getElementById('mini');
   pages.forEach(function () { dots.appendChild(document.createElement('i')); });
-  var hideMini = { top: 1, price: 1, end: 1 };
+  var hideMini = { top: 1, pv: 1, price: 1, end: 1 };
   if (!('IntersectionObserver' in window)) return;
   var io = new IntersectionObserver(function (es) {
     es.forEach(function (e) {
