@@ -2,1514 +2,390 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SearchHub NEXT｜賢く稼ぐ電脳せどり</title>
-<meta name="description" content="賢く稼ぐ電脳せどり。店舗でも電脳でも使える、せどり専用のリサーチ・在庫管理ツール。棚の前の判断は1画面で、家にいる間は10サイトを自動巡回。まずは登録不要の無料版から。有料は月額980円。">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="せどりのリサーチ・巡回・帳簿を1つのアプリで。棚の前でひと目で判定、寝てる間に10サイトを巡回、仕入れたら帳簿まで自動。まずは登録不要の無料版から。">
+<meta property="og:title" content="SearchHub NEXT">
+<meta property="og:description" content="探すのは、こいつに任せる。せどりのリサーチ・巡回・帳簿を1つのアプリで。">
+<meta property="og:image" content="https://searchhubpro.github.io/searchhubnext-LP/images/lp/cover.webp">
+<meta property="og:type" content="website">
 <link rel="icon" href="images/favicon.png">
 <link rel="apple-touch-icon" href="images/favicon.png">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>SearchHub NEXT｜探すのは、こいつに任せる。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&family=M+PLUS+1p:wght@400;700;800&display=swap">
 <style>
-  :root{
-    --ink:#0F1729;
-    --ink-2:#1B2942;
-    --paper:#FFFFFF;
-    --mist:#F5F7FB;
-    --line:#E3E8F0;
-    --slate:#5B6478;
-    --gold:#C9962B;
-    --gold-soft:#FBF3E2;
-    --green:#0E9F6E;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{margin:0; background:var(--paper); color:var(--ink); font-family:'Noto Sans JP',sans-serif; line-height:1.85; -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Zen Kaku Gothic New','Noto Sans JP',sans-serif; font-weight:900; letter-spacing:.01em; margin:0;}
-  a{color:inherit;}
-  img{display:block; max-width:100%;}
-  /* 文のまとまりの途中で改行させない */
-  .nb{display:inline-block;}
-  /* 見出しは行の長さを揃える。最後の1文字だけ落ちるのを防ぐ */
-  h1,h2,h3{text-wrap:balance;}
-  p,li{text-wrap:pretty;}
-  /* 「ー」や小さい「ゃ」が行頭に落ちないようにする */
-  body{line-break:strict;}
-  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+/* Layout: スマホは1画面ずつ上へめくる紙芝居。絵の上3分の1に見出しを載せる。パソコンは絵と文の2列を下へスクロール */
+:root {
+  --sky: #dff1fb;        /* 絵の空色 */
+  --cream: #fff8ec;      /* 絵のクリーム */
+  --box: #e7a95a;        /* 段ボールの茶 */
+  --ink: #1b2a44;        /* 文字の紺 */
+  --sub: #4d5d78;
+  --blue: #1f8fc4;       /* 胸のPの青 */
+  --orange: #f2762e;     /* 矢印のオレンジ */
+  --line: #d9e4ee;
+  --paper: #ffffff;
+  --night: #1d2a4d;
+  --f-disp: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
+  --f-body: "M PLUS 1p", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.7; -webkit-text-size-adjust: 100%; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--f-disp); font-weight: 900; margin: 0; line-height: 1.3; text-wrap: balance; letter-spacing: .01em; }
+p { margin: 0; }
+.chip { display: inline-block; font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--ink); color: #fff; letter-spacing: .04em; }
+.chip.k { background: var(--orange); }
 
-  /* ===== スマホの枠 ===== */
-  .phone{
-    width:100%; max-width:250px; margin:0 auto;
-    background:#171A20; border-radius:32px; padding:8px;
-    box-shadow:0 26px 55px -20px rgba(15,23,41,.5), inset 0 0 0 1px rgba(255,255,255,.07);
-  }
-  .phone-screen{
-    border-radius:25px; overflow:hidden; background:#fff;
-    aspect-ratio:9/18; position:relative;
-  }
-  /* 上のステータスバー(時刻・電波・電池)を隠す */
-  .phone-screen img{width:100%; margin-top:-10%;}
-  .phone.lg{max-width:290px;}
+/* ---------- 共通の部品 ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; font-weight: 800; font-size: 17px; padding: 14px 26px; border-radius: 999px; background: var(--orange); color: #fff; box-shadow: 0 4px 0 #c75a1b; transition: transform .1s; }
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #c75a1b; }
+.btn:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.btn.ghost { background: var(--paper); color: var(--ink); box-shadow: 0 4px 0 var(--line); border: 2px solid var(--ink); }
+.phone { width: min(62vw, 300px); aspect-ratio: 620 / 1341; border-radius: 34px; border: 9px solid #1a1f2b; background: #1a1f2b; overflow: hidden; box-shadow: 0 18px 40px rgba(27, 42, 68, .25); margin-inline: auto; flex: none; }
+.phone img { width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 25px; }
+.panel { width: min(80vw, 360px); border-radius: 14px; overflow: hidden; box-shadow: 0 18px 40px rgba(27, 42, 68, .25); margin-inline: auto; background: #fff; flex: none; }
 
-  /* ===== header ===== */
-  header{position:sticky; top:0; z-index:60; background:rgba(255,255,255,.93); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
-  .headbar{display:flex; align-items:center; justify-content:space-between; padding:14px 24px;}
-  .brand{display:flex; align-items:center; gap:10px; font-weight:900; font-size:18px;}
-  .brand img{width:30px; height:30px; border-radius:3px;}
-  .head-cta{background:var(--ink); color:#fff; padding:10px 22px; border-radius:3px; font-weight:700; font-size:13px; text-decoration:none;}
-  /* 目次（ヘッダーの項目）。狭い画面では出しません */
-  .headnav{display:none; align-items:center; gap:24px; margin:0 auto;}
-  .headnav a{color:var(--ink-2); font-size:13.5px; font-weight:700; text-decoration:none; white-space:nowrap;}
-  .headnav a:hover{color:var(--gold);}
-  .headact{display:flex; align-items:center; gap:10px;}
-  .head-free{border:2px solid var(--ink); color:var(--ink); background:#fff;
-    padding:8px 18px; border-radius:3px; font-weight:700; font-size:13px; text-decoration:none;}
-  /* 目次から飛んだとき、ヘッダーの下にもぐらないように */
-  #loop,#sites,#screens,#pricing,#faq{scroll-margin-top:74px;}
+/* ---------- スマホ：1画面ずつ ---------- */
+.pg { position: relative; min-height: 100vh; min-height: 100dvh; scroll-snap-align: start; display: flex; flex-direction: column; overflow: hidden; }
+.pg.art { background: var(--sky); }
+.pg.art .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center bottom; }
+.pg.art .cap { position: relative; padding: calc(28px + env(safe-area-inset-top, 0px)) 22px 0; }
+.pg.art.dark .cap { color: #fff; }
+.cap h1 { font-size: clamp(34px, 10vw, 46px); }
+.cap h2 { font-size: clamp(28px, 8.4vw, 40px); }
+.cap p { margin-top: 10px; font-size: 16px; font-weight: 700; color: var(--sub); }
+.pg.art.dark .cap p { color: #d9e3f7; }
+.cap .lead-b { background: rgba(255, 255, 255, .78); display: inline; padding: 2px 6px; border-radius: 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone; line-height: 2; }
+.pg.art .cta-row { position: relative; margin-top: auto; padding: 0 22px calc(26px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 10px; flex-wrap: wrap; }
+.pg.shot { background: var(--paper); padding: calc(26px + env(safe-area-inset-top, 0px)) 20px calc(22px + env(safe-area-inset-bottom, 0px)); gap: 18px; justify-content: flex-start; }
+.pg.shot:nth-of-type(even) { background: var(--sky); }
+.pg.shot .txt h2 { font-size: clamp(27px, 8vw, 38px); }
+.pg.shot .txt p { margin-top: 8px; color: var(--sub); font-weight: 700; }
+.pg.shot .vis { flex: 1; min-height: 0; display: flex; align-items: flex-start; justify-content: center; }
+.pg.shot .phone { width: auto; height: min(62dvh, 560px); max-width: 78vw; }
+.pg.shot .panel { width: auto; max-width: 86vw; max-height: 60dvh; }
+.pg.shot .panel img { max-height: 60dvh; width: auto; }
+.mark { color: var(--orange); }
+.mark-b { color: var(--blue); }
 
-  /* ===== ボタン ===== */
-  .btn{display:inline-block; text-decoration:none; font-weight:700; border-radius:3px; transition:transform .15s ease;}
-  .btn:hover{transform:translateY(-2px);}
-  .btn-gold{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206; padding:16px 34px; font-size:15px; box-shadow:0 12px 26px rgba(201,150,43,.32);}
-  .btn-ghost{border:1px solid rgba(255,255,255,.35); color:#fff; padding:15px 28px; font-size:14px;}
+/* 乗り換え */
+.pg.switch { background: var(--cream); padding: calc(28px + env(safe-area-inset-top, 0px)) 20px 24px; gap: 18px; }
+.switch h2 { font-size: clamp(25px, 7.4vw, 36px); }
+.cmp { display: grid; gap: 12px; }
+.cmp div { background: var(--paper); border: 2px solid var(--ink); border-radius: 16px; padding: 14px 16px; display: grid; gap: 4px; }
+.cmp s { color: var(--sub); font-size: 14px; text-decoration-thickness: 2px; }
+.cmp b { font-family: var(--f-disp); font-size: 19px; line-height: 1.4; }
+.cmp small { color: var(--sub); font-size: 13px; }
+.switch .mascot { width: 110px; margin: -40px 0 -20px auto; }
 
-  /* ===== hero（明るい型・中央寄せ／マーカーと丸バッジ） ===== */
-  .hero{background:linear-gradient(180deg,#EAF0F7 0%,#F5F8FC 62%,#fff 100%); color:var(--ink);
-    padding:0 0 26px; position:relative; overflow:hidden;}
-  .hstrip{background:var(--ink); color:#fff; text-align:center; font-weight:700;
-    font-size:14px; letter-spacing:.02em; padding:11px 14px;}
-  .hstrip b{color:#F0C465;}
-  .hgrid{padding-top:24px; text-align:center;}
-  .hcopy{max-width:900px; margin:0 auto;}
+/* 料金 */
+.pg.price { background: var(--sky); padding: calc(26px + env(safe-area-inset-top, 0px)) 16px 26px; gap: 14px; }
+.price h2 { font-size: clamp(26px, 7.6vw, 38px); }
+.price .note { color: var(--sub); font-size: 13px; font-weight: 700; }
+.plans { display: grid; gap: 12px; }
+.plan { background: var(--paper); border-radius: 18px; border: 2px solid var(--line); padding: 14px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 12px; align-items: start; position: relative; }
+.plan.free { border-style: dashed; background: var(--cream); }
+.plan.best { border-color: var(--blue); }
+.plan.kiwami { border-color: var(--orange); }
+.plan img { width: 64px; height: 64px; object-fit: contain; grid-row: span 3; }
+.plan h3 { font-size: 20px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.plan .yen { font-family: var(--f-body); font-weight: 800; font-size: 22px; font-variant-numeric: tabular-nums; }
+.plan .yen small { font-size: 12px; color: var(--sub); font-weight: 700; }
+.plan .yen del { font-size: 13px; color: var(--sub); font-weight: 700; margin-right: 4px; }
+.plan ul { margin: 0; padding: 0; list-style: none; font-size: 14px; display: grid; gap: 2px; }
+.plan ul li::before { content: "✓"; color: var(--blue); font-weight: 800; margin-right: 6px; }
+.plan .go { grid-column: 1 / -1; margin-top: 8px; padding: 11px; font-size: 15px; width: 100%; }
+.plan .tag { position: absolute; top: -11px; right: 14px; }
+.slot { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; color: var(--orange); }
+.slot .bar { flex: 1; height: 10px; border-radius: 99px; background: #fde3d3; overflow: hidden; }
+.slot .bar i { display: block; height: 100%; width: 0; background: var(--orange); border-radius: 99px; transition: width .6s; }
+.plan.sold { opacity: .6; }
+.need { font-size: 12px; color: var(--sub); line-height: 1.6; }
 
-  .hkicker{font-family:'Zen Kaku Gothic New',sans-serif; font-weight:900; font-size:29px;
-    line-height:1.4; margin:0 0 10px; color:var(--ink-2);}
-  .hero h1{font-size:46px; line-height:1.26; margin:0 0 14px; display:flex; align-items:center;
-    justify-content:center; flex-wrap:wrap; gap:6px 10px;}
-  .hero h1 mark{background:#FBE7A8; color:var(--ink); padding:2px 12px 5px; border-radius:2px;}
-  .hero h1 .hx{color:var(--gold); font-size:34px; font-weight:900;}
-  .hbrand{font-size:20px; font-weight:700; color:var(--ink-2); margin:0;}
-  .hbrand b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:28px; font-weight:900;}
+/* 締め */
+.links { position: relative; display: flex; gap: 8px 16px; flex-wrap: wrap; font-size: 14px; font-weight: 700; margin-top: 12px; }
+.links a { text-decoration: underline; text-underline-offset: 3px; }
+.mail { user-select: all; font-weight: 800; }
+footer { background: var(--ink); color: #c9d4e6; font-size: 12px; padding: 18px 20px calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; gap: 8px 16px; flex-wrap: wrap; scroll-snap-align: end; }
+footer a { color: #fff; }
 
-  /* 絵の舞台 */
-  .hvis{position:relative; width:588px; height:312px; margin:14px auto 0;}
-  .hphone{position:absolute; left:14px; bottom:0; width:150px; background:#171A20;
-    border-radius:24px; padding:6px; box-shadow:0 26px 52px -20px rgba(15,23,41,.55); z-index:3;}
-  .hphone-in{border-radius:19px; overflow:hidden; background:#fff; aspect-ratio:9/19; position:relative;}
-  .hslide{display:flex; height:100%; width:100%; transition:transform .55s cubic-bezier(.4,0,.2,1);}
-  .hs{flex:0 0 100%; height:100%; margin:0; overflow:hidden;}
-  .hs img{width:100%; height:auto; display:block; margin-top:-9%;}
-  .hdots{position:absolute; left:0; right:0; bottom:9px; display:flex; gap:6px; justify-content:center; z-index:3;}
-  .hdots i{width:6px; height:6px; border-radius:50%; background:rgba(15,23,41,.22); display:block; transition:background .3s, width .3s;}
-  .hdots i.on{background:var(--gold); width:16px; border-radius:99px;}
-  @media (prefers-reduced-motion:reduce){ .hslide{transition:none;} }
+/* 右の点 */
+.dots { position: fixed; right: 8px; top: 50%; transform: translateY(-50%); display: grid; gap: 7px; z-index: 5; }
+.dots i { width: 7px; height: 7px; border-radius: 50%; background: rgba(27, 42, 68, .25); transition: background .2s, transform .2s; }
+.dots i.on { background: var(--orange); transform: scale(1.35); }
+/* 下の小さい申し込み */
+.mini { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 6; padding: 10px 20px; font-size: 14px; opacity: 0; pointer-events: none; transition: opacity .25s; }
+.mini.show { opacity: 1; pointer-events: auto; }
 
-  .hbadge{position:absolute; right:14px; top:0; width:240px; height:240px; border-radius:50%;
-    background:radial-gradient(circle at 34% 30%,#FBE7A8,#F0C465); color:var(--ink); z-index:1;
-    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
-    padding:0 20px 26px; box-shadow:0 20px 40px -16px rgba(201,150,43,.7);}
-  .hbadge .t{font-size:15px; font-weight:900; color:#6A5320; letter-spacing:.01em;}
-  .hbadge b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:21px; font-weight:900;
-    color:#C0392B; line-height:1.05; margin:6px 0 0; white-space:nowrap;}
-  .hbadge b i{font-style:normal; font-size:58px; color:#C0392B; line-height:1;}
-  .hbadge .s{font-size:14px; font-weight:700; color:#6A5320;}
+@media (max-width: 899px) {
+  html { scroll-snap-type: y proximity; }
+}
 
-  .hlap{position:absolute; right:100px; bottom:0; width:190px; z-index:2;}
-  .hlap-scr{border:6px solid #2A3242; border-top-width:8px; border-radius:8px 8px 0 0;
-    background:#fff; overflow:hidden; height:106px;}
-  .hlap-scr img{width:100%; display:block;}
-  .hlap-base{height:9px; background:#2A3242; border-radius:0 0 10px 10px; margin:0 -13px;
-    box-shadow:0 12px 22px -10px rgba(15,23,41,.5);}
-
-  .hmascot{position:absolute; right:2px; bottom:0; width:106px; height:auto; z-index:4;}
-
-  .hribbon{max-width:540px; margin:14px auto 0; border:2px solid #E9C98C; background:#FDF7EA;
-    border-radius:3px; padding:10px 14px; font-size:15px; font-weight:700; color:var(--ink-2); text-align:center;}
-  .hribbon em{font-style:normal; background:#C0392B; color:#fff; font-size:11.5px;
-    padding:3px 9px; border-radius:2px; margin-right:8px;}
-  .hribbon b{font-family:'Zen Kaku Gothic New',sans-serif; font-size:23px; font-weight:900; color:#C0392B;}
-
-  .hact{margin:13px auto 0; max-width:420px;}
-  .hcta{display:block; text-align:center; padding:16px 18px; font-size:17px; line-height:1.35;}
-  .hcta small{display:block; font-size:11.5px; font-weight:700; opacity:.78; margin-top:3px;}
-  .btn-out{display:block; text-align:center; margin-top:11px; padding:15px 18px; font-size:15px;
-    border:2px solid var(--ink); color:var(--ink); background:#fff;}
-  .hmicro{margin:12px 0 0; font-size:11.5px; color:var(--slate); line-height:1.75; text-align:center;}
-
-  /* ===== problem ===== */
-  .problem{background:var(--mist); padding:76px 0;}
-  .prob-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:40px;}
-  .prob{background:#fff; border:1px solid var(--line); border-radius:2px; padding:26px 24px;}
-  .prob .q{font-size:15px; font-weight:700; margin:0 0 10px;}
-  .prob .a{font-size:13px; color:var(--slate); margin:0;}
-
-  /* ===== section shell ===== */
-  section{padding:84px 0;}
-  .sec-head{max-width:680px; margin:0 auto 48px; text-align:center;}
-  .sec-eyebrow{font-size:11px; font-weight:700; letter-spacing:.16em; color:var(--gold); margin-bottom:12px;}
-  .sec-head h2{font-size:30px; line-height:1.5; margin-bottom:14px;}
-  .sec-head p{color:var(--slate); font-size:15px; margin:0;}
-  .sec-head.left{text-align:left; max-width:780px; margin:0 0 44px;}
-  .sec-head.left h2{font-size:32px;}
-  .sec-head.left .sec-eyebrow{letter-spacing:.2em;}
-
-  /* ===== 挿絵 ===== */
-  .headrow{display:grid; grid-template-columns:1fr auto; gap:44px; align-items:center; margin-bottom:46px;}
-  .headrow > .sec-head{order:1; margin-bottom:0;}
-  .headrow > .fig{order:2; margin:0;}
-  .headrow > .fig img{width:auto; max-width:200px; max-height:160px; margin-left:auto;}
-  .fig img{width:100%; height:auto; display:block;}
-  .fig-c{max-width:190px; margin:0 auto 44px;}
-  .fig-c img{width:auto; max-width:100%; max-height:150px; margin:0 auto;}
-  /* 縦長の絵と横長の絵が並んでも、高さをそろえて同じ大きさに見せる */
-  .figs{display:flex; gap:26px; justify-content:center; align-items:center; margin:0 auto 34px;}
-  .figs img{width:auto; max-width:180px; max-height:118px; height:auto; display:block;}
-  @media (max-width:820px){
-    /* スマホでは絵を右に浮かせて、文字が横に回り込むようにする */
-    /* 巡回の節は縦に長くなるので、スマホでは画面写真を出さない */
-    .sites-shot{display:none;}
-    .sites{padding:64px 0;}
-    .headrow{display:block; margin-bottom:30px;}
-    .headrow > .fig{float:right; width:auto; margin:28px 0 10px 16px;}
-    .headrow > .fig img{width:auto; max-width:102px; max-height:96px;}
-    /* ストーリーは見出しが短いので、絵を金の文字の高さから始める */
-    #story .headrow > .fig{margin-top:0;}
-    #story .headrow{margin-bottom:16px;}
-    /* 「棚の前で、10分。」の横だけ大きめに */
-    #research .headrow > .fig{margin-right:12px;}
-    #research .headrow > .fig img{max-width:134px; max-height:126px;}
-    .headrow > .sec-head{margin-bottom:0;}
-    .headrow::after{content:""; display:block; clear:both;}
-    .headrow .sec-head.left h2{font-size:23px; line-height:1.45;}
-    .headrow .sec-head.left h2 br{display:none;}
-    .figs{gap:18px; max-width:340px; margin-bottom:26px;}
-    .figs img{max-width:140px; max-height:92px;}
-    .fig-c{max-width:150px; margin-bottom:30px;}
-    .fig-c img{max-height:118px;}
-  }
-
-  .ill{max-width:500px; margin:0 auto 46px; display:block;}
-  .ill svg{width:100%; height:auto; display:block;}
-  .il-line{fill:none; stroke:#2A3A57; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
-  .il-soft{fill:none; stroke:#C2CBDA; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
-  .il-gold{fill:none; stroke:#C9962B; stroke-width:2.3; stroke-linecap:round; stroke-linejoin:round;}
-  .il-goldfill{fill:#FBF3E2; stroke:none;}
-  .il-inkfill{fill:#1B2942; stroke:none;}
-  .ill--dark .il-line{stroke:#E0E6F1;}
-  .ill--dark .il-soft{stroke:#495B7C;}
-  .ill--dark .il-goldfill{fill:rgba(201,150,43,.16);}
-  .ill--dark .il-inkfill{fill:#E0E6F1;}
-  @media (max-width:820px){ .ill{max-width:360px; margin-bottom:34px;} }
-
-  /* ===== pillars ===== */
-  .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  .pillar{border:1px solid var(--line); border-radius:2px; padding:32px 26px; background:#fff;}
-  .pillar .n{font-size:12px; font-weight:700; color:var(--gold); letter-spacing:.1em; margin-bottom:14px;}
-  .pillar h3{font-size:19px; margin-bottom:12px; line-height:1.5;}
-  .pillar p{font-size:14px; color:var(--slate); margin:0;}
-  .pillar-note{margin-top:14px; font-size:11.5px; line-height:1.85; color:#8A93A6;}
-
-  /* ===== sites ===== */
-  .sites{background:var(--ink); color:#fff; padding:84px 0;}
-  .sites h2{color:#fff;}
-  .sites .sec-head p{color:#9BA7BE;}
-  .sites-grid{display:grid; grid-template-columns:1fr .8fr; gap:56px; align-items:center;}
-  .site-tags{display:flex; flex-wrap:wrap; gap:10px;}
-  .site-tag{border:1px solid rgba(255,255,255,.2); background:rgba(255,255,255,.06); padding:9px 18px; border-radius:2px; font-size:14px;}
-  .sites-note{color:#9BA7BE; font-size:13px; margin-top:26px;}
-  .sites-note b{color:#F0C465;}
-  .sites-mini{display:none; margin:0;}
-  .sites-img{width:100%; max-width:300px; margin:0 auto; display:block; border:1px solid rgba(255,255,255,.22); border-radius:2px;}
-
-  /* ===== panel section ===== */
-  .psec{display:grid; grid-template-columns:1.02fr 1fr; gap:44px; align-items:center;}
-  .psec-img{width:100%; border-radius:2px; border:1px solid var(--line); box-shadow:0 14px 40px -18px rgba(15,23,41,.45); display:block;}
-  .psec-img.sm{max-width:330px; margin:0 auto;}
-  .psec-list{margin-top:18px; list-style:none; padding-left:0;}
-  .psec-list li{margin-bottom:10px; font-size:14px; line-height:1.9;}
-  .psec-note{margin-top:22px; padding:16px 18px; background:var(--mist); border-radius:2px; font-size:13px; line-height:1.9; color:var(--slate);}
-  .psec-note b{color:var(--ink);}
-  .psec-mini{display:none; margin:0;}
-
-  /* ===== screens ===== */
-  .screens{background:var(--mist);}
-  .screen-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:40px 24px;}
-  .shot{margin:0; text-align:center;}
-  .shot figcaption{margin-top:16px; font-size:13px; font-weight:700; line-height:1.6;}
-  .shot figcaption span{display:block; font-weight:400; font-size:12px; color:var(--slate); margin-top:2px;}
-
-  /* ===== loop ===== */
-  .loop-steps{max-width:760px; margin:0 auto;}
-  .lstep{display:grid; grid-template-columns:46px 1fr; gap:20px; padding:24px 0; border-bottom:1px solid var(--line);}
-  .lstep:last-of-type{border-bottom:none;}
-  .lnum{width:36px; height:36px; border-radius:50%; background:var(--gold-soft); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:14px;}
-  .lstep h3{font-size:16.5px; line-height:1.6; margin-bottom:9px;}
-  .lstep p{font-size:13.5px; line-height:2; color:var(--slate); margin:0;}
-  .lstep b{color:var(--ink);}
-  .lbadge{display:inline-block; font-size:10.5px; font-weight:700; padding:3px 9px; border-radius:2px; background:var(--gold-soft); color:var(--gold); margin-left:8px; vertical-align:2px; white-space:nowrap;}
-  .loop-end{max-width:760px; margin:30px auto 0; background:var(--ink); color:#fff; border-radius:2px; padding:26px 28px; text-align:center;}
-  .loop-end h3{font-size:19px; line-height:1.65; margin-bottom:10px;}
-  .loop-end p{font-size:13.5px; line-height:2; color:#B9C3D6; margin:0;}
-
-  /* ===== 事故を防ぐ ===== */
-  .guard{display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:920px; margin:0 auto;}
-  .guard-item{border:1px solid var(--line); border-left:4px solid #C0392B; border-radius:2px;
-    padding:24px 24px; background:#fff;}
-  .guard-item h3{font-size:16px; line-height:1.6; margin-bottom:12px;}
-  .guard-item p{font-size:13.5px; line-height:2; color:var(--slate); margin:0;}
-  .guard-item b{color:var(--ink);}
-  .guard-note{max-width:920px; margin:26px auto 0; background:var(--mist); border-radius:2px;
-    padding:20px 22px; font-size:13.5px; line-height:2; color:var(--slate);}
-  .guard-note b{color:var(--ink);}
-  @media (max-width:820px){ .guard{grid-template-columns:1fr; gap:14px;} .guard-item{padding:18px 18px;} }
-
-  /* ===== story ===== */
-  .story{background:var(--mist);}
-  .story-body{max-width:700px; margin:0 auto;}
-  .story .story-body,.story .story-line,.story .brake,
-  #research .story-body,#research .story-line{margin-left:0; margin-right:auto;}
-  .story .ill,#research .ill{margin-left:0;}
-  .story-body p{font-size:15px; line-height:2.15; color:var(--ink-2); margin:0 0 24px;}
-  .story-body p:last-child{margin-bottom:0;}
-  .story-body b{color:var(--ink);}
-  .story-line{max-width:700px; margin:0 auto 24px; padding:18px 22px; background:#fff; border-left:4px solid var(--gold); border-radius:0 12px 12px 0; font-size:16px; font-weight:700; line-height:1.9;}
-  .brake{max-width:700px; margin:38px auto 0; background:#fff; border:1px solid var(--line); border-radius:2px; padding:30px 30px;}
-  .brake h3{font-size:17px; margin-bottom:16px;}
-  .brake p{font-size:14px; line-height:2.05; color:var(--slate); margin:0 0 14px;}
-  .brake p:last-child{margin-bottom:0;}
-  .brake b{color:var(--ink);}
-
-  /* ===== for whom ===== */
-  .forwho{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-bottom:26px;}
-  .forwho-c{border:1px solid var(--line); border-radius:2px; padding:28px 26px; background:#fff;}
-  .forwho-c .fw-tag{font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--gold); margin-bottom:10px;}
-  .forwho-c h3{font-size:16px; line-height:1.6; margin-bottom:14px;}
-  .forwho-c p{font-size:13.5px; line-height:2; color:var(--slate); margin:0 0 12px;}
-  .forwho-c p:last-child{margin-bottom:0;}
-  .forwho-c b{color:var(--ink);}
-
-  /* ===== 選び方 ===== */
-  .pick{background:var(--mist); border-radius:2px; padding:24px 26px; margin-bottom:26px;}
-  .pick-row{display:grid; grid-template-columns:96px 84px 1fr; gap:16px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line);}
-  .pick-row:last-of-type{border-bottom:none;}
-  .pick-name{font-size:13px; font-weight:700; white-space:nowrap;}
-  .pick-bar{display:block; height:7px; background:#E2E7F0; border-radius:99px; overflow:hidden;}
-  .pick-bar i{display:block; height:100%; background:var(--gold); border-radius:99px;}
-  .pick-txt{font-size:13px; line-height:1.85; color:var(--slate);}
-  .pick-note{font-size:11px; color:#9AA3B4; margin-top:12px;}
-
-  /* ===== pricing ===== */
-  .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; align-items:stretch;}
-  .picon{width:52px; height:52px; border-radius:3px; margin-bottom:14px; object-fit:cover;
-    box-shadow:0 8px 20px -8px rgba(15,23,41,.35), 0 0 0 1px rgba(15,23,41,.06);}
-  .pcard.free{background:var(--mist); border-style:dashed;}
-  .pcard.free .pcta{background:#fff; color:var(--ink); border:1px solid var(--line);}
-  .free-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--ink); color:#fff;
-    font-size:11px; font-weight:700; padding:5px 18px; border-radius:2px; white-space:nowrap;}
-  .pcard{border:1px solid var(--line); border-radius:3px; padding:30px 22px; display:flex; flex-direction:column; background:#fff; position:relative;}
-  .pcard.reco{border:2px solid var(--gold); box-shadow:0 20px 50px -24px rgba(201,150,43,.5);}
-  .reco-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:var(--gold); color:#1a1206; font-size:11px; font-weight:700; padding:5px 18px; border-radius:2px; white-space:nowrap;}
-  .pname{font-size:17px; font-weight:900; margin-bottom:4px;}
-  .pfor{font-size:12px; color:var(--slate); margin-bottom:18px; min-height:3.4em;}
-  .pnum{font-size:36px; font-weight:900; line-height:1; margin-bottom:4px;}
-  .pfor{min-height:44px;}
-  .pnum sup{font-size:17px; margin-right:2px;}
-  .punit{font-size:12px; color:var(--slate); margin-bottom:22px;}
-  .plist{list-style:none; padding:0; margin:0 0 24px; font-size:13px;}
-  .plist li{padding:7px 0 7px 26px; position:relative; border-bottom:1px dashed var(--line);}
-  .plist li:last-child{border-bottom:none;}
-  .plist li::before{content:"✓"; position:absolute; left:2px; color:var(--green); font-weight:900;}
-  .plist li.off{color:#AAB2C0;}
-  .plist li.off::before{content:"—"; color:#C7CDD8;}
-  .ptoggle{display:none;}
-  .pbody{display:contents;}
-  .pgive{margin-top:auto; padding:14px 14px 12px; background:var(--mist); border-radius:2px; font-size:11.5px; line-height:1.8; color:var(--slate); margin-bottom:14px;}
-  .pcard.free .pgive{background:#fff;}
-  .pgive b{display:block; color:var(--ink); font-size:11px; letter-spacing:.06em; margin-bottom:7px;}
-  .pgive ul{list-style:none; padding:0; margin:0;}
-  .pgive li{padding-left:12px; position:relative;}
-  .pgive li::before{content:"・"; position:absolute; left:0;}
-  .pcta{display:block; margin-top:0; text-align:center; text-decoration:none; padding:15px; border-radius:3px; font-weight:700; font-size:14px; background:var(--ink); color:#fff;}
-  .pcard.reco .pcta{background:linear-gradient(135deg,#D9A73C,#B7801C); color:#1a1206;}
-  /* 残り枠 */
-  .sale-flag{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#C0392B; color:#fff;
-    font-size:11px; font-weight:700; padding:5px 18px; border-radius:2px; white-space:nowrap;}
-  .pold{display:block; font-size:15px; font-weight:700; color:var(--slate); text-decoration:line-through; margin-bottom:2px;}
-  .sale-note{font-size:11px; font-weight:700; color:#C0392B; margin:-16px 0 22px; min-height:15px;}
-  .plist-red{color:#C0392B !important; font-weight:700;}
-  .slot-badge{position:absolute; top:-14px; left:50%; transform:translateX(-50%); background:#FBEAEA; color:#C0392B; border:1px solid #F0C4C4; font-size:11px; font-weight:700; padding:4px 14px; border-radius:2px; white-space:nowrap;}
-  .slot-label{display:flex; justify-content:space-between; font-size:12px; color:var(--slate); margin-bottom:6px;}
-  .slot-label b{color:var(--ink);}
-  .slot-bar{height:8px; border-radius:99px; background:#EDF0F5; overflow:hidden; margin-bottom:20px;}
-  .slot-fill{height:100%; width:0%; border-radius:99px; background:linear-gradient(90deg,#D9A73C,#B7801C); transition:width .7s ease;}
-  .pcard.sold{opacity:.7;}
-  .pcard.sold .slot-fill{background:#C7CDD8;}
-  .pcard.sold .pcta{background:#C7CDD8; color:#5B6478; pointer-events:none;}
-
-  .price-notes{margin-top:32px; padding:24px 28px; background:var(--mist); border-radius:2px; font-size:13px; color:var(--slate);}
-  .price-notes b{color:var(--ink);}
-  .price-notes ul{margin:10px 0 0; padding-left:20px;}
-  .price-notes li{margin-bottom:6px;}
-
-  /* ===== requirements ===== */
-  .req-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
-  .req{border:1px solid var(--line); border-radius:2px; padding:30px 28px; background:#fff;}
-  .req h3{font-size:16px; margin-bottom:16px;}
-  .req ul{margin:0; padding-left:20px; font-size:14px; color:var(--slate);}
-  .req li{margin-bottom:10px;}
-  .req li b{color:var(--ink);}
-  .req.warn{background:var(--gold-soft); border-color:#EBD6A4;}
-
-  /* ===== 注意 ===== */
-  .caution{border:1px solid #F0C4C4; background:#FDF6F6; border-radius:2px; padding:32px 30px;}
-  .caution h3{font-size:16px; margin-bottom:12px; color:#A03030;}
-  .caution h3 .plan{display:inline-block; margin-left:10px; vertical-align:2px;
-    background:#A03030; color:#fff; font-size:11px; font-weight:700;
-    letter-spacing:.04em; padding:3px 9px; border-radius:2px;}
-  .caution p{font-size:14px; color:var(--slate); margin:0 0 14px;}
-  .caution p:last-child{margin-bottom:0;}
-  .caution b{color:var(--ink);}
-  .caution + .caution{margin-top:22px;}
-
-  /* ===== faq ===== */
-  .faq{max-width:820px; margin:0 auto;}
-  .faq-item{border-bottom:1px solid var(--line); padding:22px 0;}
-  .faq-q{font-weight:700; font-size:15px; margin:0 0 8px;}
-  .faq-a{color:var(--slate); font-size:14px; margin:0;}
-
-  /* ===== final ===== */
-  .final{background:linear-gradient(160deg,#0F1729,#243A5E); color:#fff; text-align:center; padding:96px 0;}
-  .final h2{color:#fff; font-size:30px; margin-bottom:16px; line-height:1.5;}
-  .final p{color:#B7C2D6; margin:0 0 34px;}
-
-  footer{border-top:1px solid var(--line); padding:34px 0; text-align:center; color:var(--slate); font-size:12px;}
-
-  @media (max-width:1080px){
-    .price-grid{grid-template-columns:repeat(2,1fr);}
-  }
-  @media (max-width:960px){
-    .screen-grid{grid-template-columns:repeat(2,1fr);}
-    .sites-grid{grid-template-columns:1fr; gap:40px;}
-    .psec{grid-template-columns:1fr; gap:32px;}
-  }
-  @media (max-width:820px){
-    /* 画面写真は小さくして、説明文の横に回り込ませる。大きいほうは出さない */
-    .sites-mini{display:block; float:right; width:auto; margin:26px 0 8px 16px;}
-    .sites-mini img{width:auto; max-width:158px; max-height:296px; border:1px solid rgba(255,255,255,.22); border-radius:2px;}
-    .sites-note::after{content:""; display:block; clear:both;}
-    .psec > div > .psec-img.sm{display:none;}
-    .psec-mini{display:block; float:right; width:auto; margin:26px 0 10px 16px;}
-    .psec-mini img{width:auto; max-width:158px; max-height:330px; border:1px solid var(--line); border-radius:2px; display:block;}
-    .psec-list::after{content:""; display:block; clear:both;}
-    /* 料金カードは縦に長いので、機能一覧を折りたたむ */
-    /* 値段と「/月（税込）」を横並びにして、高さそろえ用の空行も消す */
-    /* カードを縦積みの箱に戻す（flexのままだと横並びにできない） */
-    .pcard{display:block;}
-    .pnum{display:inline-block; margin-bottom:0; vertical-align:baseline;}
-    .punit{display:inline-block; margin:0 0 0 10px; vertical-align:baseline;}
-    .sale-note{margin:8px 0 0;}
-    [style*="visibility:hidden"]{display:none !important;}
-    .pbody{display:block;}
-    .pcard:not(.open) .pbody{display:none;}
-    .ptoggle{display:block; width:100%; margin:4px 0 0; padding:12px; background:#fff;
-      border:1px solid var(--line); border-radius:2px; font-family:inherit; font-size:13px;
-      font-weight:700; color:var(--slate); cursor:pointer;}
-    .pcard.free .ptoggle{background:rgba(255,255,255,.7);}
-    /* 閉じているときも「このプランではじめる」とくっつかないように */
-    .ptoggle{margin-bottom:12px;}
-    /* 極は下に残り枠の帯があるので、そのまま */
-    #cardKiwami:not(.open) .ptoggle{margin-bottom:4px;}
-    .pcard.open .ptoggle{margin-bottom:16px;}
-    .picon{width:42px; height:42px; margin-bottom:10px;}
-    /* サイト名は2列にそろえる。幅がバラバラだと散らかって見えるため */
-    .site-tags{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
-    .site-tag{padding:10px 8px; font-size:13px; text-align:center;}
-    /* ヒーローは中央寄せの1列。絵は縮めて舞台ごと収める */
-    .hstrip{font-size:12px; padding:9px 12px;}
-    .hgrid{padding-top:18px;}
-    .hkicker{font-size:22px; margin-bottom:6px;}
-    .hero h1{font-size:28px; margin-bottom:10px; gap:2px 5px; flex-wrap:nowrap;}
-    .hero h1 mark{padding:2px 5px 4px;}
-    .hero h1 .hx{font-size:21px;}
-    .hbrand{font-size:15px;}
-    .hbrand b{font-size:20px;}
-    .hvis{width:310px; height:222px; margin:12px auto 0;}
-    .hphone{left:0; top:auto; bottom:0; width:106px; border-radius:13px; padding:4px;}
-    .hphone-in{border-radius:11px;}
-    .hdots{bottom:5px;} .hdots i{width:4px; height:4px;} .hdots i.on{width:11px;}
-    .hbadge{right:0; top:0; width:178px; height:178px; padding:0 14px 24px;}
-    .hbadge .t{font-size:14px;}
-    .hbadge b{font-size:15px; margin:4px 0 0;}
-    .hbadge b i{font-size:42px;}
-    .hbadge .s{font-size:10.5px; white-space:nowrap;}
-    .hlap{right:64px; bottom:0; width:136px;}
-    .hlap-scr{border-width:4px; border-top-width:6px; height:78px; border-radius:5px 5px 0 0;}
-    .hlap-base{height:6px; margin:0 -8px;}
-    .hmascot{right:0; bottom:0; width:74px;}
-    .hribbon{margin-top:12px; font-size:12.5px; padding:7px 10px;}
-    .hribbon b{font-size:19px;}
-    .hact{margin-top:10px; max-width:none;}
-    .hcta{font-size:15.5px; padding:15px 12px;}
-    .btn-out{font-size:14px; padding:13px 12px;}
-    /* 注意書きは1行に収める。画面の幅に合わせて字を細める */
-    .hmicro{font-size:clamp(7.5px,2.45vw,10.5px); white-space:nowrap; margin-top:10px;}
-    .prob-grid,.pillars,.price-grid,.req-grid,.forwho{grid-template-columns:1fr;}
-    .story-line{font-size:15px;}
-    .pick-row{grid-template-columns:1fr; gap:8px;}
-    .pick-bar{max-width:120px;}
-    .head-cta{display:none;}
-    .head-free{display:none;}
-    section{padding:60px 0;}
-    .sec-head h2{font-size:23px;}
-  }
-
-  /* =========================================================
-     パソコンで見たときの余白づめ（961px以上でだけ効く）
-     スマホの見た目には一切さわりません。
-     ========================================================= */
-  @media (min-width:961px){
-
-    /* ① 文の途中で切っている「かたまり」を、パソコンでは切らない。
-          スマホの改行のために入れている印なので、幅が広い画面では
-          そのまま流したほうが右側があきません。 */
-    .nb{display:inline;}
-
-    /* ② 本文が左に寄っていて、右が大きくあいていた場所。
-          ほかの節と同じように、まん中にそろえます。 */
-    .story-body,.story-line,.brake{max-width:820px;}
-    .story .story-body,.story .story-line,.story .brake,
-    #research .story-body,#research .story-line{margin-left:auto; margin-right:auto;}
-
-    /* 見出しの行も同じ幅のまん中にそろえて、本文と縦のラインを合わせる */
-    #research .headrow{max-width:820px; margin-left:auto; margin-right:auto;}
-    #research .headrow > .sec-head.left{max-width:none;}
-
-    /* ③ 見出し横のイラストが小さくて、文字とのあいだがあいていた分 */
-    .headrow{gap:36px;}
-    .headrow > .fig img{max-width:230px; max-height:176px;}
-    .problem .headrow > .sec-head.left,
-    section > .wrap > .headrow > .sec-head.left{max-width:none;}
-
-    /* ③-2 Why と Panel の見出し。文字が左はし、絵が右はしで、
-            まん中が大きくあいていた。文字と絵をひとかたまりにして
-            まん中に置きます（本文が横いっぱいの節だけ） */
-    .problem > .wrap > .headrow,
-    section:not(#research) > .wrap > .headrow{
-      grid-template-columns:auto auto; justify-content:center; column-gap:44px;}
-    .problem > .wrap > .headrow > .sec-head.left,
-    section:not(#research) > .wrap > .headrow > .sec-head.left{max-width:620px;}
-
-    /* ④ 中央の見出しの幅。680pxだと見出しが変なところで折れて、
-          そのぶん両側があいて見えていた */
-    .sec-head{max-width:820px;}
-
-    /* ⑤ Solid price のイラスト2枚。小さすぎて左右があいていた */
-    .figs{gap:46px;}
-    .figs img{max-width:280px; max-height:174px;}
-
-    /* ⑥ Patrol（10サイト）。スマホの画面写真が縦に長すぎて、
-          左のサイト名の上下が大きくあいていた。高さで止めます */
-    .sites-grid{grid-template-columns:1fr auto; gap:56px;}
-    .sites-note{font-size:14.5px; line-height:2.05;}
-    .sites-img{width:auto; max-width:none; max-height:400px;}
-
-    /* Solid price の右側も同じく縦長。高さで止めて、列も細くする */
-    .psec:has(.psec-img.sm){grid-template-columns:1fr 280px;}
-    .psec-img.sm{width:auto; max-width:none; max-height:500px; margin:0 auto;}
-
-  }
-
-  /* =========================================================
-     ヒーローだけ、幅がじゅうぶんある画面（1180px以上）で
-     元ネタと同じ左右2列にします。それより狭いと文字と絵が
-     ぶつかるので、中央寄せの1列のままにします。
-     ========================================================= */
-  @media (min-width:1180px){
-    /* 目次を出す */
-    .headnav{display:flex;}
-
-    /* ===== ヒーロー（元ネタと同じ左右の組み方） =====
-       ・左に大きい文字。リリース記念の枠より右まで伸ばす
-       ・その下の右側に「丸＋ノートPC＋マスコット」
-       ・右はしにスマホ。上は見出しの頭、下は注意書きの行まで
-       絵は舞台（.hvis）をやめて、ヒーロー全体を基準に置きます */
-    .hgrid{position:relative; display:block; text-align:left; padding:54px 0 46px;}
-    .hcopy{max-width:none; margin:0;}
-
-    .hkicker{font-size:40px; margin-bottom:13px;}
-    .hero h1{font-size:54px; justify-content:flex-start; flex-wrap:nowrap;
-      white-space:nowrap; gap:0 12px; margin-bottom:20px;}
-    .hero h1 mark{padding:3px 16px 8px;}
-    .hero h1 .hx{font-size:40px;}
-    .hbrand{font-size:26px;}
-    .hbrand b{font-size:36px;}
-
-    /* リリース記念の枠は、下のボタンと同じ幅にそろえる */
-    .hribbon{max-width:430px; margin:26px 0 0; font-size:15.5px; padding:12px 16px;}
-    .hribbon b{font-size:24px;}
-    .hact{max-width:430px; margin:15px 0 0;}
-    .hmicro{text-align:left;}
-
-    /* 舞台をやめる。中の絵は全部 .hgrid が基準になる */
-    .hvis{position:static; width:0; height:0; margin:0;}
-
-    /* 右はしのスマホ。大きくする */
-    .hphone{left:auto; right:24px; top:54px; bottom:auto; width:258px;
-      border-radius:34px; padding:8px;}
-    .hphone-in{border-radius:24px;}
-    .hdots{bottom:12px;}
-    .hdots i{width:7px; height:7px;}
-    .hdots i.on{width:19px;}
-
-    /* 丸＋ノートPC＋マスコットのセット。文字の下、ボタンの右 */
-    .hbadge{right:360px; top:auto; bottom:132px; width:248px; height:248px; padding:0 16px 26px;}
-    .hbadge .t{font-size:18px;}
-    .hbadge b{font-size:21px; margin-top:2px;}
-    .hbadge b i{font-size:60px;}
-    .hlap{right:450px; bottom:82px; width:178px;}
-    .hlap-scr{height:100px; border-width:6px; border-top-width:9px;}
-    .hlap-base{height:10px; margin:0 -13px;}
-    .hmascot{right:368px; bottom:80px; width:100px;}
-  }
+/* ---------- パソコン：2列 ---------- */
+.topbar { display: none; }
+@media (min-width: 900px) {
+  .dots, .mini { display: none; }
+  .topbar { display: flex; position: sticky; top: 0; z-index: 10; align-items: center; justify-content: space-between; gap: 20px; padding: 10px 40px; background: rgba(255, 248, 236, .94); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+  .topbar .logo { display: flex; align-items: center; gap: 10px; font-family: var(--f-disp); font-weight: 900; font-size: 20px; text-decoration: none; }
+  .topbar .logo img { width: 40px; height: 40px; }
+  .topbar nav { display: flex; gap: 22px; font-weight: 700; font-size: 15px; }
+  .topbar nav a { text-decoration: none; }
+  .topbar nav a:hover { color: var(--orange); }
+  .topbar .btn { padding: 9px 20px; font-size: 15px; }
+  .pg, .pg.shot, .pg.switch, .pg.price, .pg.art { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 56px; padding: 72px max(40px, calc((100vw - 1120px) / 2)); }
+  .pg.art .bg { position: static; width: 100%; max-width: 440px; height: auto; aspect-ratio: 900 / 1612; border-radius: 28px; box-shadow: 0 20px 50px rgba(27, 42, 68, .2); justify-self: center; }
+  .pg.art { background: var(--cream); }
+  .pg.art.dark { background: var(--night); }
+  .pg.art .cap { padding: 0; }
+  .pg.art .cta-row { padding: 0; margin-top: 26px; }
+  .pg.art > .side { display: flex; flex-direction: column; }
+  .pg.art:nth-of-type(even) .bg { order: 2; }
+  .cap h1 { font-size: 54px; }
+  .cap h2, .pg.shot .txt h2, .switch h2, .price h2 { font-size: 42px; }
+  .cap p, .pg.shot .txt p { font-size: 18px; }
+  .cap .lead-b { background: none; padding: 0; }
+  .pg.shot .vis { order: 0; }
+  .pg.shot:nth-of-type(odd) .vis { order: 2; }
+  .pg.shot .phone { height: 600px; max-width: none; }
+  .pg.shot .panel, .pg.shot .panel img { max-height: 640px; }
+  .pg.switch { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+  .switch .mascot { width: 220px; margin: 24px 0 0; }
+  .pg.price { display: block; padding-block: 72px; }
+  .pg.price > * + * { margin-top: 18px; }
+  .plans { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .plan { grid-template-columns: minmax(0, 1fr); align-content: start; }
+  .plan img { width: 96px; height: 96px; grid-row: auto; margin-inline: auto; }
+  .plan h3 { justify-content: center; text-align: center; }
+  .plan .yen { text-align: center; }
+  .plan .go { margin-top: auto; }
+  footer { padding: 22px max(40px, calc((100vw - 1120px) / 2)); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn, .slot .bar i, .dots i, .mini { transition: none; } }
 </style>
+
 </head>
 <body>
-
-<header>
-  <div class="headbar wrap">
-    <div class="brand"><img src="images/logo-next.png" alt="SearchHub NEXT">SearchHub NEXT</div>
-    <nav class="headnav">
-      <a href="#loop">機能</a>
-      <a href="#sites">対応サイト</a>
-      <a href="#screens">画面</a>
-      <a href="#pricing">料金</a>
-      <a href="#faq">よくある質問</a>
-    </nav>
-    <div class="headact">
-      <a class="head-free" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す</a>
-      <a class="head-cta" href="#pricing">料金を見る</a>
-    </div>
-  </div>
+<header class="topbar">
+  <a class="logo" href="#top"><img src="images/lp/mascot.webp" alt="">SearchHub NEXT</a>
+  <nav><a href="#research">調べる</a><a href="#patrol">巡回</a><a href="#ledger">帳簿</a><a href="#switch">乗り換え</a><a href="#price">料金</a><a href="guide.html">使い方ガイド</a></nav>
+  <a class="btn" href="#price">申し込む</a>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hstrip">＼ <b>フリマ対応</b>・店舗も電脳も <b>これ1本</b> ／</div>
-
-  <div class="wrap hgrid">
-
-    <div class="hcopy">
-      <p class="hkicker">探す時間が、なくなる。</p>
-      <h1><mark>自動リサーチ</mark><span class="hx">×</span><mark>自動巡回</mark></h1>
-      <p class="hbrand">せどり自動化ツール <b>SearchHub NEXT</b></p>
+<main id="deck">
+  <!-- 1 表紙 -->
+  <section class="pg art" id="top">
+    <img class="bg" src="images/lp/cover.webp" alt="段ボールのロボットが虫めがねを持って、たくさんの出品画面の間を走っている">
+    <div class="side">
+      <div class="cap">
+        <span class="chip">せどりのリサーチ・巡回・帳簿</span>
+        <h1 style="margin-top:12px">探すのは、<br>こいつに<span class="mark">任せる。</span></h1>
+        <p><span class="lead-b">調べる・見張る・帳簿をつける。<br>ぜんぶ、1つのアプリで。</span></p>
+      </div>
+      <div class="cta-row">
+        <a class="btn" href="#price">プランを見る</a>
+        <a class="btn ghost" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す</a>
+      </div>
     </div>
+  </section>
 
-    <div class="hvis">
-      <div class="hphone">
-        <div class="hphone-in">
-          <div class="hslide" id="heroSlide">
-            <figure class="hs"><img src="images/amazon-research.jpg" alt="Amazonリサーチの解析画面" loading="eager"></figure>
-            <figure class="hs"><img src="images/watcher.jpg" alt="ウォッチャーで見つかった商品" loading="eager"></figure>
-            <figure class="hs"><img src="images/patrol-progress.jpg" alt="巡回の進捗" loading="lazy"></figure>
-            <figure class="hs"><img src="images/dashboard.png" alt="ダッシュボード" loading="lazy"></figure>
-          </div>
-          <div class="hdots" id="heroDots"><i class="on"></i><i></i><i></i><i></i></div>
+  <!-- 2 困りごと -->
+  <section class="pg art dark">
+    <img class="bg" src="images/lp/night.webp" alt="夜中にスマホとパソコンを見比べる男性の肩に、ロボットが手を置いている">
+    <div class="side">
+      <div class="cap">
+        <h2>夜中まで、<br>フリマに張り付いてない？</h2>
+        <p>10サイトを見て回るだけで、1日が終わる。<br>その「探す」を、まるごと引き受けます。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 一発解析 -->
+  <section class="pg shot" id="research">
+    <div class="txt">
+      <span class="chip">全プラン</span>
+      <h2 style="margin-top:8px">棚の前で、<br><span class="mark">ひと目で判定。</span></h2>
+      <p>バーコードを読むだけ。相場・ランク・鉄板値・利益が1画面に。</p>
+    </div>
+    <div class="vis"><div class="phone"><img src="images/lp/sc_amazon.webp" alt="Amazonリサーチの画面。buybox平均、中古最安、鉄板値、想定利益が出ている" loading="lazy"></div></div>
+  </section>
+
+  <!-- 4 パネル -->
+  <section class="pg shot">
+    <div class="txt">
+      <span class="chip">全プラン・パソコンのChrome</span>
+      <h2 style="margin-top:8px">仕入れ先のページに、<br><span class="mark-b">相場が出る。</span></h2>
+      <p>メルカリを見ながら、右下のパネルで利益まで。そのまま帳簿へ登録。</p>
+    </div>
+    <div class="vis"><div class="panel"><img src="images/lp/sc_panel.webp" alt="リサーチパネル。値動きグラフ、相場、ランク、利益計算、登録ボタン" loading="lazy"></div></div>
+  </section>
+
+  <!-- 5 寝てる間 -->
+  <section class="pg art dark" id="autoresearch">
+    <img class="bg" src="images/lp/sleep.webp" alt="男性が眠っている間に、ロボットがパソコンで商品を調べている" loading="lazy">
+    <div class="side">
+      <div class="cap">
+        <span class="chip k">NEXT・極</span>
+        <h2 style="margin-top:8px">寝てる間に、<br>商品リサーチ。</h2>
+        <p>条件に合う商品を、夜のうちに自動で調べておく。<br>朝には、利益の出そうな候補がリストに。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 巡回 -->
+  <section class="pg shot" id="patrol">
+    <div class="txt">
+      <span class="chip k">NEXT・極</span>
+      <h2 style="margin-top:8px">本業中も、<br><span class="mark">10サイトを見張る。</span></h2>
+      <p>メルカリ・ヤフオク・オフモールほか10サイト。見つけた商品は、相場と利益まで計算済み。</p>
+    </div>
+    <div class="vis"><div class="phone"><img src="images/lp/sc_watcher.webp" alt="巡回で見つかった商品の一覧。相場と仕入上限と利益の表" loading="lazy"></div></div>
+  </section>
+
+  <!-- 7 帳簿 -->
+  <section class="pg shot" id="ledger">
+    <div class="txt">
+      <span class="chip">全プラン</span>
+      <h2 style="margin-top:8px">仕入れたら、<br><span class="mark-b">帳簿まで自動。</span></h2>
+      <p>古物台帳・月別の利益・経費・一括出品。Amazonのレポートを落とせば売上も入る。</p>
+    </div>
+    <div class="vis"><div class="phone"><img src="images/lp/sc_ledger.webp" alt="販売管理の画面。仕入れた商品と想定利益の一覧" loading="lazy"></div></div>
+  </section>
+
+  <!-- 8 乗り換え -->
+  <section class="pg switch" id="switch">
+    <div>
+      <span class="chip">乗り換える方へ</span>
+      <h2 style="margin-top:8px">自動価格改定ツールから、<br>乗り換える方へ。</h2>
+      <img class="mascot" src="images/lp/mascot.webp" alt="" loading="lazy">
+    </div>
+    <div class="cmp">
+      <div><s>値段を自動で追いかける</s><b>値段は自分の目で決める。<br>決める材料を1画面に。</b><small>ライバルの値段・手残り・経過日数。セラセンへの直通ボタン付き。</small></div>
+      <div><s>帳簿は別のツールで</s><b>仕入れた瞬間に、帳簿へ。</b><small>二重入力なし。古物台帳のCSVもそのまま。</small></div>
+      <div><s>また別の契約が増える</s><b>いまのKeepaのキーで始められる。</b><small>トークンを抑える「低トークンモード」付き。</small></div>
+    </div>
+  </section>
+
+  <!-- 9 料金 -->
+  <section class="pg price" id="price">
+    <div>
+      <h2>料金</h2>
+      <p class="note">月額・税込。あとからいつでもプランを変えられます。データはそのままです。</p>
+    </div>
+    <div class="plans">
+      <div class="plan free">
+        <img src="images/lp/icon-free.webp" alt="" loading="lazy">
+        <h3>無料版</h3>
+        <div class="yen">¥0 <small>登録いらず</small></div>
+        <ul><li>Amazonリサーチ（1日20回）</li><li>バーコード読み取り</li></ul>
+        <a class="btn ghost go" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す</a>
+      </div>
+      <div class="plan">
+        <span class="chip tag">リリース記念</span>
+        <img src="images/lp/icon-lite.webp" alt="" loading="lazy">
+        <h3>NEXTライト</h3>
+        <div class="yen"><del>¥1,980</del>¥980 <small>/月</small></div>
+        <ul><li>Amazonリサーチ</li><li>リサーチパネル（拡張）</li><li>帳簿・価格改定・月別・経費</li></ul>
+        <a class="btn go" data-buy href="https://buy.stripe.com/8x2eVc2VMabd9beatv4AU09" target="_blank" rel="noopener">ライトではじめる</a>
+      </div>
+      <div class="plan best">
+        <span class="chip tag" style="background:var(--blue)">おすすめ</span>
+        <img src="images/lp/logo-next.webp" alt="" loading="lazy">
+        <h3>NEXT</h3>
+        <div class="yen">¥2,980 <small>/月</small></div>
+        <ul><li>ライトの全部</li><li>10サイト自動巡回（1日2回）</li><li>夜の自動リサーチ・仕入れリスト</li></ul>
+        <a class="btn go" data-buy href="https://buy.stripe.com/cNi4gy2VMfvx1IM7hj4AU07" target="_blank" rel="noopener">NEXTではじめる</a>
+      </div>
+      <div class="plan kiwami" id="cardKiwami">
+        <span class="chip k tag">毎月20名まで</span>
+        <img src="images/lp/icon-kiwami.webp" alt="" loading="lazy">
+        <h3>NEXT極</h3>
+        <div class="yen">¥4,980 <small>/月</small></div>
+        <ul><li>NEXTの全部</li><li>人気3サイトを何周も高速巡回</li></ul>
+        <div class="slot">今月の残り <span class="bar"><i id="slotFill"></i></span> <span id="slotText">20名 / 月</span></div>
+        <a class="btn go" id="ctaKiwami" data-buy href="https://buy.stripe.com/7sY5kCaoebfh0EI9pr4AU08" target="_blank" rel="noopener">極ではじめる</a>
+      </div>
+    </div>
+    <p class="need">使うのに必要なもの：Keepa（有料版）とAmazonセラーセントラル。巡回（NEXT・極）は、つけっぱなしにできるWindowsのパソコンとChrome。</p>
+  </section>
+
+  <!-- 10 締め -->
+  <section class="pg art" id="end">
+    <img class="bg" src="images/lp/happy.webp" alt="届いた商品を開けて喜ぶ男性と、帳簿を抱えてピースするロボット" loading="lazy">
+    <div class="side">
+      <div class="cap">
+        <h2>探す時間を、<br><span class="mark">自分の時間に。</span></h2>
+        <div class="links">
+          <a href="guide.html">使い方ガイド</a><a href="guide.html#video">使い方の動画</a>
         </div>
+        <p style="margin-top:10px"><span class="lead-b">お問い合わせ：<span class="mail">searchhubnext@gmail.com</span></span></p>
       </div>
-
-      <div class="hbadge">
-        <span class="t">自動化システムで</span>
-        <b>作業量<i>80</i>%カット</b>
-      </div>
-
-      <div class="hlap">
-        <div class="hlap-scr"><img src="images/panel.png" alt="リサーチパネル" loading="lazy"></div>
-        <div class="hlap-base"></div>
-      </div>
-
-      <img class="hmascot" src="images/mascot.png" alt="" loading="lazy">
-    </div>
-
-    <div class="hribbon"><em>リリース記念</em> <b>980</b>円/月 からはじめられます</div>
-
-    <div class="hact">
-      <a class="btn btn-gold hcta" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料で試す<small>登録もライセンスも不要</small></a>
-      <a class="btn btn-out hcta2" href="#pricing">料金プランを見る</a>
-      <p class="hmicro">画面は開発者の実際の解析結果です。成果を保証するものではありません</p>
-    </div>
-
-  </div>
-</section>
-
-<!-- ============ PROBLEM ============ -->
-<div class="problem">
-  <div class="wrap">
-    <div class="headrow">
-      <figure class="fig"><img src="images/ill-time.png" alt="時間に追われる" loading="lazy"></figure>
-      <div class="sec-head left" style="margin-bottom:0;">
-        <div class="sec-eyebrow">Why</div>
-        <h2>せどりで消えていく時間は、<br>だいたい決まっています。</h2>
+      <div class="cta-row">
+        <a class="btn" href="#price">プランを選ぶ</a>
       </div>
     </div>
-    <div class="prob-grid">
-      <div class="prob">
-        <p class="q">同じ商品を、毎日手で検索している</p>
-        <p class="a">前に利益が出た商品。また安く出ていないか、いくつものサイトを開いて確かめる。その時間だけで1日が終わる。</p>
-      </div>
-      <div class="prob">
-        <p class="q">出品したかどうか、思い出せない</p>
-        <p class="a">「これ、まだ出品してたっけ？」。仕入れとAmazonと帳簿がバラバラだから、毎回セラーセントラルを開いて確かめることになる。</p>
-      </div>
-      <div class="prob">
-        <p class="q">同じ数字を、何度も打ち込んでいる</p>
-        <p class="a">価格改定ツールに1回、帳簿に1回、確定申告用にもう1回。売れるたびにコピペしている。</p>
-      </div>
-    </div>
-  </div>
-</div>
+  </section>
+  <footer>
+    <span>© SearchHub NEXT</span>
+    <a href="tokushoho.html">特定商取引法に基づく表記</a>
+    <a href="privacy.html">プライバシーポリシー</a>
+  </footer>
+</main>
 
-<!-- ============ PILLARS ============ -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">What it does</div>
-      <h2>やることは、3つだけです。</h2>
-      <p><span class="nb">探す。見張る。管理する。</span><span class="nb">この3つを1本につなげました。</span></p>
-    </div>
-    <div class="pillars">
-      <div class="pillar">
-        <div class="n">01 / SEARCH</div>
-        <h3>寝ている間に、利益商品を探しておく</h3>
-        <p>あなたが寝ているあいだ、こちらのサーバーが<b>自動で利益の出る商品を探します</b>。見つかった商品を出しているセラーを辿って、また次の候補を探す。パソコンは切ったままで構いません。朝には候補が溜まっています。</p>
-      </div>
-      <div class="pillar">
-        <div class="n">02 / WATCH</div>
-        <h3>本業をしている間も、探し続ける</h3>
-        <p><b>利益商品を登録しておくと</b>、10サイトを自動で巡回します。あなたが決めた仕入上限より安く出た瞬間に通知。別の作業をしている時間も、本業をしている時間も、仕入れの時間になります。</p>
-        <p class="pillar-note">※ 自動巡回はあなたのパソコンのChromeが動かします。電源を入れたままにしておく必要があります。</p>
-      </div>
-      <div class="pillar">
-        <div class="n">03 / MANAGE</div>
-        <h3>仕入れから記帳まで、二重入力なし</h3>
-        <p>仕入れた瞬間に販売管理へ。出品、価格改定、販売、返金までひと続き。月別の利益も、古物台帳用のCSVも、そのまま出せます。Amazonで販売した商品は、ダウンロードしたCSV等で必要事項を自動入力できます。</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ LOOP ============ -->
-<section id="loop">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Loop</div>
-      <h2>探すのをやめません。<br>あなたが寝ていても。</h2>
-      <p><span class="nb">利益商品を探し、</span><span class="nb">それを売っているセラーを辿り、</span><span class="nb">出てきた瞬間に知らせる。</span><span class="nb">この輪がずっと回り続けます。</span></p>
-    </div>
-
-    <figure class="fig fig-c"><img src="images/ill-night.png" alt="寝ているあいだも探し続ける" loading="lazy"></figure>
-    <div class="loop-steps">
-      <div class="lstep">
-        <div class="lnum">1</div>
-        <div>
-          <h3>寝ている間に、利益商品をリサーチ<span class="lbadge">NEXT以上</span></h3>
-          <p>あなたが寝ている間に、こちらのサーバーが自動で利益の出る商品を探します。パソコンは切ったままで構いません。</p>
-        </div>
-      </div>
-
-      <div class="lstep">
-        <div class="lnum">2</div>
-        <div>
-          <h3>見つけた商品から、セラーを抜き出す<span class="lbadge">NEXT以上</span></h3>
-          <p>利益商品が見つかったら、それを出している<b>セラーを抽出</b>します。良い商品を扱っている人は、他にも良い商品を持っているからです。そのセラーを辿って、また次の候補を探す。<b>半永久的に候補が増え続けます。</b></p>
-        </div>
-      </div>
-
-      <div class="lstep">
-        <div class="lnum">3</div>
-        <div>
-          <h3>1日2回、今まさに出ている物を探す<span class="lbadge">NEXT以上</span></h3>
-          <p>溜まった利益商品のリストを使って、<b>あなたが指定した時刻に1日2回</b>、10サイトを回ります。今この瞬間に、あなたの仕入上限より安く出品されている物だけを拾ってリストにします。</p>
-        </div>
-      </div>
-
-      <div class="lstep">
-        <div class="lnum">4</div>
-        <div>
-          <h3>取りこぼしたくないなら、何周でも<span class="lbadge">NEXT極</span></h3>
-          <p>NEXT極は、指定した時間帯のあいだ<b>何回も探しにいきます</b>。早い者勝ちの1件は、見た回数の多いほうが取れます。</p>
-        </div>
-      </div>
-
-      <div class="lstep">
-        <div class="lnum">5</div>
-        <div>
-          <h3>見つかったら、通知<span class="lbadge">NEXT極</span></h3>
-          <p>条件に合う物が出た瞬間に<b>スマホに知らせます</b>。あとは開いて、買うか見送るかを決めるだけです。</p>
-        </div>
-      </div>
-
-      <div class="lstep">
-        <div class="lnum">6</div>
-        <div>
-          <h3>買ったら、その場で登録</h3>
-          <p>仕入れた商品は<b>その場で販売管理へ登録</b>できます。仕入先も自動で入ります。<b>古物台帳用のCSVもそのまま出せる</b>ので、帳簿をつけるために後からまとめて打ち直す手間がありません。</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="loop-end">
-      <h3>パソコンの前にいる必要は、ありません。</h3>
-      <p>通知はスマホに届きます。仕事中でも、出先でも、電車の中でも。<br>その場で開いて、その場で買えます。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SITES ============ -->
-<div class="sites" id="sites">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Patrol</div>
-      <h2>10サイトを、順番に見て回ります。</h2>
-      <p>あなたの仕入上限に合わせた検索URLを自動で作り、1件ずつ確かめていきます。</p>
-    </div>
-    <div class="sites-grid">
-      <div>
-        <div class="site-tags">
-          <span class="site-tag">メルカリ</span>
-          <span class="site-tag">ヤフーフリマ</span>
-          <span class="site-tag">ヤフオク</span>
-          <span class="site-tag">ラクマ</span>
-          <span class="site-tag">駿河屋</span>
-          <span class="site-tag">セカンドストリート</span>
-          <span class="site-tag">オフモール</span>
-          <span class="site-tag">トレジャーファクトリー</span>
-          <span class="site-tag">Yahoo!ショッピング</span>
-          <span class="site-tag">au PAY マーケット</span>
-        </div>
-        <figure class="sites-mini"><img src="images/patrol-progress.jpg" alt="巡回進捗パネル" loading="lazy"></figure>
-        <p class="sites-note">
-          <span class="nb">どこまで回ったかは、</span><span class="nb">進捗パネルでいつでも</span><span class="nb">確認できます。</span><br><br>
-          <span class="nb">NEXT極では、</span><span class="nb">メルカリ・ヤフーフリマ・</span><span class="nb">オフモールの3サイトを</span><span class="nb"><b>高速巡回</b>。</span>
-          <span class="nb">新着が出てから通知が</span><span class="nb">届くまでの時間を、</span><span class="nb">さらに縮めます。</span>
-        </p>
-      </div>
-      <div class="sites-shot">
-        <img class="sites-img" src="images/patrol-progress.jpg" alt="巡回進捗パネル" loading="lazy">
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ============ RESEARCH ============ -->
-<section id="research">
-  <div class="wrap">
-    <div class="headrow">
-      <figure class="fig"><img src="images/ill-shelf-1.png" alt="棚の前で迷う" loading="lazy"></figure>
-      <div class="sec-head left">
-        <div class="sec-eyebrow">Amazon research</div>
-        <h2>棚の前で、10分。</h2>
-        <p><span class="nb">見つけた商品が、</span><span class="nb">本当に買って売れるのか。</span><span class="nb">プライスターを見て、</span><span class="nb">Keepaを見て、また戻る。</span><span class="nb">長いときは1商品で10分以上。</span><span class="nb">その間ずっと、</span><span class="nb">棚の前に立ったままです。</span></p>
-      </div>
-    </div>
-    <div class="story-line">Amazonリサーチは、その往復を1画面にしました。</div>
-    <div class="story-body" style="margin-top:26px;">
-      <p>ASINかバーコードを読ませるだけで、<b>実際にカートを取って売れている値段</b>・中古最安・手数料を引いた手取り・想定利益・出品者数・売れた回数まで一画面に出ます。値動きが上がりか下がりか横ばいかも札で出ます。</p>
-      <p>自分の在庫が何個あるかも同時に出るので、<b>二重仕入れも防げます</b>。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SOLID ============ -->
-<section style="background:var(--mist);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Solid price</div>
-      <h2>「この値段なら、出したら即売れる」を数字にしました。</h2>
-      <p><span class="nb">よこよこの相場から一瞬だけ落ちて、</span><span class="nb">すぐ買われて消える値段。</span><br>
-      ベテランがチャートを見て掴んでいたその感覚を、90日分の値動きから数えて出します。</p>
-    </div>
-    <div class="figs">
-      <img src="images/ill-chart-1.png" alt="値動きを見る" loading="lazy">
-      <img src="images/ill-chart-2.png" alt="繰り返し現れる安値" loading="lazy">
-    </div>
-    <div class="psec">
-      <div>
-        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">鉄板値</h3>
-        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
-          相場が1万円の商品に、たまに9,000円が出て、数時間で消える。<br>
-          あれは「9,000円なら誰かが必ず買う」という値段です。<br><br>
-          90日の値動きから、<b>短い時間で消えた安値</b>だけを拾い、同じ値段が繰り返し現れているかを数えます。
-          <b>何回あったか</b>と<b>何時間で消えたか</b>まで出るので、その値段の固さが一目で分かります。
-          回数が多くて、消えるのが速いほど固い値段です。
-        </p>
-        <figure class="psec-mini"><img src="images/amazon-research.jpg" alt="Amazonリサーチ 鉄板値" loading="lazy"></figure>
-        <ul class="psec-list">
-          <li>◆ <b>buybox平均</b>…実際にカートを取って売れている値段の90日平均。売れない高値に引っ張られません。</li>
-          <li>◆ <b>値動きの札</b>…上昇／下降（継続中・品薄で跳ね）／下降が終了／もみもみ。%ではなく、向きで出します。</li>
-          <li>◆ <b>SR・SSR</b>…中古が点でしか出ないのに売れている商品。供給が絶えているのに需要がある、いわゆるお宝です。</li>
-          <li>◆ <b>ランクの＋</b>…SR・SSRの形はできているのに、直近30日だけ動きが無かった商品に付きます。中古がめったに出ない商品は売れた回数も出品者数も伸びず、需要があってもランクが低く出るためです。<b>あと一歩、という印</b>です。</li>
-        </ul>
-        <div class="psec-note">
-          鉄板値は<b>仕入上限としてそのまま使えます</b>。巡回で見つかった商品がこの値段以下なら、赤い「鉄板」の札が付きます。迷う時間がなくなります。
-        </div>
-      </div>
-      <div>
-        <img class="psec-img sm" src="images/amazon-research.jpg" alt="Amazonリサーチ 鉄板値" loading="lazy">
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PANEL ============ -->
-<section>
-  <div class="wrap">
-    <div class="headrow">
-      <figure class="fig"><img src="images/ill-pc.png" alt="パソコンで作業する" loading="lazy"></figure>
-      <div class="sec-head left">
-        <div class="sec-eyebrow">Panel</div>
-        <h2>仕入れ先のページに、間借りします。</h2>
-        <p><span class="nb">手動の電脳仕入れで、</span><span class="nb">判断のために</span><span class="nb">いくつものサイトを</span><span class="nb">行き来しなくて済むように。</span><br><span class="nb">PCで開いているページの上に</span><span class="nb">そのまま出る、</span><span class="nb">補助のツールです。</span></p>
-      </div>
-    </div>
-    <div class="psec">
-      <div>
-        <img class="psec-img" src="images/panel.png" alt="リサーチパネル" loading="lazy">
-      </div>
-      <div>
-        <h3 style="font-size:19px; line-height:1.6; margin-bottom:10px;">リサーチパネル（Chrome拡張機能）</h3>
-        <p style="font-size:14px; line-height:1.95; color:var(--slate);">
-          メルカリ・ヤフーフリマ・ヤフオク・オフモール・セカンドストリート、そしてAmazon。
-          商品ページの型番をなぞるか、打ち込むだけで、その場でAmazonの相場が出ます。
-        </p>
-        <ul class="psec-list">
-          <li>◆ buybox平均・中古最安・カート価格・<b>鉄板値</b></li>
-          <li>◆ ランク（回転の速さ）と値動きの札</li>
-          <li>◆ 仕入れ値を打てば、手数料を引いた手取りと想定利益がその場で出る</li>
-          <li>◆ <b>自在庫</b>…同じ商品を自分が何個持っているか。1つでもあれば赤くなります</li>
-          <li>◆ その商品を<b>過去いくらで売ってきたか</b>もその場で開けます</li>
-          <li>◆ 仕入れたら<b>そのまま販売管理へ登録</b>。仕入先も自動で入ります</li>
-        </ul>
-        <div class="psec-note">
-          <b>NEXTライトからお使いいただけます。</b>店舗仕入れが中心の方でも、フリマの新着を見ながらそのまま判断できます。
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ GUARD ============ -->
-<section id="guard" style="background:var(--mist);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Safeguards</div>
-      <h2>間違ったものを、出さない。</h2>
-      <p><span class="nb">機能の数より、こちらのほうが大事だと思っています。</span><span class="nb">一度の事故で、その月の利益は消えるからです。</span></p>
-    </div>
-
-    <div class="guard">
-      <div class="guard-item">
-        <h3>型番が一致しなければ、何も出しません</h3>
-        <p>型番で調べたとき、<b>打った型番とぴったり同じ商品だけ</b>を出します。1文字違いの別商品は出しません。見つからなければ「ありません」と正直に言います。<b>似ているものを出すほうが親切に見えますが、それを買ってしまう事故のほうが高くつきます。</b></p>
-      </div>
-
-      <div class="guard-item">
-        <h3>その商品を何個持っているか、同時に出します</h3>
-        <p>解析した瞬間に<b>自分の在庫の数</b>が出ます。1つでも持っていれば赤くなります。売れ残っているものをもう一度仕入れる、という一番もったいない事故を止めるためです。</p>
-      </div>
-
-      <div class="guard-item">
-        <h3>1つに決まらないときは、勝手に決めません</h3>
-        <p>色違いやセット品など、候補が複数あるときは<b>写真付きで並べて選んでもらいます</b>。こちらで適当に1つ選ぶことはしません。選び直しても<b>追加のトークンはかかりません</b>。</p>
-      </div>
-
-      <div class="guard-item">
-        <h3>古くなった鉄板値は、出しません</h3>
-        <p>鉄板値が<b>直近30日の平均より高くなっていたら、その値は捨てます</b>。相場が下がったのに昔の高値を出し続けると、その値段で仕入れて売れ残ります。出ないことが答えの場合もあります。</p>
-      </div>
-
-      <div class="guard-item" style="grid-column:1 / -1;">
-        <h3>良さそうに見えても、危ない兆しがあれば評価を下げます</h3>
-        <p>高いランクが付きそうな商品でも、<b>値崩れが起きている・ライバルが急に増えている・直近30日で1つも売れていない</b>、このどれかに当てはまるときはランクを下げます。売れた回数が多いだけで良く見える商品はありますが、それを買うのは今ではない、ということがあるからです。</p>
-        <p><b>レア（SR・SSR）の札も同じ扱いです。</b>90日のあいだに売れていても、直近30日が止まっているならレアとは呼びません。かわりに<b>ランクの横に「＋」</b>を出して、あと一歩だったことだけを残します。中古がめったに出ない商品を切り捨てず、かといって「出たら即売れる」と言い切りもしない、その間を取っています。</p>
-      </div>
-    </div>
-
-    <div class="guard-note">
-      <b>なぜここにこだわるのか。</b>これらは全部、実際にやってみて損をしたことがある場面です。棚の前で慌てて型番を打ち込んで、1文字違いの商品を買って帰る。売れ残っている物をもう一度仕入れる。半年前の高値を見て買う。<b>作った人間が毎日仕入れをしているので、どこで事故が起きるかを知っています。</b>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SCREENS ============ -->
-<section class="screens" id="screens">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Screens</div>
-      <h2>実際の画面</h2>
-      <p><span class="nb">PC版とスマホ版、</span><span class="nb">どちらも同じデータを見ています。</span><br><span class="nb">店頭ではスマホ、事務所ではPC。</span><span class="nb">そのまま続きができます。</span></p>
-    </div>
-    <div class="screen-grid">
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/watcher.jpg" alt="ウォッチャー" loading="lazy"></div></div>
-        <figcaption>ウォッチャー<span>仕入上限より安く出た商品</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/sniper.jpg" alt="スナイパー" loading="lazy"></div></div>
-        <figcaption>スナイパー<span>3サイトを短い間隔で</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/amazon-research.jpg" alt="Amazonリサーチ" loading="lazy"></div></div>
-        <figcaption>Amazonリサーチ<span>鉄板値・buybox平均・自在庫まで</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/research-list.png" alt="リサーチリスト" loading="lazy"></div></div>
-        <figcaption>リサーチリスト<span>自動で集めた候補</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/purchase-list.jpg" alt="仕入れリスト" loading="lazy"></div></div>
-        <figcaption>仕入れリスト<span>巡回で見張る商品と仕入上限</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/ledger.png" alt="販売管理" loading="lazy"></div></div>
-        <figcaption>販売管理<span>納品待ちから販売済みまで</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/price-revision.jpg" alt="価格改定" loading="lazy"></div></div>
-        <figcaption>価格改定<span>ライバル価格と手残り</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/monthly-sales.jpg" alt="月別販売情報" loading="lazy"></div></div>
-        <figcaption>月別販売情報<span>純利益まで自動集計</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/monthly-purchase.jpg" alt="月別仕入情報" loading="lazy"></div></div>
-        <figcaption>月別仕入情報<span>仕入れた分を月ごとに</span></figcaption>
-      </figure>
-
-      <figure class="shot">
-        <div class="phone"><div class="phone-screen">
-          <img src="images/dashboard.png" alt="ダッシュボード" loading="lazy"></div></div>
-        <figcaption>ダッシュボード<span>今日の仕入れと利益率</span></figcaption>
-      </figure>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ STORY ============ -->
-<section class="story" id="story">
-  <div class="wrap">
-    <div class="headrow">
-      <figure class="fig"><img src="images/ill-car.png" alt="車で店を回る" loading="lazy"></figure>
-      <div class="sec-head left">
-        <div class="sec-eyebrow">Story</div>
-        <h2>これは、自分のために作りました。</h2>
-      </div>
-    </div>
-
-    <div class="story-body">
-      <p>大阪から、奈良・和歌山・三重・京都・兵庫。月に最低1回はそれぞれの店を回っていました。近所の店はほぼ毎日です。本業の自営をやりながらでした。</p>
-      <p>利益率は高い。けれどガソリン代と高速代が消えていくし、時間も縛られる。大型商品が中心になるので、帰ってから荷ほどきをして、寝るのが2時ということも珍しくありませんでした。</p>
-      <p>そこへ物価高が来ました。<b>仕入れ値は上がるのに、相場は横ばいか下がる。</b>仕入れられる数そのものが減っていきました。</p>
-      <p>店をやめて、手動の電脳に切り替えました。行かなくてよくなった代わりに、拾える小物が少なくて、結局は中型と大型が中心のまま。利益率は下がったのに、<b>作業時間は変わりませんでした</b>。</p>
-      <p>次に、スプレッドシートで半自動の仕組みを作りました。今度は小物が拾えるようになった。それでも<b>作業時間は変わりません</b>。出品されていない商品を開いては閉じ、開いては閉じ。1日1,000件以上です。</p>
-    </div>
-
-    <div class="story-line">道具を変えても、仕入れ先を変えても、時間だけは減らなかった。</div>
-
-    <div class="story-body">
-      <p>それで作ったのが、GASとWEBアプリのハイブリッド版でした。ここでやっと、ほとんど時間をかけずに利益を出せるようになりました。残りの大半は、システムを作っている時間でした。</p>
-      <p>それをサーバーで動くように作り直したのが、SearchHub NEXT です。</p>
-    </div>
-
-    <div class="brake">
-      <h3>特別なことは、していません。</h3>
-      <p>電脳せどりで、みんながやっている当たり前の手順です。それを極限まで半自動にしただけです。ただし<b>最終判断だけは、あなたにやってもらいます</b>。そこがブレーキだからです。</p>
-      <p>拾うところまでは全部こちらでやります。買うか見送るかを決めるのは人間です。全部を機械に任せてしまうと、機械が止まった日に何もできなくなる。判断を自分でやり続けた人だけが、道具が無くても稼げるようになります。</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PRICING ============ -->
-<section id="pricing">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Pricing</div>
-      <h2>まずは無料から。使う分だけの、4プラン。</h2>
-      <p><span class="nb">あとからいつでも変更できます。</span><span class="nb">上げても下げても、</span><span class="nb">これまでのデータはそのままです。</span></p>
-    </div>
-
-    <div class="forwho">
-      <div class="forwho-c">
-        <div class="fw-tag">すでにやっている方へ</div>
-        <h3>やり方を変えてください、とは言いません。</h3>
-        <p>自分のスタイルがあるはずです。預けてほしいのは<b>「探す作業」だけ</b>です。そこだけこちらに渡してもらえれば、あとは今まで通りで構いません。</p>
-        <p>それでも時間は確実に減ります。</p>
-      </div>
-      <div class="forwho-c">
-        <div class="fw-tag">これから始める方へ</div>
-        <h3>何を仕入れたらいいのか分からない、が最初の壁です。</h3>
-        <p>SearchHub NEXT は、条件に合った商品を集めて通知します。ただ「通知が来たものを買うだけで稼げます」とは言いません。実際には選んでいます。回転が速いか、値動きが下降していないか、標準サイズか。</p>
-        <p><b>その判断の基準も、隠さず全部お渡しします。</b>必要なのは「考えなくていい」ではなく、「これで合っているという確信」のはずだからです。</p>
-      </div>
-    </div>
-
-    <div class="pick">
-      <div class="pick-row">
-        <span class="pick-name">NEXTライト</span>
-        <span class="pick-bar"><i style="width:75%"></i></span>
-        <span class="pick-txt"><b>店舗が7割、電脳が3割</b>くらいの方。店で見つけた物をその場で調べて、そのまま帳簿まで。フリマも見るけれど、張り付くほどではない。</span>
-      </div>
-      <div class="pick-row">
-        <span class="pick-name">NEXT</span>
-        <span class="pick-bar"><i style="width:25%"></i></span>
-        <span class="pick-txt"><b>電脳が主戦場</b>の方。指定した時刻に10サイトを回して、条件に合えば通知。店舗はついでに回る、くらいの比重。</span>
-      </div>
-      <div class="pick-row">
-        <span class="pick-name">NEXT極</span>
-        <span class="pick-bar"><i style="width:10%"></i></span>
-        <span class="pick-txt"><b>電脳をがっつり、取りこぼしたくない</b>方。人気の3サイトは別枠で何周も回します。早い者勝ちの1件を、人より先に見たい方向け。</span>
-      </div>
-      <div class="pick-note">左の帯は、店舗仕入れの比重の目安です。</div>
-    </div>
-
-    <div class="price-grid">
-
-      <div class="pcard free">
-        <div class="free-flag">登録不要</div>
-        <img class="picon" src="images/icon-free.png" alt="">
-        <div class="pname">SearchHub リサーチ</div>
-        <div class="pfor">まず解析だけ試したい方へ。<br>ライセンスも登録も要りません。</div>
-        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span>無料</div>
-        <div class="punit">1日20回まで</div>
-        <div class="sale-note" style="visibility:hidden;">-</div>
-        <button class="ptoggle" type="button" aria-expanded="false">機能を見る</button>
-        <div class="pbody">
-        <ul class="plist">
-          <li>Amazonリサーチ（一発解析）</li>
-          <li><b>鉄板値・buybox平均</b></li>
-          <li>バーコード読み取り</li>
-          <li>利益シミュレーション</li>
-          <li class="off">リサーチパネル</li>
-          <li class="off">販売管理</li>
-          <li class="off">価格改定</li>
-          <li class="off">自動巡回</li>
-          <li class="off">自動リサーチ</li>
-        </ul>
-        <div class="pgive">
-          <b>お渡しするもの</b>
-          <ul>
-            <li>ありません</li>
-            <li>ページを開けばすぐ使えます</li>
-          </ul>
-        </div>
-        </div>
-        <a class="pcta" href="https://searchhubpro.github.io/searchhubnext-free/" target="_blank" rel="noopener">無料ではじめる</a>
-      </div>
-
-      <div class="pcard">
-        <img class="picon" src="images/icon-lite.png" alt="">
-        <div class="sale-flag">リリース記念</div>
-        <div class="pname">NEXTライト</div>
-        <div class="pfor"><b>店舗せどりが中心</b>で、<br>電脳も少しやる方へ。</div>
-        <div class="pnum"><span class="pold">¥1,980</span><sup>¥</sup>980</div>
-        <div class="punit">/ 月（税込）</div>
-        <div class="sale-note">リリース記念価格</div>
-        <button class="ptoggle" type="button" aria-expanded="false">機能を見る</button>
-        <div class="pbody">
-        <ul class="plist">
-          <li>Amazonリサーチ（一発解析）</li>
-          <li><b>リサーチパネル（拡張機能）</b></li>
-          <li><b>鉄板値・buybox平均</b></li>
-          <li>バーコード読み取り</li>
-          <li>販売管理・古物台帳CSV</li>
-          <li>価格改定</li>
-          <li>月別レポート・経費管理</li>
-          <li>一括商品登録</li>
-          <li class="off">自動巡回</li>
-          <li class="off">自動リサーチ</li>
-        </ul>
-        <div class="pgive">
-          <b>お渡しするもの</b>
-          <ul>
-            <li>ライセンスキー</li>
-            <li>アプリ（PC版・スマホ版）</li>
-            <li>リサーチパネル（Chrome拡張・LITE）</li>
-          </ul>
-        </div>
-        </div>
-        <a class="pcta" href="https://buy.stripe.com/8x2eVc2VMabd9beatv4AU09" target="_blank" rel="noopener">このプランではじめる</a>
-      </div>
-
-      <div class="pcard reco">
-        <div class="reco-flag">おすすめ</div>
-        <img class="picon" src="images/logo-next.png" alt="">
-        <div class="pname">NEXT</div>
-        <div class="pfor"><b>電脳をがっつり。</b><br>店舗はおまけで回したい方へ。</div>
-        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>2,980</div>
-        <div class="punit">/ 月（税込）</div>
-        <div class="sale-note" style="visibility:hidden;">-</div>
-        <button class="ptoggle" type="button" aria-expanded="false">機能を見る</button>
-        <div class="pbody">
-        <ul class="plist">
-          <li class="plist-red">ライトの機能すべて</li>
-          <li><b>10サイトの自動巡回</b></li>
-          <li>条件に合えば通知</li>
-          <li>仕入れリスト</li>
-          <li>自動リサーチ（セラー巡回）</li>
-          <li class="off">高速巡回</li>
-        </ul>
-        <div class="pgive">
-          <b>お渡しするもの</b>
-          <ul>
-            <li>ライセンスキー</li>
-            <li>アプリ（PC版・スマホ版）</li>
-            <li>Chrome拡張（リサーチパネル＋自動巡回）</li>
-          </ul>
-        </div>
-        </div>
-        <a class="pcta" href="https://buy.stripe.com/cNi4gy2VMfvx1IM7hj4AU07" target="_blank" rel="noopener">このプランではじめる</a>
-      </div>
-
-      <div class="pcard" id="cardKiwami">
-        <div class="slot-badge">月20名限定</div>
-        <img class="picon" src="images/icon-kiwami.png" alt="">
-        <div class="pname">NEXT極</div>
-        <div class="pfor"><b>電脳をがっつり</b>やって、<br>1件も取り逃したくない方へ。</div>
-        <div class="pnum"><span class="pold" style="visibility:hidden;">-</span><sup>¥</sup>4,980</div>
-        <div class="punit">/ 月（税込）</div>
-        <div class="sale-note" style="visibility:hidden;">-</div>
-        <button class="ptoggle" type="button" aria-expanded="false">機能を見る</button>
-        <div class="pbody">
-        <ul class="plist">
-          <li class="plist-red">NEXTの機能すべて</li>
-          <li>メルカリ・ヤフーフリマ・オフモール<br><b>高速巡回</b></li>
-          <li>新着商品通知</li>
-        </ul>
-        <div class="pgive">
-          <b>お渡しするもの</b>
-          <ul>
-            <li>ライセンスキー</li>
-            <li>アプリ（PC版・スマホ版）</li>
-            <li>Chrome拡張（リサーチパネル＋自動巡回＋高速巡回）</li>
-          </ul>
-        </div>
-        </div>
-        <div class="slot-label"><span>今月の残り枠</span><b id="slotText">確認中…</b></div>
-        <div class="slot-bar"><div class="slot-fill" id="slotFill"></div></div>
-        <a class="pcta" id="ctaKiwami" href="https://buy.stripe.com/7sY5kCaoebfh0EI9pr4AU08" target="_blank" rel="noopener">このプランではじめる</a>
-      </div>
-
-    </div>
-
-    <div class="price-notes">
-      <b>ご契約前に、必ずご確認ください。</b>
-      <ul>
-        <li><b>無料版もKeepaの有料プランが必要です。</b>相場はKeepaから取っているため、無料版だけでは動きません。</li>
-        <li>ご利用には別途 <b>Keepa</b> の有料プラン（月29€〜）が必要です。当ツールの料金には含まれません。</li>
-        <li>NEXT・NEXT極の自動巡回と自動リサーチは、Keepaのトークンを多く使います。<b>49€プランを前提</b>としてください。</li>
-        <li>自動巡回には、<b>電源を入れたままにできるパソコン（Windows・Chrome）</b>が必要です。スマホだけでは動きません。</li>
-        <li>Amazonセラーセントラルのアカウントが必要です。</li>
-        <li><b>NEXT極は月20名までの受付</b>です。埋まった場合は翌月1日にまた受付を再開します。</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ============ REQUIREMENTS ============ -->
-<section style="background:var(--mist);">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Requirements</div>
-      <h2>できないことも、先に書いておきます。</h2>
-      <p><span class="nb">買ってから「思っていたのと違う」となるのが、</span><span class="nb">いちばん困るからです。</span></p>
-    </div>
-    <div class="figs">
-      <img src="images/ill-device-1.png" alt="電源を入れたままのパソコン" loading="lazy">
-      <img src="images/ill-device-2.png" alt="手元のスマホ" loading="lazy">
-    </div>
-    <div class="req-grid">
-      <div class="req">
-        <h3>全プランに必要なもの</h3>
-        <ul>
-          <li><b>Keepaの有料プラン</b>（月29€〜）。相場も手数料もKeepaから取っています。</li>
-          <li><b>Amazonセラーセントラル</b>のアカウント。</li>
-          <li>PC版はChrome、スマホ版はSafari・Chromeで動きます。</li>
-          <li>29€プランでも足りるように作っています。<b>1商品あたり1トークン</b>で調べる設定を用意し、一度調べた商品は控えておくので、次からは商品を探す問い合わせが要りません。</li>
-        </ul>
-      </div>
-      <div class="req warn">
-        <h3>NEXT・NEXT極に必要なもの</h3>
-        <ul>
-          <li><b>電源を入れたままにできるパソコン。</b>巡回はあなたのパソコンのChromeが動かします。スマホだけでは巡回できません。</li>
-          <li><b>Keepaの49€プラン。</b>29€プランでは、自動リサーチの途中でトークンが尽きます。</li>
-          <li>パソコンの設定（毎日決まった時刻に起きて巡回を始める設定）が必要です。手順書をお渡しします。15分ほどで終わります。</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CAUTION ============ -->
-<section>
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">Notice</div>
-      <h2>ご利用にあたって</h2>
-      <p><span class="nb">都合の良いことだけを</span><span class="nb">書くつもりはありません。</span><br><span class="nb">知っておいていただきたいことを、</span><span class="nb">先にお伝えします。</span></p>
-    </div>
-    <div style="max-width:820px; margin:0 auto;">
-
-      <div class="caution">
-        <h3>アカウント停止のリスクについて<span class="plan">NEXT以上</span></h3>
-        <p><b>「100%安全」なツールは、この世に存在しません。</b>ご利用は自己責任でお願いいたします。</p>
-        <p>本サービスの自動巡回は、一定の間隔で機械的に動くのではなく、開く間隔をばらつかせるなどして、できる限り人の操作に近い動きになるよう設計しています。それでも、各サイトの規約上、自動での操作が推奨されているわけではありません。リスクはゼロではありません。</p>
-        <p><b>「1%でもアカウントが止まるのが怖い」という方は、導入をお控えください。</b>手作業でのリサーチをお願いいたします。</p>
-      </div>
-
-      <div class="caution">
-        <h3>各サイトの仕様変更について<span class="plan">NEXT以上</span></h3>
-        <p>巡回先のサイトが大きく作り変えられた場合、一時的に動かなくなったり、特定の機能が使えなくなることがあります。ウェブの性質上、動作を永続的にお約束することはできません。</p>
-        <p>そうなった場合は、開発者として速やかな修正に全力を尽くします。ただし、サイト側の変更があまりに大きい場合、技術的に対応できないことも稀にあり得ます。その際は免責とさせていただきますので、あらかじめご了承のうえご検討ください。</p>
-        <p>常に使える状態を保てるよう、日々手を入れ続けることをお約束します。</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section id="faq">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-eyebrow">FAQ</div>
-      <h2>よくあるご質問</h2>
-    </div>
-    <figure class="fig fig-c"><img src="images/ill-faq.png" alt="よくある質問" loading="lazy"></figure>
-    <div class="faq">
-      <div class="faq-item">
-        <p class="faq-q">Keepaは本当に必要ですか。</p>
-        <p class="faq-a">必要です。相場・手数料・出品者数・売れた回数は、すべてKeepaから取っています。当ツールの料金には含まれません。<br>
-        NEXTライトは<b>月29€のプランでお使いいただけます</b>。29€は1時間に60回ぶんの持ち点なので、そのままだと1時間に20商品で止まります。そこで、<b>1商品あたり1トークンで調べる設定</b>（buybox平均とカート価格だけを省き、鉄板値もランクも値動きもそのまま出ます）を用意しました。この設定なら1時間に60商品まで見られます。<br>
-        さらに、一度調べた商品の型番とASINを控えているので、<b>次からは「その型番はどの商品か」を探す問い合わせ（1回10トークン）が要りません</b>。よく扱う商品ほど軽くなっていきます。<br>
-        NEXT・NEXT極は、自動巡回と自動リサーチで数千件を一度に解析するため、<b>月49€のプランが前提</b>です。決して安くはありませんが、その作業を人に頼むことを考えれば、はるかに安く済みます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">スマホだけで使えますか。</p>
-        <p class="faq-a">NEXTライトはスマホだけでお使いいただけます。ただし<b>リサーチパネル（拡張機能）はパソコンのChrome専用</b>です。スマホでは、アプリのAmazonリサーチをお使いください。出るものは同じです。<br>
-        NEXT・NEXT極の自動巡回はパソコンのChromeが動かす仕組みのため、電源を入れたままにできるパソコンが必要です。その他の機能はスマホでご使用いただけます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">あとからプランを変えられますか。</p>
-        <p class="faq-a">いつでも変更できます。上げても下げても、それまでの販売管理・月別・経費のデータはすべてそのまま残ります。アプリの設定画面から手続きできます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">解約したらどうなりますか。</p>
-        <p class="faq-a">その時点でアプリと拡張機能が使えなくなります。データはお預かりしたまま残るので、再開されたときは続きからお使いいただけます。解約はアプリの設定画面から、いつでも可能です。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">パソコンとスマホ、両方で使えますか。</p>
-        <p class="faq-a">はい。同じライセンスキーで、PC版とスマホ版の両方をお使いいただけます。データはリアルタイムで共有されます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">巡回は何時から何時まで動きますか。</p>
-        <p class="faq-a">初期設定では朝6時から深夜0時までです。深夜はパソコンを休ませます。時間帯はご自身で変更できます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">初心者でも設定できますか。マニュアルはありますか。</p>
-        <p class="faq-a">全機能を解説した使い方ガイドをご用意しています。最初の設定から毎日の流れ、つまずきやすいところまで、画面ごとに順を追って説明しています。ご契約後のメールでURLをご案内します。<br>
-        ただし正直に申し上げると、これは「ボタンを押すだけで稼げるアプリ」ではありません。パソコンの基本的な操作が難しい方や、最初の設定が面倒だと感じる方には向いていません。一度越えてしまえば、あとは動き続けます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">パソコンの電源を切っていても動きますか。</p>
-        <p class="faq-a">自動リサーチ（セラーから利益商品を探す工程）は、こちらのサーバー側で動きます。あなたが寝ている間も外出中も、パソコンを切ったまま候補が溜まっていきます。<br>
-        一方、その商品が「今」出品されているかを見に行く自動巡回は、あなたのパソコンのChromeが動かします。こちらは電源を入れたままにしておく必要があります。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">仕入れまで全部自動でやってくれますか。</p>
-        <p class="faq-a">いいえ。あえて半分だけ自動にしています。<br>
-        面倒な絞り込みと監視はこちらでやりますが、<b>最後に買うかどうかはご自身の目で判断していただきます。</b>商品の状態も、急な相場の変動も、機械には見えないからです。そこを人が見ることで、利益率と安全性を両立させています。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">他の利用者と同じ商品を取り合うことになりませんか。</p>
-        <p class="faq-a">なりにくい作りです。決まったリストを配っているのではなく、<b>あなたが選んだセラーから商品を抜き出しています。</b>選ぶセラーが違えば、出てくるリストも全く違うものになります。自分だけの抽出ルートができていきます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">使っているうちにネタ切れしませんか。</p>
-        <p class="faq-a">利益が出た商品が見つかると、その商品を扱っている別のセラーを自動で見つけて、次のリサーチ先にします。使うほどに対象が広がっていくので、止まりません。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">家電以外のカテゴリーでも使えますか。</p>
-        <p class="faq-a">使えます。おもちゃ、ゲーム、楽器、カメラ、工具など、Amazonにカタログがあって、Keepaでデータが取れるカテゴリーであれば対象になります。どのカテゴリーを狙うかは、ご自身で設定できます。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">申し込みのメールアドレスは何に使われますか。</p>
-        <p class="faq-a">ライセンスキーの送付先になります。決済時に入力されたアドレスへ、キーとアプリのURLをお送りします。</p>
-      </div>
-      <div class="faq-item">
-        <p class="faq-q">ここに無いことを聞きたいときは。</p>
-        <p class="faq-a">メールでお気軽にどうぞ。買う前のご相談でも構いません。<br>
-        <a href="mailto:searchhubnext@gmail.com" style="font-weight:700; color:var(--ink);">searchhubnext@gmail.com</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FINAL ============ -->
-<div class="final">
-  <div class="wrap">
-    <h2>探す時間を、他のことに使ってください。</h2>
-    <p><span class="nb">仕入れも、出品も、記帳も。</span><span class="nb">全部ひとつの画面の中で。</span></p>
-    <a class="btn btn-gold" href="#pricing">料金プランを見る</a>
-    <p style="margin:28px 0 0; font-size:13px; color:#93A0B8;">
-      迷われている点があれば、お気軽にご相談ください<br>
-      <a href="mailto:searchhubnext@gmail.com" style="color:#F0C465; font-weight:700;">searchhubnext@gmail.com</a>
-    </p>
-  </div>
-</div>
-
-<footer>
-  <div class="wrap">
-    <div style="margin-bottom:10px;">
-      <span class="nb"><a href="tokushoho.html">特定商取引法に基づく表記</a></span>
-      <span class="nb">　|　</span>
-      <span class="nb"><a href="privacy.html">プライバシーポリシー</a></span>
-    </div>
-    <div style="margin-bottom:10px;">
-      <span class="nb">お問い合わせ：</span><span class="nb"><a href="mailto:searchhubnext@gmail.com">searchhubnext@gmail.com</a></span>
-    </div>
-    © SearchHub NEXT
-  </div>
-</footer>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<a class="btn mini" id="mini" href="#price">プランを見る</a>
 
 <script>
-  // ============================================================
-  // 🌟 NEXT極の残り枠。ここに公開キーを1つ入れるだけです。
-  //   Supabase → Settings → API → 「anon public」または
-  //   「publishable key」をコピーして貼り付けてください。
-  //   ※ service_role キーは絶対に貼らないでください。
-  //   空のままでも「月20名限定」の表示だけは出ます（数字が出ないだけ）。
-  // ============================================================
-  const SUPABASE_URL = "https://ihsjwsdwjuapfdhtocmq.supabase.co";
-  const SUPABASE_PUBLIC_KEY = "sb_publishable_B0Dl0AwnXKzculDEEyMXTQ_ifl052oV";
-
-  (async function loadSlots(){
-    const textEl = document.getElementById('slotText');
-    const fillEl = document.getElementById('slotFill');
-    if (!textEl) return;
-
-    if (!SUPABASE_PUBLIC_KEY || SUPABASE_PUBLIC_KEY.indexOf('【') === 0) {
-      textEl.textContent = '20名 / 月';
-      fillEl.style.width = '0%';
-      return;
-    }
-    try {
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
-      const { data, error } = await sb.rpc('get_kiwami_slots');
-      if (error) throw error;
-
-      const limit = Number(data.limit) || 20;
-      const used  = Number(data.used)  || 0;
-      const left  = Math.max(0, limit - used);
-
-      textEl.textContent = left + ' / ' + limit;
-      fillEl.style.width = Math.min(100, used / limit * 100) + '%';
-
-      if (left <= 0) {
-        const card = document.getElementById('cardKiwami');
-        const cta  = document.getElementById('ctaKiwami');
-        card.classList.add('sold');
-        cta.textContent = '今月分は受付終了しました';
-        cta.removeAttribute('href');
-      }
-    } catch (e) {
-      // 取れなかった時は、数字を出さずに限定の表示だけ残す
-      textEl.textContent = '20名 / 月';
-    }
-  })();
-</script>
-<script>
-  // ============================================================
-  // 🌟【追加】このページを開いた人を1行だけ記録する。
-  //
-  //   何人来たのかが今まで一度も分からなかったため、
-  //   lp_visits という表に「いつ・どこから来たか」だけを残します。
-  //   名前もメールも取りません。ページの見た目も一切変わりません。
-  //
-  //   ・タブごとに1回だけ。読み込み直しても増えません。
-  //   ・記録に失敗しても、画面には何も出しません。
-  //     数を数えることより、ページが普通に見えることが大事なためです。
-  //   ・上の SUPABASE_URL / SUPABASE_PUBLIC_KEY をそのまま使います。
-  // ============================================================
-  (function countVisit(){
-    try {
-      if (sessionStorage.getItem('lp_counted')) return;
-    } catch (e) {}
-    try {
-      if (!window.supabase || !SUPABASE_PUBLIC_KEY) return;
-      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLIC_KEY);
-      sb.from('lp_visits').insert({
-        referrer: document.referrer || null,
-        path: location.pathname + location.search,
-        ua: navigator.userAgent
-      }).then(function(res){
-        if (res && res.error) return;   // 失敗した回は覚えない
-        try { sessionStorage.setItem('lp_counted', '1'); } catch (e) {}
-      });
-    } catch (e) {}
-  })();
-</script>
-
-<script>
-(function(){
-  document.querySelectorAll('.ptoggle').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var card = btn.closest('.pcard');
-      var open = card.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-      btn.textContent = open ? '閉じる' : '機能を見る';
+// 右の点と、下の小さい申し込みボタン（スマホだけ）
+(function () {
+  var pages = Array.prototype.slice.call(document.querySelectorAll('.pg'));
+  var dots = document.getElementById('dots'), mini = document.getElementById('mini');
+  pages.forEach(function () { dots.appendChild(document.createElement('i')); });
+  var hideMini = { top: 1, price: 1, end: 1 };
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var i = pages.indexOf(e.target);
+      Array.prototype.forEach.call(dots.children, function (d, k) { d.classList.toggle('on', k === i); });
+      mini.classList.toggle('show', !hideMini[e.target.id]);
     });
-  });
+  }, { threshold: 0.55 });
+  pages.forEach(function (p) { io.observe(p); });
+})();
+
+// 紹介の印：?p=印 で開くと、申し込みボタンに付けて Stripe に渡す
+(function () {
+  try {
+    var p = new URLSearchParams(location.search).get('p');
+    if (!p || !/^[A-Za-z0-9_-]{1,40}$/.test(p)) return;
+    document.querySelectorAll('[data-buy]').forEach(function (a) {
+      a.href += (a.href.indexOf('?') < 0 ? '?' : '&') + 'client_reference_id=' + encodeURIComponent(p);
+    });
+  } catch (e) {}
+})();
+
+// NEXT極の今月の残り枠（取れなければ「20名 / 月」のまま）
+(function () {
+  var URL_ = 'https://ihsjwsdwjuapfdhtocmq.supabase.co/rest/v1/rpc/get_kiwami_slots';
+  var KEY = 'sb_publishable_B0Dl0AwnXKzculDEEyMXTQ_ifl052oV';
+  fetch(URL_, { method: 'POST', headers: { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' }, body: '{}' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) {
+      var limit = Number(d.limit) || 20, used = Number(d.used) || 0, left = Math.max(0, limit - used);
+      document.getElementById('slotText').textContent = left + ' / ' + limit + '名';
+      document.getElementById('slotFill').style.width = Math.min(100, used / limit * 100) + '%';
+      if (left <= 0) {
+        document.getElementById('cardKiwami').classList.add('sold');
+        var c = document.getElementById('ctaKiwami'); c.textContent = '今月分は受付終了しました'; c.removeAttribute('href');
+      }
+    }).catch(function () {});
 })();
 </script>
-<script>
-(function(){
-  var track=document.getElementById('heroSlide');
-  if(!track) return;
-  var dots=document.getElementById('heroDots').querySelectorAll('i');
-  var n=track.children.length, i=0, timer=null;
-  function go(k){ i=(k+n)%n; track.style.transform='translateX('+(-i*100)+'%)';
-    dots.forEach(function(d,j){ d.className = (j===i?'on':''); }); }
-  function start(){ stop(); timer=setInterval(function(){ go(i+1); }, 3200); }
-  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-  document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
-  var x0=null;
-  track.addEventListener('touchstart', function(e){ x0=e.touches[0].clientX; stop(); }, {passive:true});
-  track.addEventListener('touchend', function(e){
-    if(x0===null) return; var dx=e.changedTouches[0].clientX-x0;
-    if(Math.abs(dx)>36) go(dx<0 ? i+1 : i-1);
-    x0=null; start();
-  }, {passive:true});
-  go(0); start();
-})();
-</script>
+
 </body>
 </html>
