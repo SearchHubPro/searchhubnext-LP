@@ -129,7 +129,9 @@ footer a { color: #fff; }
 .mini.show { opacity: 1; pointer-events: auto; }
 
 @media (max-width: 899px) {
-  html { scroll-snap-type: y proximity; }
+  /* 1回のスワイプで1画面だけ進む。1画面より長い画面（乗り換え・料金）は中を下まで読める */
+  html { scroll-snap-type: y mandatory; }
+  .pg { scroll-snap-stop: always; }
 }
 
 /* ---------- パソコン：2列 ---------- */
