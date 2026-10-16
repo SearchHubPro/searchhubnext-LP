@@ -220,6 +220,7 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
           <li><span class="n">2</span><div><b>Keepa の API キー</b>。Keepaのサイトにログインして、上のメニュー「Data」→「API」で見られます。</div></li>
           <li><span class="n">3</span><div><b>AmazonセラーID</b>。セラーセントラルの出品者ID（Aから始まる英数字）です。</div></li>
           <li><span class="n">4</span><div><b>「設定を保存」</b>を押します。</div></li>
+          <li><span class="n">5</span><div><b>🌙 ダークモード</b>：チェックすると、画面が目にやさしい暗い色になります。押した時点で切り替わり、その端末が覚えます（パソコンとスマホは別々に切り替えます）。</div></li>
         </ol>
         <p class="tip">あとから直すときは、ホーム左上の⚙️で開きます。同じ画面の「プラン変更・解約・お支払い状況の確認はこちら」から、ご契約の手続きができます（<a href="#contract">ご契約について</a>）。</p>
       </div>
@@ -236,6 +237,7 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
           <li><span class="n">2</span><div><b>Keepa の API キー</b></div></li>
           <li><span class="n">3</span><div><b>AmazonセラーID</b></div></li>
           <li><span class="n">4</span><div><b>「設定を保存」</b></div></li>
+          <li><span class="n">5</span><div><b>🌙 ダークモード</b>（お好みで）</div></li>
         </ol>
         <p class="tip">「🔎 検索ボタンの行き先」は、スマホで検索ボタンを押したときに開くサイトです。Googleのアプリに飛ばされるのがいやな時は、BingかDuckDuckGoにします。「🔔 スマホに通知を送る許可をする」を押すと、巡回で見つかった商品をスマホに通知できます。</p>
       </div>
@@ -260,8 +262,9 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
       <figure class="shot"><a href="guide_img/sp_home.webp" target="_blank"><img src="guide_img/sp_home.webp" alt="スマホ版のホーム" loading="lazy"></a><figcaption>ホーム（スマホ版）</figcaption></figure>
       <div class="text">
         <h3>スマホ版のホーム</h3>
-        <p>番号はパソコン版と同じです。スマホ版は上のタブが「概要・仕入・販売・資金・在庫」の5つで、カードの支払い予測は「資金」、在庫の金額は「在庫」タブにあります。右端の「︿」で上の段をたためます。</p>
-        <p class="tip">ホーム以外の画面は、左上の「‹」か、画面を右へスワイプで戻れます。</p>
+        <p>番号はパソコン版と同じです。スマホ版は<b>画面の一番下のタブ</b>で「ホーム・マネージャー・リサーチャー・ウォッチャー・スナイパー」をいつでも行き来できます（4・5は下のタブです）。ホームのボタンは、Amazon リサーチ・巡回進捗パネル・実行予約・実行ログの4つです。</p>
+        <p>上の段のタブは「概要・仕入・販売・資金・在庫」の5つで、カードの支払い予測は「資金」、在庫の金額は「在庫」タブにあります。</p>
+        <p class="tip">ホーム以外の画面からは、左上の「‹」、下のタブの「ホーム」、画面を右へスワイプ、のどれでも戻れます。</p>
       </div>
     </div>
 
@@ -511,10 +514,11 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
       <figure class="shot"><a href="guide_img/sp_watcher.webp" target="_blank"><img src="guide_img/sp_watcher.webp" alt="スマホ版のWatcher" loading="lazy"></a><figcaption>スマホ版の Watcher</figcaption></figure>
       <div class="text">
         <h3>外出先ではスマホで</h3>
-        <p>巡回はパソコンで回り、見つかった商品はスマホ版でも同じように見られます。スマホ版のカードは、最初から表が開いた形です。</p>
+        <p>巡回はパソコンで回り、見つかった商品はスマホ版でも同じように見られます。スマホ版は下のタブの「ウォッチャー」（極はとなりの「スナイパー」）から開きます。カードは最初から表が開いた形です。まだ見ていない商品があると、下のタブに赤い点が付きます。</p>
         <ol class="marks">
           <li><span class="n">1</span><div>サイトのタブ。横にすべらせると全サイトが出ます。</div></li>
         </ol>
+        <p class="tip"><span class="pl pl-k">極</span> スマホのアプリのアイコンには、スナイパーでまだ見ていない商品の数が赤い数字で出ます。アプリで商品を見ると減ります。</p>
       </div>
     </div>
 
@@ -564,7 +568,7 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
         <ol class="marks">
           <li><span class="n">1</span><div><b>目標利益率</b>。この率が取れる値段を「仕入値」として計算します。候補が少なすぎたら下げ、多すぎたら上げます。</div></li>
           <li><span class="n">2</span><div><b>仕入値の基準</b>：【A】90日平均／【B】buybox平均／【C】鉄板値。巡回の検索URLの上限値段にも使われます。</div></li>
-          <li><span class="n">3</span><div><b>除外ワード</b>（ジャンク・部品取り など）。巡回の検索にも付きます。</div></li>
+          <li><span class="n">3</span><div><b>除外ワード</b>（ジャンク・部品取り など）。巡回の検索にも付きます。言葉だけをスペースで区切って入れます（頭の「-」は要りません）。</div></li>
           <li><span class="n">4</span><div><b>ターゲットカテゴリー</b>。扱いたいジャンルにチェックします。</div></li>
         </ol>
         <p class="tip">ほかのタブ：「バッチ設定」（1回に調べる件数）、「ランク選別」（残すランク・値段の幅）、「セラー抽出」（候補にするセラーの評価数・在庫数）。最後に「この内容で保存」。</p>
@@ -646,6 +650,7 @@ h3.sub { font-size: 1.15em; margin-top: 22px; }
       <details><summary>画面を開いても何も出ない</summary><p>⚙️アプリ基本設定に、ライセンスキー・Keepa APIキー・AmazonセラーIDの3つが入っているか確かめてください。3つそろわないと動きません。</p></details>
       <details><summary>「🔒 ○○は ○○ の機能です」と出る</summary><p>いまのプランに入っていない機能です。こわれているわけではなく、データも消えていません。使いたいときは<a href="#contract">プランを変える</a>と使えるようになります。</p></details>
       <details><summary>巡回がまったく動かない</summary><p>順に確かめてください。① 仕入れリストに商品があり、巡回進捗パネルで「URL同期」をしたか ② 拡張機能にライセンスキーを貼って保存したか ③ パソコンのChromeで「パソコン版アプリ」のページを開いているか ④ 拡張の設定で、巡回するサイトにチェックが入っているか ⑤ 実行予約で「自動巡回」がオンか（ウォッチャーは予約の時刻にしか回りません） ⑥ パソコンが寝ていないか。</p></details>
+      <details><summary>古い画面のまま・新しくなった所が出てこない</summary><p>アプリを開くと、新しい版があれば数秒で自動で切り替わります。切り替わらないときは、スマホはアプリを一度閉じて開き直し、パソコンは Ctrl + F5 で読み込み直してください。</p></details>
       <details><summary>商品があるのに「なし」になる</summary><p>拡張機能の設定で「判定開始までの待ち時間」を1〜2秒増やしてください。</p></details>
       <details><summary>関係ない商品ばかり見つかる</summary><p>仕入れリストの「編集」で、検索キーワードにメーカー名を足してください。直したら巡回進捗パネルの「URL同期」を押します。</p></details>
       <details><summary>リサーチリストに候補が出てこない／多すぎる</summary><p>出てこないときは、リサーチャー設定の目標利益率を下げて、実行ログに赤い行がないか見てください。多すぎるときは、目標利益率を上げるか、承認するセラーを減らしてください。</p></details>
